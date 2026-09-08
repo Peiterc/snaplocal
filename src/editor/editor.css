@@ -1,0 +1,206 @@
+body.editor {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  background: var(--bg-sunken);
+}
+
+/* Fixed height and a single row: the canvas sits directly below, so a toolbar
+   that grew or shrank with the active tool would shift the image out from
+   under the pointer every time the tool changed. Narrow windows scroll the
+   toolbar sideways instead. */
+.etoolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  padding-inline-end: 8px;
+  border-inline-end: 1px solid var(--border);
+}
+
+.group:last-child { border-inline-end: 0; padding-inline-end: 0; }
+.group.push { margin-inline-start: auto; }
+
+/* Pinned to the trailing edge so copy and save stay reachable even when a
+   narrow window scrolls the toolbar sideways. */
+.group.actions {
+  position: sticky;
+  inset-inline-end: 0;
+  padding-inline-start: 10px;
+  background: var(--surface);
+  box-shadow: -10px 0 10px -8px rgba(16, 24, 40, .18);
+}
+
+.group label {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-inline-start: 6px;
+}
+
+.group select {
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+}
+
+.group input[type="range"] { width: 110px; accent-color: var(--accent); }
+
+.tool {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.tool svg { width: 20px; height: 20px; }
+.tool:hover:not(:disabled) { background: var(--bg-sunken); }
+.tool:disabled { opacity: .35; cursor: default; }
+
+.tool[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.zoomlabel {
+  min-width: 58px;
+  padding: 7px 4px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.zoomlabel:hover { background: var(--bg-sunken); }
+
+/* Text needs colour *and* font controls, so more than one property group can
+   be on screen at once: they sit side by side rather than stacked. */
+.propsdock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.props[hidden] { display: none; }
+
+.tool.mini { width: 28px; height: 28px; font-size: 14px; }
+.oline {
+  -webkit-text-stroke: 2.5px var(--surface);
+  paint-order: stroke fill;
+  font-weight: 700;
+}
+
+.swatches { display: flex; gap: 3px; }
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(0, 0, 0, .25);
+  border-radius: 5px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.swatch[aria-pressed="true"] { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.group input[type="color"] {
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.check.inline { margin: 0; font-size: 12px; }
+
+.readout {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--text-dim);
+  min-width: 82px;
+}
+
+.stage[data-tool="crop"] #board { cursor: crosshair; }
+
+.stage {
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.canvas-wrap { position: relative; line-height: 0; }
+
+#board {
+  display: block;
+  background: #fff;
+  box-shadow: var(--shadow);
+  /* Nothing here is a photo: keep edges sharp when zoomed past 100%. */
+  image-rendering: pixelated;
+}
+
+.stage:not([data-tool="move"]) #board { cursor: crosshair; }
+.stage[data-tool="text"] #board { cursor: text; }
+
+/* The inline text editor sits exactly over the spot the label will occupy, so
+   what the user types is already positioned the way it will be rendered. */
+#textInput {
+  position: absolute;
+  margin: 0;
+  padding: 0 2px;
+  border: 1px dashed var(--accent);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .55);
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  white-space: pre;
+}
+
+.warn-dialog {
+  max-width: 440px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.warn-dialog::backdrop { background: rgba(12, 16, 22, .45); }
+.warn-dialog h2 { margin: 0 0 10px; font-size: 17px; text-transform: none;
+                  letter-spacing: 0; color: var(--text); }
+.warn-dialog p { margin: 0 0 18px; color: var(--text-dim); }
+
+.check { display: flex; align-items: center; gap: 8px; font-size: 13px;
+         color: var(--text-dim); margin-bottom: 20px; }
+.check input { accent-color: var(--accent); }
+
+.warn-actions { display: flex; justify-content: flex-end; gap: 8px; }

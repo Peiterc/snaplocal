@@ -1,0 +1,617 @@
+{
+  "locale_name": {
+    "message": "English",
+    "description": "Name of this language, written in this language. Used by the language picker in Options. NEVER translate into another language."
+  },
+
+  "appName": {
+    "message": "SnapLocal",
+    "description": "Extension name. WORKING TITLE - replace once the final name is chosen. NEVER translate: the brand name is identical in every locale."
+  },
+  "appShortName": {
+    "message": "SnapLocal",
+    "description": "Short name used when space is tight (max 12 characters). NEVER translate."
+  },
+  "appDesc": {
+    "message": "Capture, annotate and blur screenshots. 100% local: no account, no cloud, no tracking.",
+    "description": "Store description shown in the browser and in the add-on stores. Hard limit of 132 characters - keep translations within it."
+  },
+
+  "mode_area": {
+    "message": "Select area",
+    "description": "Capture mode button: the user drags a rectangle over the page."
+  },
+  "mode_area_desc": {
+    "message": "Drag to capture part of the page",
+    "description": "Secondary line under the Select area button in the popup."
+  },
+  "mode_visible": {
+    "message": "Visible part",
+    "description": "Capture mode button: captures exactly what is on screen."
+  },
+  "mode_visible_desc": {
+    "message": "Capture what you see right now",
+    "description": "Secondary line under the Visible part button in the popup."
+  },
+  "mode_fullpage": {
+    "message": "Full page",
+    "description": "Capture mode button: scrolls the page and stitches the whole thing into one image."
+  },
+  "mode_fullpage_desc": {
+    "message": "Scroll and stitch the entire page",
+    "description": "Secondary line under the Full page button in the popup."
+  },
+  "mode_delay": {
+    "message": "Delayed capture",
+    "description": "Capture mode button: waits a few seconds before capturing."
+  },
+  "mode_delay_desc": {
+    "message": "Wait, then capture the visible part",
+    "description": "Secondary line under the Delayed capture button in the popup."
+  },
+
+  "popup_settings": {
+    "message": "Settings",
+    "description": "Popup footer link that opens the Options page."
+  },
+  "popup_shortcuts_hint": {
+    "message": "Tip: use keyboard shortcuts for faster captures.",
+    "description": "Hint shown at the bottom of the popup."
+  },
+
+  "ctx_parent": {
+    "message": "SnapLocal",
+    "description": "Top-level right-click menu entry. This is the brand name - do NOT translate."
+  },
+  "ctx_area": {
+    "message": "Capture selected area",
+    "description": "Right-click menu item."
+  },
+  "ctx_visible": {
+    "message": "Capture visible part",
+    "description": "Right-click menu item."
+  },
+  "ctx_fullpage": {
+    "message": "Capture full page",
+    "description": "Right-click menu item."
+  },
+  "ctx_delay": {
+    "message": "Delayed capture",
+    "description": "Right-click menu item."
+  },
+
+  "cmd_capture_area": {
+    "message": "Capture selected area",
+    "description": "Keyboard shortcut description shown in the browser shortcut settings page."
+  },
+  "cmd_capture_visible": {
+    "message": "Capture visible part",
+    "description": "Keyboard shortcut description shown in the browser shortcut settings page."
+  },
+  "cmd_capture_fullpage": {
+    "message": "Capture full page",
+    "description": "Keyboard shortcut description shown in the browser shortcut settings page."
+  },
+
+  "overlay_hint": {
+    "message": "Drag to select an area",
+    "description": "Instruction shown over the dimmed page before the user starts dragging."
+  },
+  "overlay_hint_fullscreen": {
+    "message": "Space to capture the whole screen",
+    "description": "Second line of the overlay instruction. Keep short - it sits in a small pill."
+  },
+  "overlay_hint_cancel": {
+    "message": "Esc to cancel",
+    "description": "Third line of the overlay instruction. Do NOT translate the key name Esc."
+  },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "description": "Live pixel size readout next to the selection rectangle. Symbols only - do not add words.",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": {
+    "message": "Capture",
+    "description": "Button on the small floating toolbar attached to the selection. Keep it to one short word."
+  },
+  "overlay_action_copy": {
+    "message": "Copy",
+    "description": "Floating toolbar button: copy the selection straight to the clipboard. Keep it to one short word."
+  },
+  "overlay_action_save": {
+    "message": "Save",
+    "description": "Floating toolbar button: save the selection straight to disk. Keep it to one short word."
+  },
+  "overlay_action_cancel": {
+    "message": "Cancel",
+    "description": "Floating toolbar button. Keep it to one short word."
+  },
+
+  "delay_countdown": {
+    "message": "Capturing in $SECONDS$s",
+    "description": "Countdown shown before a delayed capture fires.",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": {
+    "message": "Cancel countdown",
+    "description": "Button that aborts a delayed capture."
+  },
+
+  "fullpage_preparing": {
+    "message": "Preparing page…",
+    "description": "Full page progress: hiding fixed elements and scrolling to the top."
+  },
+  "fullpage_progress": {
+    "message": "Capturing $CURRENT$ of $TOTAL$",
+    "description": "Full page progress counter: screens captured so far out of the total.",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": {
+    "message": "Stitching image…",
+    "description": "Full page progress: merging the captured screens into a single image."
+  },
+  "fullpage_cancel": {
+    "message": "Cancel capture",
+    "description": "Button that aborts a full page capture in progress."
+  },
+
+  "editor_title": {
+    "message": "Editor",
+    "description": "Browser tab title of the editor page."
+  },
+  "editor_untitled": {
+    "message": "Untitled capture",
+    "description": "Fallback name used when the captured page has no title."
+  },
+
+  "tool_move": {
+    "message": "Select and move",
+    "description": "Editor tool: pick an existing shape and drag it."
+  },
+  "tool_pencil": {
+    "message": "Pencil",
+    "description": "Editor tool: freehand drawing."
+  },
+  "tool_line": {
+    "message": "Line",
+    "description": "Editor tool: straight line."
+  },
+  "tool_arrow": {
+    "message": "Arrow",
+    "description": "Editor tool: straight line with an arrowhead."
+  },
+  "tool_rectangle": {
+    "message": "Rectangle",
+    "description": "Editor tool."
+  },
+  "tool_ellipse": {
+    "message": "Ellipse",
+    "description": "Editor tool: circle or oval, used to circle things on the image."
+  },
+  "tool_text": {
+    "message": "Text",
+    "description": "Editor tool: type a text label onto the image."
+  },
+  "tool_highlighter": {
+    "message": "Highlighter",
+    "description": "Editor tool: translucent marker, like a highlighter pen on paper."
+  },
+  "tool_blur": {
+    "message": "Blur",
+    "description": "Editor tool: blur or pixelate a region to obscure information."
+  },
+  "tool_redact": {
+    "message": "Redact",
+    "description": "Editor tool: cover a region with a solid opaque block. This is the irreversible, genuinely safe option - the wording should sound definitive, not decorative."
+  },
+  "tool_crop": {
+    "message": "Crop",
+    "description": "Editor tool: trim the image down to a smaller rectangle."
+  },
+
+  "action_undo": {
+    "message": "Undo",
+    "description": "Editor toolbar button."
+  },
+  "action_redo": {
+    "message": "Redo",
+    "description": "Editor toolbar button."
+  },
+  "action_copy": {
+    "message": "Copy to clipboard",
+    "description": "Editor toolbar button."
+  },
+  "action_save": {
+    "message": "Save image",
+    "description": "Editor toolbar button: download the image to disk."
+  },
+  "action_delete": {
+    "message": "Delete selected",
+    "description": "Editor: remove the currently selected shape."
+  },
+  "action_clear": {
+    "message": "Clear all annotations",
+    "description": "Editor: remove every shape, keeping the original capture untouched."
+  },
+  "action_new_capture": {
+    "message": "New capture",
+    "description": "Editor toolbar button."
+  },
+  "action_zoom_in": {
+    "message": "Zoom in",
+    "description": "Editor toolbar button."
+  },
+  "action_zoom_out": {
+    "message": "Zoom out",
+    "description": "Editor toolbar button."
+  },
+  "action_zoom_fit": {
+    "message": "Fit to window",
+    "description": "Editor toolbar button."
+  },
+  "action_zoom_reset": {
+    "message": "Actual size",
+    "description": "Editor toolbar button: zoom back to 100 percent."
+  },
+  "action_crop_apply": {
+    "message": "Apply crop",
+    "description": "Confirms the crop rectangle."
+  },
+  "action_crop_cancel": {
+    "message": "Cancel crop",
+    "description": "Discards the crop rectangle."
+  },
+
+  "prop_color": {
+    "message": "Color",
+    "description": "Editor properties panel label."
+  },
+  "prop_stroke_width": {
+    "message": "Thickness",
+    "description": "Editor properties panel: line or border thickness in pixels."
+  },
+  "prop_fill": {
+    "message": "Fill",
+    "description": "Editor properties panel: whether the shape is filled or only outlined."
+  },
+  "prop_opacity": {
+    "message": "Opacity",
+    "description": "Editor properties panel."
+  },
+  "prop_font_size": {
+    "message": "Size",
+    "description": "Editor properties panel: text font size."
+  },
+  "prop_font_bold": {
+    "message": "Bold",
+    "description": "Editor properties panel: text style toggle."
+  },
+  "prop_font_italic": {
+    "message": "Italic",
+    "description": "Editor properties panel: text style toggle."
+  },
+  "prop_text_outline": {
+    "message": "Outline",
+    "description": "Editor properties panel: draw a contrasting outline around text so it stays readable on any background."
+  },
+  "prop_arrowhead": {
+    "message": "Arrowhead",
+    "description": "Editor properties panel: which end of the arrow gets the head."
+  },
+  "prop_blur_mode": {
+    "message": "Mode",
+    "description": "Editor properties panel: choose blur or pixelate."
+  },
+  "prop_blur_mode_blur": {
+    "message": "Blur",
+    "description": "Blur mode option: soft gaussian blur."
+  },
+  "prop_blur_mode_pixelate": {
+    "message": "Pixelate",
+    "description": "Blur mode option: large square blocks, a mosaic effect."
+  },
+  "prop_blur_strength": {
+    "message": "Strength",
+    "description": "Editor properties panel: how strong the blur is, or how large the pixel blocks are."
+  },
+
+  "blur_warning_title": {
+    "message": "Blur is not always safe",
+    "description": "Title of the one-time warning shown the first time the blur tool is used."
+  },
+  "blur_warning_body": {
+    "message": "Blurred or pixelated text can sometimes be recovered. To hide passwords, documents or personal data, use Redact instead: it paints a solid block that cannot be undone.",
+    "description": "Body of the one-time blur warning. This is a genuine safety point, not marketing - keep it plain and clear. Redact refers to the tool named in tool_redact and must match that translation."
+  },
+  "blur_warning_switch": {
+    "message": "Switch to Redact",
+    "description": "Button in the blur warning that swaps the active tool for the safe one. Must match the tool_redact translation."
+  },
+  "blur_warning_keep": {
+    "message": "Keep using Blur",
+    "description": "Button in the blur warning that dismisses it and keeps the blur tool. Must match the tool_blur translation."
+  },
+  "blur_warning_dont_show": {
+    "message": "Do not show this again",
+    "description": "Checkbox in the blur warning dialog."
+  },
+
+  "export_format": {
+    "message": "Format",
+    "description": "Save dialog and Options label."
+  },
+  "export_format_png": {
+    "message": "PNG (lossless)",
+    "description": "File format option. Best for screenshots containing text. Do not translate PNG."
+  },
+  "export_format_jpg": {
+    "message": "JPEG (smaller file)",
+    "description": "File format option. Do not translate JPEG."
+  },
+  "export_quality": {
+    "message": "JPEG quality",
+    "description": "Slider label, only shown when JPEG is selected. Do not translate JPEG."
+  },
+
+  "toast_copied": {
+    "message": "Copied to clipboard",
+    "description": "Brief confirmation message."
+  },
+  "toast_saved": {
+    "message": "Saved as $FILENAME$",
+    "description": "Brief confirmation message after a download completes.",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": {
+    "message": "Settings saved",
+    "description": "Brief confirmation on the Options page."
+  },
+
+  "options_title": {
+    "message": "Settings",
+    "description": "Browser tab title and main heading of the Options page."
+  },
+  "opt_section_general": {
+    "message": "General",
+    "description": "Options page section heading."
+  },
+  "opt_section_capture": {
+    "message": "Capture",
+    "description": "Options page section heading."
+  },
+  "opt_section_editor": {
+    "message": "Editor defaults",
+    "description": "Options page section heading."
+  },
+  "opt_section_privacy": {
+    "message": "Privacy",
+    "description": "Options page section heading."
+  },
+  "opt_section_about": {
+    "message": "About",
+    "description": "Options page section heading."
+  },
+
+  "opt_language": {
+    "message": "Language",
+    "description": "Options: interface language picker."
+  },
+  "opt_language_auto": {
+    "message": "Same as browser",
+    "description": "Language picker option: follow the browser interface language."
+  },
+  "opt_theme": {
+    "message": "Theme",
+    "description": "Options: light or dark appearance."
+  },
+  "opt_theme_auto": {
+    "message": "Same as system",
+    "description": "Theme option."
+  },
+  "opt_theme_light": {
+    "message": "Light",
+    "description": "Theme option."
+  },
+  "opt_theme_dark": {
+    "message": "Dark",
+    "description": "Theme option."
+  },
+
+  "opt_after_capture": {
+    "message": "After capturing",
+    "description": "Options: what should happen once a screenshot is taken."
+  },
+  "opt_after_capture_editor": {
+    "message": "Open the editor",
+    "description": "Post-capture action option."
+  },
+  "opt_after_capture_clipboard": {
+    "message": "Copy to clipboard",
+    "description": "Post-capture action option."
+  },
+  "opt_after_capture_save": {
+    "message": "Save to disk",
+    "description": "Post-capture action option."
+  },
+  "opt_delay_seconds": {
+    "message": "Delay before capture",
+    "description": "Options: how many seconds the delayed capture waits."
+  },
+  "opt_seconds_value": {
+    "message": "$COUNT$ seconds",
+    "description": "Value shown next to the delay slider. Languages with plural rules should use a form that works for 3, 5 and 10.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": {
+    "message": "After selecting an area",
+    "description": "Options: whether releasing the mouse over a selection captures straight away or waits for a confirmation."
+  },
+  "opt_area_confirm_ask": {
+    "message": "Show the action bar",
+    "description": "Area selection option: a small toolbar appears next to the selection with capture, save and cancel."
+  },
+  "opt_area_confirm_instant": {
+    "message": "Capture right away",
+    "description": "Area selection option: releasing the mouse captures immediately, with no confirmation step."
+  },
+
+  "opt_ask_location": {
+    "message": "Ask where to save each file",
+    "description": "Options checkbox. When off, files go straight to the downloads folder."
+  },
+  "opt_filename_pattern": {
+    "message": "File name pattern",
+    "description": "Options: template used to name saved files."
+  },
+  "opt_filename_pattern_hint": {
+    "message": "Available tags: {date} {time} {title} {domain} {counter}",
+    "description": "Hint under the file name field. The tags inside braces are code - copy them EXACTLY as written and never translate them."
+  },
+  "opt_hide_fixed": {
+    "message": "Hide floating headers during full page capture",
+    "description": "Options checkbox. Prevents sticky navigation bars from repeating on every stitched screen."
+  },
+  "opt_scroll_delay": {
+    "message": "Wait between scrolls",
+    "description": "Options: pause after each scroll step so lazy-loaded images have time to appear."
+  },
+  "opt_default_color": {
+    "message": "Default color",
+    "description": "Options: starting color for the drawing tools."
+  },
+  "opt_default_stroke": {
+    "message": "Default thickness",
+    "description": "Options: starting line thickness for the drawing tools."
+  },
+  "opt_manage_shortcuts": {
+    "message": "Manage keyboard shortcuts",
+    "description": "Options link that opens the browser own shortcut settings page."
+  },
+  "opt_reset": {
+    "message": "Reset to defaults",
+    "description": "Options button."
+  },
+  "opt_reset_confirm": {
+    "message": "Reset every setting to its default value?",
+    "description": "Confirmation question shown before resetting settings."
+  },
+
+  "privacy_headline": {
+    "message": "Everything stays on your device",
+    "description": "Headline of the Privacy section. This is the core promise of the product - translate it with confidence and warmth, not legalese."
+  },
+  "privacy_no_network": {
+    "message": "Your screenshots are never uploaded. This extension makes no network requests at all.",
+    "description": "Privacy bullet point. This is a literal technical fact and must not be softened."
+  },
+  "privacy_no_account": {
+    "message": "No account, no sign-in, no tracking, no ads.",
+    "description": "Privacy bullet point."
+  },
+  "privacy_local_storage": {
+    "message": "Settings are stored only in this browser, on this computer.",
+    "description": "Privacy bullet point."
+  },
+  "privacy_policy_link": {
+    "message": "Read the privacy policy",
+    "description": "Link to the hosted privacy policy page."
+  },
+
+  "about_version": {
+    "message": "Version $VERSION$",
+    "description": "Shown in the About section.",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": {
+    "message": "Support the project",
+    "description": "Discreet donation link. Keep the tone inviting and never pushy."
+  },
+  "about_translate": {
+    "message": "Help translate",
+    "description": "Link inviting users to contribute a translation."
+  },
+  "about_report_bug": {
+    "message": "Report a problem",
+    "description": "Link to the issue tracker."
+  },
+  "about_source": {
+    "message": "Source code",
+    "description": "Link to the public repository."
+  },
+  "about_rate": {
+    "message": "Rate this extension",
+    "description": "Link to the store listing review page."
+  },
+
+  "err_restricted_page": {
+    "message": "This page cannot be captured",
+    "description": "Error title shown on browser-internal pages."
+  },
+  "err_restricted_page_detail": {
+    "message": "Browsers block extensions on internal pages, add-on store pages and the PDF viewer. Try again on a regular website.",
+    "description": "Error body explaining a browser restriction, not a bug in the extension. The tone should be reassuring."
+  },
+  "err_capture_failed": {
+    "message": "The capture failed. Please try again.",
+    "description": "Generic capture error."
+  },
+  "err_no_active_tab": {
+    "message": "No active tab was found.",
+    "description": "Error shown when there is no page to capture."
+  },
+  "err_page_too_large": {
+    "message": "This page is too long to capture as a single image. Try capturing a selected area instead.",
+    "description": "Error shown when a full page capture exceeds the maximum canvas size."
+  },
+  "err_clipboard": {
+    "message": "Could not copy to the clipboard. Your image is safe: try saving it instead.",
+    "description": "Error shown when writing to the clipboard fails. Reassure the user that the capture was not lost."
+  },
+  "err_save_failed": {
+    "message": "Could not save the file.",
+    "description": "Error shown when the download fails."
+  },
+  "err_generic": {
+    "message": "Something went wrong.",
+    "description": "Last-resort error message."
+  },
+
+  "common_ok": {
+    "message": "OK",
+    "description": "Generic button."
+  },
+  "common_cancel": {
+    "message": "Cancel",
+    "description": "Generic button."
+  },
+  "common_close": {
+    "message": "Close",
+    "description": "Generic button."
+  },
+  "common_retry": {
+    "message": "Try again",
+    "description": "Generic button."
+  },
+  "common_delete": {
+    "message": "Delete",
+    "description": "Generic button."
+  },
+  "common_learn_more": {
+    "message": "Learn more",
+    "description": "Generic link."
+  }
+}

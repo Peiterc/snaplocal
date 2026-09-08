@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Stitch harness</title>
+  <style>
+    body { margin: 0; font: 14px/1.5 "Segoe UI", system-ui, sans-serif; background: #f4f5f7; }
+    .page { max-width: 900px; margin: 0 auto; padding: 24px; }
+    table { border-collapse: collapse; width: 100%; background: #fff;
+            border: 1px solid #dfe3ea; border-radius: 8px; overflow: hidden; }
+    td, th { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eef0f3;
+             font-variant-numeric: tabular-nums; }
+    th { background: #f7f8fa; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+    .ok { color: #067647; font-weight: 600; }
+    .bad { color: #b42318; font-weight: 600; }
+    img { display: block; border: 1px solid #dfe3ea; margin-top: 16px; background: #fff; }
+    h2 { font-size: 14px; margin: 24px 0 8px; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <h1>Costura de página inteira</h1>
+  <table id="results"><thead>
+    <tr><th>Cenário</th><th>Esperado</th><th>Obtido</th><th></th></tr>
+  </thead><tbody></tbody></table>
+  <h2>Resultado visual (página de 1000px, viewport 300px, dpr 2)</h2>
+  <img id="preview" width="300">
+</div>
+
+<script type="module">
+import { stitchTiles, dataUrlToBlob } from '../src/lib/imaging.js';
+
+const tbody = document.querySelector('#results tbody');
+
+function row(name, expected, got) {
+  const pass = String(expected) === String(got);
+  tbody.insertAdjacentHTML('beforeend',
+    `<tr><td>${name}</td><td>${expected}</td><td>${got}</td>`
+    + `<td class="${pass ? 'ok' : 'bad'}">${pass ? 'OK' : 'FALHOU'}</td></tr>`);
+  return pass;
+}
+
+/** One viewport-sized tile, banded so a wrong offset shows up immediately. */
+function tile(index, w, h, offsetY, pageH) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const x = c.getContext('2d');
+  // Paint the slice of a tall gradient this tile would really show, so a tile
+  // drawn at the wrong offset produces a visible discontinuity.
+  for (let y = 0; y < h; y++) {
+    const absolute = offsetY + y;
+    x.fillStyle = `hsl(${Math.round((absolute / pageH) * 300)} 70% 55%)`;
+    x.fillRect(0, y, w, 1);
+  }
+  x.fillStyle = '#fff';
+  x.font = 'bold 28px monospace';
+  x.fillText(`tile ${index} @${offsetY}`, 12, 40);
+  x.strokeStyle = '#000';
+  x.strokeRect(0.5, 0.5, w - 1, h - 1);
+  return c.toDataURL('image/png');
+}
+
+async function run(pageH, viewportH, viewportW, dpr) {
+  const maxScrollY = Math.max(0, pageH - viewportH);
+  const total = Math.max(1, Math.ceil((maxScrollY + viewportH) / viewportH));
+  const tiles = [];
+  for (let i = 0; i < total; i++) {
+    const y = Math.min(i * viewportH, maxScrollY);
+    tiles.push({ y, shot: tile(i, viewportW * dpr, viewportH * dpr, y * dpr, pageH * dpr) });
+  }
+  const out = await stitchTiles(tiles, { height: pageH, viewportW });
+  const bitmap = await createImageBitmap(dataUrlToBlob(out));
+  return { tiles: total, width: bitmap.width, height: bitmap.height, dataUrl: out };
+}
+
+let allPass = true;
+
+// Página que não é múltiplo exato da viewport: o último tile se sobrepõe.
+const a = await run(1000, 300, 300, 2);
+allPass &= row('1000px / viewport 300 · nº de tiles', 4, a.tiles);
+allPass &= row('1000px / dpr 2 · largura final', 600, a.width);
+allPass &= row('1000px / dpr 2 · altura final', 2000, a.height);
+document.getElementById('preview').src = a.dataUrl;
+
+// Múltiplo exato: nenhuma sobreposição.
+const b = await run(900, 300, 300, 1);
+allPass &= row('900px / múltiplo exato · nº de tiles', 3, b.tiles);
+allPass &= row('900px / dpr 1 · altura final', 900, b.height);
+
+// Página menor que a viewport: um tile só.
+const c = await run(180, 300, 300, 1);
+allPass &= row('180px / menor que a viewport · nº de tiles', 1, c.tiles);
+allPass &= row('180px · altura final', 180, c.height);
+
+// Zoom de página: dpr efetivo fracionário.
+const d = await run(1000, 300, 300, 1.5);
+allPass &= row('zoom 150% · largura final', 450, d.width);
+allPass &= row('zoom 150% · altura final', 1500, d.height);
+
+// Acima do teto do canvas deve falhar de forma explícita.
+let guard = 'sem erro';
+try { await run(40000, 300, 300, 1); } catch (e) { guard = e.message; }
+allPass &= row('página de 40000px · guarda de tamanho', 'err_page_too_large', guard);
+
+window.__stitchPass = Boolean(allPass);
+</script>
+</body>
+</html>

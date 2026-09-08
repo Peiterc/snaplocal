@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SnapLocal harness</title>
+  <!-- Everything below resolves against the real editor folder, so the harness
+       loads the shipping HTML, CSS and JS instead of a copy that could drift. -->
+  <base href="../src/editor/">
+</head>
+<body>
+<script type="module">
+/**
+ * Development harness: runs the real editor outside the extension.
+ *
+ * It stubs only the chrome.* surface the editor touches and feeds it a
+ * synthetic screenshot, so the drawing tools, undo/redo, text editing and
+ * export can be exercised in a plain browser. It is not part of the build.
+ */
+
+const store = { local: {}, session: {} };
+
+function area(bag) {
+  return {
+    async get(query) {
+      if (typeof query === 'string') return { [query]: bag[query] };
+      if (Array.isArray(query)) return Object.fromEntries(query.map((k) => [k, bag[k]]));
+      return { ...query, ...Object.fromEntries(Object.entries(bag).filter(([k]) => k in (query ?? {}))) };
+    },
+    async set(values) { Object.assign(bag, values); }
+  };
+}
+
+/** A stand-in screenshot with small text, so blur strength can be judged by eye. */
+function fakeCapture() {
+  const c = document.createElement('canvas');
+  c.width = 900; c.height = 560;
+  const x = c.getContext('2d');
+
+  x.fillStyle = '#f2f4f8'; x.fillRect(0, 0, c.width, c.height);
+  x.fillStyle = '#ffffff'; x.fillRect(40, 40, 820, 480);
+  x.strokeStyle = '#dfe3ea'; x.strokeRect(40.5, 40.5, 819, 479);
+
+  x.fillStyle = '#1b1f24';
+  x.font = '600 26px "Segoe UI", sans-serif';
+  x.fillText('Painel da conta', 72, 92);
+
+  x.font = '15px "Segoe UI", sans-serif';
+  x.fillStyle = '#454b54';
+  const lines = [
+    'Titular: Maria Aparecida de Souza Lima',
+    'CPF: 123.456.789-09      Nascimento: 14/03/1987',
+    'E-mail: maria.souza@exemplo.com.br',
+    'Token de acesso: sk-9f4c2ae17b0d8e635a91cc47',
+    'Endereco: Rua das Acacias, 412 - apto 73 - Sao Paulo/SP',
+    'Telefone: (11) 98765-4321      Agencia: 0341   Conta: 88192-6'
+  ];
+  lines.forEach((line, i) => x.fillText(line, 72, 140 + i * 30));
+
+  x.fillStyle = '#2563eb'; x.fillRect(72, 330, 150, 38);
+  x.fillStyle = '#fff'; x.font = '600 14px "Segoe UI", sans-serif';
+  x.fillText('Salvar alteracoes', 92, 354);
+
+  x.fillStyle = '#0f172a'; x.fillRect(72, 400, 756, 90);
+  x.fillStyle = '#93c5fd'; x.font = '13px ui-monospace, Consolas, monospace';
+  x.fillText('$ curl -H "Authorization: Bearer sk-9f4c2ae17b0d8e6" https://api.exemplo.com', 88, 428);
+  x.fillStyle = '#e2e8f0';
+  x.fillText('{ "status": "ok", "saldo": 12480.55, "id": 90128371 }', 88, 452);
+  x.fillStyle = '#64748b';
+  x.fillText('Texto pequeno de 11px para testar o piso do desfoque.', 88, 476);
+  return c.toDataURL('image/png');
+}
+
+window.chrome = {
+  storage: { local: area(store.local), session: area(store.session), onChanged: { addListener() {} } },
+  runtime: {
+    // The <base> above points at src/editor/, so one level up is src/.
+    getURL: (path) => `../${path}`,
+    getManifest: () => ({ version: '0.0.0-harness' })
+  },
+  i18n: { getUILanguage: () => new URLSearchParams(location.search).get('lang') || 'en' },
+  downloads: {
+    async download({ filename }) {
+      document.getElementById('harnessNote').textContent = `download(): ${filename}`;
+    }
+  }
+};
+
+store.session.lastCapture = { dataUrl: fakeCapture(), title: 'Painel da conta', url: 'https://exemplo.com', at: Date.now() };
+
+// Pull in the shipping markup, then hand control to the real editor script.
+const page = await (await fetch('editor.html')).text();
+const parsed = new DOMParser().parseFromString(page, 'text/html');
+for (const link of parsed.head.querySelectorAll('link[rel="stylesheet"]')) {
+  document.head.append(link.cloneNode(true));
+}
+document.body.className = parsed.body.className;
+document.body.innerHTML = parsed.body.innerHTML
+  + '<div id="harnessNote" style="position:fixed;left:8px;bottom:8px;font:11px monospace;opacity:.6"></div>';
+
+await import('./editor.js');
+</script>
+</body>
+</html>

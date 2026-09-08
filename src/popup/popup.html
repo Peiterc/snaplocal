@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SnapLocal</title>
+  <link rel="stylesheet" href="../lib/ui.css">
+</head>
+<body class="popup">
+  <ul class="modes">
+    <li>
+      <button class="mode" data-action="capture-area">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M2 6V3h3M14 3h3v3M18 14v3h-3M6 17H3v-3" stroke-linecap="round"/>
+          <rect x="6.5" y="6.5" width="7" height="7" stroke-dasharray="2 2"/>
+        </svg>
+        <span class="label"><b data-i18n="mode_area"></b><small data-i18n="mode_area_desc"></small></span>
+      </button>
+    </li>
+    <li>
+      <button class="mode" data-action="capture-visible">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="2.5" y="3.5" width="15" height="13" rx="2"/>
+          <path d="M2.5 7.5h15" stroke-linecap="round"/>
+        </svg>
+        <span class="label"><b data-i18n="mode_visible"></b><small data-i18n="mode_visible_desc"></small></span>
+      </button>
+    </li>
+    <li>
+      <button class="mode" data-action="capture-fullpage">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="4.5" y="1.5" width="11" height="17" rx="2"/>
+          <path d="M10 5.5v9M7 11.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="label"><b data-i18n="mode_fullpage"></b><small data-i18n="mode_fullpage_desc"></small></span>
+      </button>
+    </li>
+    <li>
+      <button class="mode" data-action="capture-delay">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="10" cy="11" r="7"/>
+          <path d="M10 7.5V11l2.5 1.5M7.5 1.5h5" stroke-linecap="round"/>
+        </svg>
+        <span class="label"><b data-i18n="mode_delay"></b><small data-i18n="mode_delay_desc"></small></span>
+      </button>
+    </li>
+  </ul>
+
+  <footer>
+    <small data-i18n="popup_shortcuts_hint"></small>
+    <button class="linkish" id="settings" data-i18n="popup_settings"></button>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+dist/
+*.zip
+.DS_Store
+Thumbs.db
+
+# gerado por tools/build-strings-preview.py
+tools/strings-preview.html

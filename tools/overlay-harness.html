@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Overlay harness</title>
+  <style>
+    body { margin: 0; font: 15px/1.6 "Segoe UI", system-ui, sans-serif; color: #1b1f24; }
+    .page { max-width: 760px; margin: 0 auto; padding: 40px 24px; }
+    h1 { font-size: 28px; }
+    .card { border: 1px solid #dfe3ea; border-radius: 10px; padding: 20px; margin: 20px 0; }
+    /* Deliberately hostile page CSS: the overlay must ignore all of it. */
+    div { outline: 0 !important; }
+    * { box-sizing: border-box; }
+    #log { position: fixed; left: 8px; bottom: 8px; z-index: 10;
+           font: 12px ui-monospace, Consolas, monospace; background: #111;
+           color: #7ee787; padding: 8px 12px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Página de teste do overlay</h1>
+    <p>Esta página existe só para o overlay de seleção ter algo por baixo. O CSS
+      aqui é propositalmente agressivo para confirmar que nada vaza para dentro
+      do shadow root.</p>
+    <div class="card">
+      <strong>CPF:</strong> 123.456.789-09<br>
+      <strong>Token:</strong> sk-9f4c2ae17b0d8e635a91cc47<br>
+      <strong>Conta:</strong> 88192-6
+    </div>
+    <p>Arraste para selecionar. Espaço captura a tela toda, Esc cancela.</p>
+  </div>
+
+  <div id="log">aguardando seleção…</div>
+
+  <script>
+    // Stubs the two chrome.* surfaces the overlay touches.
+    window.chrome = {
+      runtime: {
+        sendMessage(message, respond) {
+          document.getElementById('log').textContent =
+            `rect ${Math.round(message.rect.x)},${Math.round(message.rect.y)} `
+            + `${Math.round(message.rect.w)}×${Math.round(message.rect.h)} `
+            + `| viewport ${message.viewport.w}×${message.viewport.h} `
+            + `| action ${message.action}`;
+          window.__lastMessage = message;
+          setTimeout(respond, 50);
+        }
+      }
+    };
+  </script>
+  <script src="../src/content/overlay.js"></script>
+  <script>
+    // ?instant=1 exercises the no-confirmation path, which is the shipping default.
+    globalThis.__snapLocalArea.open({
+      hint: 'Drag to select an area',
+      fullscreen: 'Space to capture the whole screen',
+      cancel: 'Esc to cancel',
+      capture: 'Capture',
+      save: 'Save',
+      cancelAction: 'Cancel',
+      dimensions: '{w} × {h}'
+    }, { instant: new URLSearchParams(location.search).has('instant') });
+  </script>
+</body>
+</html>

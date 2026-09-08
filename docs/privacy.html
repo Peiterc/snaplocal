@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapLocal — Privacy Policy</title>
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f7f8fa; --border: #e3e5e9;
+    --text: #1b1f24; --dim: #5c636d; --accent: #2563eb;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181d; --surface: #1e2126; --border: #32363d;
+      --text: #e8eaed; --dim: #9aa1ab; --accent: #6b9bff;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.65 "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+  h1 { font-size: 30px; margin: 0 0 6px; letter-spacing: -.01em; }
+  h2 { font-size: 20px; margin: 40px 0 12px; }
+  .sub { color: var(--dim); margin: 0 0 8px; }
+  .date { color: var(--dim); font-size: 14px; }
+  .lede {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent); border-radius: 8px;
+    padding: 18px 20px; margin: 28px 0;
+  }
+  .lede p { margin: 0; font-size: 17px; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--dim); }
+  code { font: 14px ui-monospace, Consolas, monospace; color: var(--accent); }
+  a { color: var(--accent); }
+  ul { padding-left: 20px; }
+  li { margin: 6px 0; }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 56px 0; }
+  .nav { font-size: 14px; color: var(--dim); }
+</style>
+</head>
+<body>
+<main>
+
+<p class="nav"><a href="#pt">Ler em português</a></p>
+
+<h1>Privacy Policy</h1>
+<p class="sub">SnapLocal — screenshot capture and annotation extension</p>
+<p class="date">Last updated: 8 September 2026</p>
+
+<div class="lede">
+  <p><strong>SnapLocal collects nothing.</strong> It has no servers, sends no
+  network requests, and has no way to see your screenshots. Everything happens
+  inside your browser, on your computer.</p>
+</div>
+
+<h2>Data we collect</h2>
+<p>None. There is no analytics, no telemetry, no crash reporting, no advertising
+identifier and no account. We do not know how many people use SnapLocal, which
+pages they capture, or whether they use it at all.</p>
+
+<h2>Data stored on your device</h2>
+<table>
+  <tr><th>What</th><th>Where</th><th>How long</th></tr>
+  <tr>
+    <td>Your preferences: language, theme, capture behaviour, editor defaults</td>
+    <td><code>chrome.storage.local</code>, inside your browser profile</td>
+    <td>Until you change them or remove the extension</td>
+  </tr>
+  <tr>
+    <td>The screenshot currently being edited</td>
+    <td><code>chrome.storage.session</code>, held in memory</td>
+    <td>Discarded when you close the browser</td>
+  </tr>
+  <tr>
+    <td>Images you choose to save</td>
+    <td>Wherever you tell your browser to download them</td>
+    <td>Yours to keep or delete</td>
+  </tr>
+</table>
+<p>None of this is transmitted anywhere. It is not synced between your devices
+and it is not readable by us or by anyone else.</p>
+
+<h2>Network access</h2>
+<p>SnapLocal makes <strong>no network requests of any kind</strong>. It bundles
+no third-party scripts, loads nothing from a CDN, and requests no host
+permissions. You can verify this yourself: the complete source code is
+<a href="https://github.com/Peiterc/snaplocal">published on GitHub</a>, and the
+extension is shipped unminified, so the code in the store is the code you can
+read.</p>
+
+<h2>Permissions and why they exist</h2>
+<table>
+  <tr><th>Permission</th><th>Why it is needed</th></tr>
+  <tr>
+    <td><code>activeTab</code></td>
+    <td>To photograph the tab you are looking at, and only at the moment you ask
+    for it. This grant expires on its own; it does not give standing access to
+    your browsing.</td>
+  </tr>
+  <tr>
+    <td><code>scripting</code></td>
+    <td>To draw the selection overlay on the page, and to scroll the page during
+    a full-page capture.</td>
+  </tr>
+  <tr>
+    <td><code>storage</code></td>
+    <td>To remember your preferences and to hand the capture to the editor tab.</td>
+  </tr>
+  <tr>
+    <td><code>downloads</code></td>
+    <td>To save an image when you click Save.</td>
+  </tr>
+  <tr>
+    <td><code>contextMenus</code></td>
+    <td>To add the right-click entries.</td>
+  </tr>
+</table>
+<p>There are no host permissions. SnapLocal cannot read a page unless you
+actively start a capture on it.</p>
+
+<h2>A note on blurring</h2>
+<p>Blurred and pixelated text can sometimes be reconstructed. For passwords,
+documents and personal data, use the <strong>Redact</strong> tool instead: it
+paints a solid block that cannot be reversed. The extension warns you about this
+the first time you blur something.</p>
+
+<h2>Children</h2>
+<p>SnapLocal collects no personal data from anyone, of any age.</p>
+
+<h2>Changes</h2>
+<p>If this policy ever changes, the new version will be published on this page
+with a new date, and the change will appear in the public commit history of the
+repository.</p>
+
+<h2>Contact</h2>
+<p>Questions or concerns:
+<a href="https://github.com/Peiterc/snaplocal/issues">open an issue on GitHub</a>.</p>
+
+<hr>
+
+<h1 id="pt">Política de Privacidade</h1>
+<p class="sub">SnapLocal — extensão de captura e anotação de tela</p>
+<p class="date">Última atualização: 8 de setembro de 2026</p>
+
+<div class="lede">
+  <p><strong>A SnapLocal não coleta nada.</strong> Ela não tem servidores, não
+  faz nenhuma requisição de rede e não tem como ver suas capturas. Tudo acontece
+  dentro do seu navegador, no seu computador.</p>
+</div>
+
+<h2>Dados que coletamos</h2>
+<p>Nenhum. Não há analytics, telemetria, relatório de erros, identificador de
+publicidade nem conta de usuário. Não sabemos quantas pessoas usam a SnapLocal,
+que páginas elas capturam, nem se chegam a usar.</p>
+
+<h2>Dados guardados no seu dispositivo</h2>
+<table>
+  <tr><th>O quê</th><th>Onde</th><th>Por quanto tempo</th></tr>
+  <tr>
+    <td>Suas preferências: idioma, tema, comportamento de captura, padrões do editor</td>
+    <td><code>chrome.storage.local</code>, no perfil do seu navegador</td>
+    <td>Até você mudar ou remover a extensão</td>
+  </tr>
+  <tr>
+    <td>A captura que está sendo editada</td>
+    <td><code>chrome.storage.session</code>, mantida em memória</td>
+    <td>Descartada ao fechar o navegador</td>
+  </tr>
+  <tr>
+    <td>Imagens que você escolhe salvar</td>
+    <td>Onde você mandar o navegador baixar</td>
+    <td>São suas, para guardar ou apagar</td>
+  </tr>
+</table>
+<p>Nada disso é transmitido para lugar nenhum. Não sincroniza entre dispositivos
+e não é legível por nós nem por terceiros.</p>
+
+<h2>Acesso à rede</h2>
+<p>A SnapLocal <strong>não faz nenhuma requisição de rede</strong>. Não embute
+scripts de terceiros, não carrega nada de CDN e não pede permissão de host. Você
+mesmo pode conferir: o código-fonte completo está
+<a href="https://github.com/Peiterc/snaplocal">publicado no GitHub</a>, e a
+extensão é distribuída sem minificação — o código que está na loja é o código
+que você consegue ler.</p>
+
+<h2>Permissões e por que existem</h2>
+<table>
+  <tr><th>Permissão</th><th>Para que serve</th></tr>
+  <tr>
+    <td><code>activeTab</code></td>
+    <td>Fotografar a aba que você está vendo, e só no momento em que você pede.
+    Essa autorização expira sozinha; ela não dá acesso permanente à sua
+    navegação.</td>
+  </tr>
+  <tr>
+    <td><code>scripting</code></td>
+    <td>Desenhar o overlay de seleção sobre a página e rolar a página durante a
+    captura de página inteira.</td>
+  </tr>
+  <tr>
+    <td><code>storage</code></td>
+    <td>Guardar suas preferências e entregar a captura para a aba do editor.</td>
+  </tr>
+  <tr>
+    <td><code>downloads</code></td>
+    <td>Salvar a imagem quando você clica em Salvar.</td>
+  </tr>
+  <tr>
+    <td><code>contextMenus</code></td>
+    <td>Adicionar os itens do menu de botão direito.</td>
+  </tr>
+</table>
+<p>Não há permissões de host. A SnapLocal não consegue ler uma página a menos
+que você inicie uma captura nela.</p>
+
+<h2>Uma observação sobre o borrão</h2>
+<p>Texto borrado ou pixelizado às vezes pode ser reconstruído. Para senhas,
+documentos e dados pessoais, use a ferramenta <strong>Tarja</strong>: ela pinta
+um bloco sólido que não pode ser revertido. A extensão avisa sobre isso na
+primeira vez que você borra alguma coisa.</p>
+
+<h2>Crianças</h2>
+<p>A SnapLocal não coleta dado pessoal de ninguém, de nenhuma idade.</p>
+
+<h2>Alterações</h2>
+<p>Se esta política mudar, a nova versão será publicada nesta página com data
+nova, e a mudança aparecerá no histórico público de commits do repositório.</p>
+
+<h2>Contato</h2>
+<p>Dúvidas ou preocupações:
+<a href="https://github.com/Peiterc/snaplocal/issues">abra uma issue no GitHub</a>.</p>
+
+</main>
+</body>
+</html>

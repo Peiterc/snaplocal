@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SnapLocal</title>
+  <link rel="stylesheet" href="../lib/ui.css">
+</head>
+<body>
+  <main class="page">
+    <h1 data-i18n="options_title"></h1>
+
+    <h2 data-i18n="opt_section_general"></h2>
+    <div class="card">
+      <div class="row">
+        <label for="language" data-i18n="opt_language"></label>
+        <select id="language"></select>
+      </div>
+      <div class="row">
+        <label for="theme" data-i18n="opt_theme"></label>
+        <select id="theme">
+          <option value="auto" data-i18n="opt_theme_auto"></option>
+          <option value="light" data-i18n="opt_theme_light"></option>
+          <option value="dark" data-i18n="opt_theme_dark"></option>
+        </select>
+      </div>
+    </div>
+
+    <h2 data-i18n="opt_section_capture"></h2>
+    <div class="card">
+      <div class="row">
+        <label for="areaConfirm" data-i18n="opt_area_confirm"></label>
+        <select id="areaConfirm">
+          <option value="instant" data-i18n="opt_area_confirm_instant"></option>
+          <option value="ask" data-i18n="opt_area_confirm_ask"></option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="delay" data-i18n="opt_delay_seconds"></label>
+        <select id="delay">
+          <option value="3"></option>
+          <option value="5"></option>
+          <option value="10"></option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="hideFixed" data-i18n="opt_hide_fixed"></label>
+        <input type="checkbox" id="hideFixed">
+      </div>
+      <div class="row">
+        <label data-i18n="opt_manage_shortcuts"></label>
+        <button class="btn" id="shortcuts" data-i18n="opt_manage_shortcuts"></button>
+      </div>
+    </div>
+
+    <h2 data-i18n="opt_section_privacy"></h2>
+    <div class="card">
+      <div class="row"><strong data-i18n="privacy_headline"></strong></div>
+      <ul class="bullets">
+        <li data-i18n="privacy_no_network"></li>
+        <li data-i18n="privacy_no_account"></li>
+        <li data-i18n="privacy_local_storage"></li>
+      </ul>
+      <div class="links">
+        <a href="https://peiterc.github.io/snaplocal/privacy.html" target="_blank"
+           rel="noopener noreferrer" data-i18n="privacy_policy_link"></a>
+      </div>
+    </div>
+
+    <h2 data-i18n="opt_section_about"></h2>
+    <div class="card">
+      <div class="row"><span id="version"></span></div>
+      <!-- O link de doação entra depois da 1.0, quando a página de apoio
+           existir: um link morto na interface é pior que link nenhum. -->
+      <div class="links">
+        <a href="https://github.com/Peiterc/snaplocal/blob/main/CONTRIBUTING.md"
+           target="_blank" rel="noopener noreferrer" data-i18n="about_translate"></a>
+        <a href="https://github.com/Peiterc/snaplocal/issues"
+           target="_blank" rel="noopener noreferrer" data-i18n="about_report_bug"></a>
+        <a href="https://github.com/Peiterc/snaplocal"
+           target="_blank" rel="noopener noreferrer" data-i18n="about_source"></a>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

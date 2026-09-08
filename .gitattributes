@@ -1,0 +1,4 @@
+# Repositorio normalizado em LF: sem isso, contribuidores fora do Windows
+# veem o arquivo inteiro como alterado.
+* text=auto eol=lf
+*.png binary
