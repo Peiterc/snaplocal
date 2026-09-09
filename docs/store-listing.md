@@ -240,15 +240,33 @@ de ferramentas inteira visível. Mostra que é editor, não só captura.
 As três promessas na tela, mais o seletor de idioma aberto mostrando os 11
 idiomas. Fecha o argumento e sinaliza alcance internacional.
 
-### Como tirar
+### Como regenerar
 
-Com a própria SnapLocal, em **Parte visível** numa janela ajustada. É o teste
-mais honesto que existe: se os screenshots da loja ficaram bons, a ferramenta
-funciona.
+Cada quadro é montado por URL, então não é preciso lembrar onde arrastar nem
+que ferramenta escolher. Abra cada uma no navegador com a extensão instalada,
+pressione o atalho de **Parte visível** e salve:
 
-Para o quadro 1, o overlay some quando a captura dispara — então use o
-`tools/overlay-harness.html`, que mantém o overlay na tela, ou a tecla Print
-Screen do sistema.
+| Quadro | URL |
+|---|---|
+| 1 | `tools/overlay-harness.html?shot=area` |
+| 2 | `tools/harness.html?shot=blur` |
+| 3 | `tools/harness.html?shot=warn` |
+| 4 | `tools/harness.html?shot=annotate` |
+| 5 | a tela de Opções da extensão, via `Win+Shift+S` |
+
+O quadro 5 precisa da ferramenta do sistema: a SnapLocal se recusa a fotografar
+páginas de extensão, incluindo as próprias.
+
+Depois, com os arquivos numa pasta:
+
+```bash
+python -m http.server 8712
+python tools/make-store-shots.py <pasta>
+```
+
+O processador corta o rodapé morto, encaixa pelo menor fator (a tela de Opções
+é uma coluna em pé e seria cortada se escalasse pela largura), centraliza numa
+moldura da cor do próprio fundo e gera os dois formatos.
 
 ---
 
@@ -264,7 +282,7 @@ python tools/build.py
 - [ ] Pacote do Firefox carregado num Firefox real — ES module em background
       script ainda não foi confirmado
 - [ ] Política de privacidade respondendo na URL
-- [ ] Screenshots sem nenhum dado real
+- [x] Screenshots sem nenhum dado real, em `docs/store-assets/screenshots/`
 
 ---
 
