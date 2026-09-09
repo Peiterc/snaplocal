@@ -87,6 +87,15 @@ window.chrome = {
 
 store.session.lastCapture = { dataUrl: fakeCapture(), title: 'Painel da conta', url: 'https://exemplo.com', at: Date.now() };
 
+// ?shot=<nome> pre-monta um quadro para os screenshots da loja. O aviso de blur
+// precisa estar decidido antes do editor iniciar.
+const shot = new URLSearchParams(location.search).get('shot');
+if (shot && shot !== 'warn') store.local.blurWarningDismissed = true;
+
+// Eventos de ponteiro sinteticos nao tem pointerId ativo, e setPointerCapture
+// lanca NotFoundError nesse caso. So o harness precisa disto.
+HTMLElement.prototype.setPointerCapture = function () {};
+
 // Pull in the shipping markup, then hand control to the real editor script.
 const page = await (await fetch('editor.html')).text();
 const parsed = new DOMParser().parseFromString(page, 'text/html');
@@ -98,6 +107,116 @@ document.body.innerHTML = parsed.body.innerHTML
   + '<div id="harnessNote" style="position:fixed;left:8px;bottom:8px;font:11px monospace;opacity:.6"></div>';
 
 await import('./editor.js');
+
+/* ---------------- quadros pre-montados para a loja ---------------- */
+
+const board = document.getElementById('board');
+/** Espera dois quadros, mas com prazo: requestAnimationFrame não dispara em aba
+ *  oculta, e sem o timeout a montagem do quadro trava para sempre no meio. */
+const raf = () => new Promise((resolve) => {
+  let done = false;
+  const finish = () => { if (!done) { done = true; resolve(); } };
+  requestAnimationFrame(() => requestAnimationFrame(finish));
+  setTimeout(finish, 250);
+});
+
+/** Dispara um evento de ponteiro em coordenadas da imagem, nao da tela. */
+function at(type, x, y) {
+  const r = board.getBoundingClientRect();
+  board.dispatchEvent(new PointerEvent(type, {
+    clientX: r.left + x * (r.width / board.width),
+    clientY: r.top + y * (r.height / board.height),
+    button: 0, buttons: type === 'pointerup' ? 0 : 1,
+    bubbles: true, pointerId: 1, isPrimary: true
+  }));
+}
+
+const drag = (x0, y0, x1, y1) => {
+  at('pointerdown', x0, y0);
+  at('pointermove', (x0 + x1) / 2, (y0 + y1) / 2);
+  at('pointermove', x1, y1);
+  at('pointerup', x1, y1);
+};
+
+const tool = (name) => document.querySelector(`.tool[data-tool="${name}"]`).click();
+const swatch = (hex) => document.querySelector(`#swatches button[data-color="${hex}"]`).click();
+const deselect = () => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+async function label(x, y, text) {
+  tool('text');
+  at('pointerdown', x, y);
+  await raf();
+  const input = document.getElementById('textInput');
+  input.value = text;
+  input.dispatchEvent(new Event('input'));
+  // Escape em vez de blur(): o campo pode nunca ter recebido foco numa aba de
+  // fundo, e aí blur() não dispara nada e o rótulo fica vazio e pendurado.
+  input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  await raf();
+}
+
+const SHOTS = {
+  // Borrão e tarja lado a lado, para a diferença entre os dois ficar óbvia.
+  async blur() {
+    tool('blur');
+    drag(70, 214, 566, 240);
+    await raf();
+    tool('redact');
+    drag(70, 154, 404, 180);
+    await raf();
+    tool('move');
+    deselect();
+  },
+
+  // O aviso de que borrão é reversível, que nenhum concorrente mostra.
+  async warn() {
+    tool('blur');
+    drag(70, 214, 566, 240);
+    await raf();
+  },
+
+  // O editor anotando de verdade: marca-texto, retângulo, seta e texto.
+  async annotate() {
+    tool('highlight');
+    drag(68, 156, 462, 182);
+    await raf();
+    // Desenhar deixa a forma selecionada, então trocar a cor agora repintaria
+    // o marca-texto em vez de definir o padrão das próximas formas.
+    deselect();
+
+    swatch('#e11d48');
+    const stroke = document.getElementById('stroke');
+    stroke.value = '5';
+    stroke.dispatchEvent(new Event('input'));
+
+    tool('rect');
+    drag(64, 322, 232, 376);
+    await raf();
+    deselect();
+
+    tool('arrow');
+    drag(430, 268, 252, 340);
+    await raf();
+    deselect();
+
+    await label(438, 238, 'Confirme aqui');
+    tool('move');
+    deselect();
+  }
+};
+
+if (shot && SHOTS[shot]) {
+  const note = document.getElementById('harnessNote');
+  try {
+    await SHOTS[shot]();
+    note.textContent = `quadro: ${shot}`;
+  } catch (error) {
+    // Sem isto uma falha na montagem some em silêncio e o quadro sai pela
+    // metade, parecendo um bug do editor em vez de um bug do harness.
+    note.textContent = `ERRO no quadro ${shot}: ${error.message}`;
+    note.style.color = '#ff7b72';
+  }
+}
 </script>
 </body>
 </html>
