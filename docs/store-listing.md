@@ -313,6 +313,35 @@ python tools/build.py
 
 ---
 
+## 6b. Identificadores da submissão
+
+Gerados pelo Partner Center no primeiro envio e **permanentes**. São públicos:
+o CRX ID aparece em qualquer instalação e a chave pública vem embutida no
+pacote assinado — nada aqui é segredo.
+
+| Campo | Valor |
+|---|---|
+| ID da Store (Edge) | `0RDCKCZ8LVFX` |
+| CRX ID | `bpenklkjkfmcmkbeggldokggnjpgfndn` |
+| ID do Produto | `cf22f64d-4084-4214-8a01-8bd7c7facf10` |
+| Chave pública | no Partner Center, em *Visão geral da extensão* |
+
+O CRX ID é o que identifica a extensão instalada no Edge — use-o ao pedir
+detalhes num relato de problema. A URL pública da loja só existe depois da
+aprovação.
+
+> A ID do Chrome Web Store será **diferente**: cada loja gera a sua. Só o
+> `browser_specific_settings.gecko.id` do Firefox é definido por nós, em
+> `tools/build.py`.
+
+**Histórico de envios**
+
+| Versão | Loja | Data | Situação |
+|---|---|---|---|
+| 1.0.0 | Edge Add-ons | 09/09/2026 | em análise |
+
+---
+
 ## 7. Onde criar as contas
 
 | Loja | Onde se cadastrar | Conta | Custo |
