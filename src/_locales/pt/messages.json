@@ -1,0 +1,200 @@
+{
+  "locale_name": { "message": "Português" },
+
+  "appName": { "message": "SnapLocal" },
+  "appShortName": { "message": "SnapLocal" },
+  "appDesc": { "message": "Capture, anote e desfoque capturas de ecrã. 100% local: sem conta, sem nuvem, sem rastreio." },
+
+  "mode_area": { "message": "Selecionar área" },
+  "mode_area_desc": { "message": "Arraste para capturar parte da página" },
+  "mode_visible": { "message": "Parte visível" },
+  "mode_visible_desc": { "message": "Capture o que está a ver agora" },
+  "mode_fullpage": { "message": "Página inteira" },
+  "mode_fullpage_desc": { "message": "Percorre e junta a página inteira" },
+  "mode_delay": { "message": "Captura temporizada" },
+  "mode_delay_desc": { "message": "Aguarde e capture a parte visível" },
+
+  "popup_settings": { "message": "Definições" },
+  "popup_shortcuts_hint": { "message": "Dica: use os atalhos de teclado para capturar mais depressa." },
+
+  "ctx_parent": { "message": "SnapLocal" },
+  "ctx_area": { "message": "Capturar área selecionada" },
+  "ctx_visible": { "message": "Capturar parte visível" },
+  "ctx_fullpage": { "message": "Capturar página inteira" },
+  "ctx_delay": { "message": "Captura temporizada" },
+
+  "cmd_capture_area": { "message": "Capturar área selecionada" },
+  "cmd_capture_visible": { "message": "Capturar parte visível" },
+  "cmd_capture_fullpage": { "message": "Capturar página inteira" },
+
+  "overlay_hint": { "message": "Arraste para selecionar uma área" },
+  "overlay_hint_fullscreen": { "message": "Espaço para capturar o ecrã todo" },
+  "overlay_hint_cancel": { "message": "Esc para cancelar" },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": { "message": "Capturar" },
+  "overlay_action_copy": { "message": "Copiar" },
+  "overlay_action_save": { "message": "Guardar" },
+  "overlay_action_cancel": { "message": "Cancelar" },
+
+  "delay_countdown": {
+    "message": "A capturar em $SECONDS$s",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": { "message": "Cancelar contagem" },
+
+  "fullpage_preparing": { "message": "A preparar a página…" },
+  "fullpage_progress": {
+    "message": "A capturar $CURRENT$ de $TOTAL$",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": { "message": "A montar a imagem…" },
+  "fullpage_cancel": { "message": "Cancelar captura" },
+
+  "editor_title": { "message": "Editor" },
+  "editor_untitled": { "message": "Captura sem título" },
+
+  "tool_move": { "message": "Selecionar e mover" },
+  "tool_pencil": { "message": "Lápis" },
+  "tool_line": { "message": "Linha" },
+  "tool_arrow": { "message": "Seta" },
+  "tool_rectangle": { "message": "Retângulo" },
+  "tool_ellipse": { "message": "Elipse" },
+  "tool_text": { "message": "Texto" },
+  "tool_highlighter": { "message": "Marcador" },
+  "tool_blur": { "message": "Desfocar" },
+  "tool_redact": { "message": "Tarja" },
+  "tool_crop": { "message": "Recortar" },
+
+  "action_undo": { "message": "Anular" },
+  "action_redo": { "message": "Refazer" },
+  "action_copy": { "message": "Copiar para a área de transferência" },
+  "action_save": { "message": "Guardar imagem" },
+  "action_delete": { "message": "Eliminar selecionado" },
+  "action_clear": { "message": "Limpar todas as anotações" },
+  "action_new_capture": { "message": "Nova captura" },
+  "action_zoom_in": { "message": "Ampliar" },
+  "action_zoom_out": { "message": "Reduzir" },
+  "action_zoom_fit": { "message": "Ajustar à janela" },
+  "action_zoom_reset": { "message": "Tamanho real" },
+  "action_crop_apply": { "message": "Aplicar recorte" },
+  "action_crop_cancel": { "message": "Cancelar recorte" },
+
+  "prop_color": { "message": "Cor" },
+  "prop_stroke_width": { "message": "Espessura" },
+  "prop_fill": { "message": "Preenchimento" },
+  "prop_opacity": { "message": "Opacidade" },
+  "prop_font_size": { "message": "Tamanho" },
+  "prop_font_bold": { "message": "Negrito" },
+  "prop_font_italic": { "message": "Itálico" },
+  "prop_text_outline": { "message": "Contorno" },
+  "prop_arrowhead": { "message": "Ponta da seta" },
+  "prop_blur_mode": { "message": "Modo" },
+  "prop_blur_mode_blur": { "message": "Desfoque" },
+  "prop_blur_mode_pixelate": { "message": "Pixelizar" },
+  "prop_blur_strength": { "message": "Intensidade" },
+
+  "blur_warning_title": { "message": "Desfocar nem sempre é seguro" },
+  "blur_warning_body": { "message": "Texto desfocado ou pixelizado pode por vezes ser recuperado. Para esconder palavras-passe, documentos ou dados pessoais, use antes a Tarja: ela pinta um bloco sólido que não pode ser anulado." },
+  "blur_warning_switch": { "message": "Mudar para Tarja" },
+  "blur_warning_keep": { "message": "Continuar a desfocar" },
+  "blur_warning_dont_show": { "message": "Não mostrar novamente" },
+
+  "export_format": { "message": "Formato" },
+  "export_format_png": { "message": "PNG (sem perdas)" },
+  "export_format_jpg": { "message": "JPEG (ficheiro menor)" },
+  "export_quality": { "message": "Qualidade do JPEG" },
+
+  "toast_copied": { "message": "Copiado para a área de transferência" },
+  "toast_saved": {
+    "message": "Guardado como $FILENAME$",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": { "message": "Definições guardadas" },
+
+  "options_title": { "message": "Definições" },
+  "opt_section_general": { "message": "Geral" },
+  "opt_section_capture": { "message": "Captura" },
+  "opt_section_editor": { "message": "Predefinições do editor" },
+  "opt_section_privacy": { "message": "Privacidade" },
+  "opt_section_about": { "message": "Acerca" },
+
+  "opt_language": { "message": "Idioma" },
+  "opt_language_auto": { "message": "Igual ao navegador" },
+  "opt_theme": { "message": "Tema" },
+  "opt_theme_auto": { "message": "Igual ao sistema" },
+  "opt_theme_light": { "message": "Claro" },
+  "opt_theme_dark": { "message": "Escuro" },
+
+  "opt_after_capture": { "message": "Depois de capturar" },
+  "opt_after_capture_editor": { "message": "Abrir o editor" },
+  "opt_after_capture_clipboard": { "message": "Copiar para a área de transferência" },
+  "opt_after_capture_save": { "message": "Guardar no disco" },
+  "opt_delay_seconds": { "message": "Atraso antes de capturar" },
+  "opt_seconds_value": {
+    "message": "$COUNT$ segundos",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": { "message": "Depois de selecionar a área" },
+  "opt_area_confirm_ask": { "message": "Mostrar a barra de ações" },
+  "opt_area_confirm_instant": { "message": "Capturar de imediato" },
+
+  "opt_ask_location": { "message": "Perguntar onde guardar cada ficheiro" },
+  "opt_filename_pattern": { "message": "Padrão do nome do ficheiro" },
+  "opt_filename_pattern_hint": { "message": "Marcadores disponíveis: {date} {time} {title} {domain} {counter}" },
+  "opt_hide_fixed": { "message": "Ocultar cabeçalhos flutuantes na captura de página inteira" },
+  "opt_scroll_delay": { "message": "Espera entre deslocamentos" },
+  "opt_default_color": { "message": "Cor predefinida" },
+  "opt_default_stroke": { "message": "Espessura predefinida" },
+  "opt_manage_shortcuts": { "message": "Gerir atalhos de teclado" },
+  "opt_reset": { "message": "Repor predefinições" },
+  "opt_reset_confirm": { "message": "Repor todas as definições nos valores predefinidos?" },
+
+  "privacy_headline": { "message": "Tudo fica no seu dispositivo" },
+  "privacy_no_network": { "message": "As suas capturas nunca são enviadas. Esta extensão não faz qualquer pedido de rede." },
+  "privacy_no_account": { "message": "Sem conta, sem sessão iniciada, sem rastreio, sem anúncios." },
+  "privacy_local_storage": { "message": "As definições ficam apenas neste navegador, neste computador." },
+  "privacy_policy_link": { "message": "Ler a política de privacidade" },
+
+  "about_version": {
+    "message": "Versão $VERSION$",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": { "message": "Apoiar o projeto" },
+  "about_translate": { "message": "Ajudar a traduzir" },
+  "about_report_bug": { "message": "Comunicar um problema" },
+  "about_source": { "message": "Código-fonte" },
+  "about_rate": { "message": "Avaliar esta extensão" },
+
+  "err_restricted_page": { "message": "Não é possível capturar esta página" },
+  "err_restricted_page_detail": { "message": "Os navegadores bloqueiam extensões em páginas internas, nas lojas de extensões e no visualizador de PDF. Tente num site normal." },
+  "err_capture_failed": { "message": "A captura falhou. Tente novamente." },
+  "err_no_active_tab": { "message": "Não foi encontrado nenhum separador ativo." },
+  "err_page_too_large": { "message": "Esta página é demasiado longa para caber numa única imagem. Experimente capturar uma área selecionada." },
+  "err_clipboard": { "message": "Não foi possível copiar para a área de transferência. A sua imagem está segura: experimente guardá-la." },
+  "err_save_failed": { "message": "Não foi possível guardar o ficheiro." },
+  "err_generic": { "message": "Algo correu mal." },
+
+  "common_ok": { "message": "OK" },
+  "common_cancel": { "message": "Cancelar" },
+  "common_close": { "message": "Fechar" },
+  "common_retry": { "message": "Tentar novamente" },
+  "common_delete": { "message": "Eliminar" },
+  "common_learn_more": { "message": "Saber mais" }
+}

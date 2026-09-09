@@ -1,0 +1,200 @@
+{
+  "locale_name": { "message": "Bahasa Indonesia" },
+
+  "appName": { "message": "SnapLocal" },
+  "appShortName": { "message": "SnapLocal" },
+  "appDesc": { "message": "Tangkap, anotasi, dan buramkan tangkapan layar. 100% lokal: tanpa akun, tanpa cloud, tanpa pelacakan." },
+
+  "mode_area": { "message": "Pilih area" },
+  "mode_area_desc": { "message": "Seret untuk menangkap sebagian halaman" },
+  "mode_visible": { "message": "Bagian terlihat" },
+  "mode_visible_desc": { "message": "Tangkap apa yang terlihat sekarang" },
+  "mode_fullpage": { "message": "Seluruh halaman" },
+  "mode_fullpage_desc": { "message": "Menggulir dan menyatukan seluruh halaman" },
+  "mode_delay": { "message": "Tangkapan tertunda" },
+  "mode_delay_desc": { "message": "Tunggu, lalu tangkap bagian yang terlihat" },
+
+  "popup_settings": { "message": "Pengaturan" },
+  "popup_shortcuts_hint": { "message": "Tips: gunakan pintasan keyboard agar lebih cepat." },
+
+  "ctx_parent": { "message": "SnapLocal" },
+  "ctx_area": { "message": "Tangkap area terpilih" },
+  "ctx_visible": { "message": "Tangkap bagian terlihat" },
+  "ctx_fullpage": { "message": "Tangkap seluruh halaman" },
+  "ctx_delay": { "message": "Tangkapan tertunda" },
+
+  "cmd_capture_area": { "message": "Tangkap area terpilih" },
+  "cmd_capture_visible": { "message": "Tangkap bagian terlihat" },
+  "cmd_capture_fullpage": { "message": "Tangkap seluruh halaman" },
+
+  "overlay_hint": { "message": "Seret untuk memilih area" },
+  "overlay_hint_fullscreen": { "message": "Spasi untuk menangkap seluruh layar" },
+  "overlay_hint_cancel": { "message": "Esc untuk membatalkan" },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": { "message": "Tangkap" },
+  "overlay_action_copy": { "message": "Salin" },
+  "overlay_action_save": { "message": "Simpan" },
+  "overlay_action_cancel": { "message": "Batal" },
+
+  "delay_countdown": {
+    "message": "Menangkap dalam $SECONDS$ dtk",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": { "message": "Batalkan hitung mundur" },
+
+  "fullpage_preparing": { "message": "Menyiapkan halaman…" },
+  "fullpage_progress": {
+    "message": "Menangkap $CURRENT$ dari $TOTAL$",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": { "message": "Menyatukan gambar…" },
+  "fullpage_cancel": { "message": "Batalkan tangkapan" },
+
+  "editor_title": { "message": "Editor" },
+  "editor_untitled": { "message": "Tangkapan tanpa judul" },
+
+  "tool_move": { "message": "Pilih dan pindahkan" },
+  "tool_pencil": { "message": "Pensil" },
+  "tool_line": { "message": "Garis" },
+  "tool_arrow": { "message": "Panah" },
+  "tool_rectangle": { "message": "Persegi panjang" },
+  "tool_ellipse": { "message": "Elips" },
+  "tool_text": { "message": "Teks" },
+  "tool_highlighter": { "message": "Stabilo" },
+  "tool_blur": { "message": "Buramkan" },
+  "tool_redact": { "message": "Sensor" },
+  "tool_crop": { "message": "Pangkas" },
+
+  "action_undo": { "message": "Urungkan" },
+  "action_redo": { "message": "Ulangi" },
+  "action_copy": { "message": "Salin ke papan klip" },
+  "action_save": { "message": "Simpan gambar" },
+  "action_delete": { "message": "Hapus yang dipilih" },
+  "action_clear": { "message": "Bersihkan semua anotasi" },
+  "action_new_capture": { "message": "Tangkapan baru" },
+  "action_zoom_in": { "message": "Perbesar" },
+  "action_zoom_out": { "message": "Perkecil" },
+  "action_zoom_fit": { "message": "Sesuaikan ke jendela" },
+  "action_zoom_reset": { "message": "Ukuran asli" },
+  "action_crop_apply": { "message": "Terapkan pangkas" },
+  "action_crop_cancel": { "message": "Batalkan pangkas" },
+
+  "prop_color": { "message": "Warna" },
+  "prop_stroke_width": { "message": "Ketebalan" },
+  "prop_fill": { "message": "Isian" },
+  "prop_opacity": { "message": "Opasitas" },
+  "prop_font_size": { "message": "Ukuran" },
+  "prop_font_bold": { "message": "Tebal" },
+  "prop_font_italic": { "message": "Miring" },
+  "prop_text_outline": { "message": "Garis luar" },
+  "prop_arrowhead": { "message": "Ujung panah" },
+  "prop_blur_mode": { "message": "Mode" },
+  "prop_blur_mode_blur": { "message": "Buram" },
+  "prop_blur_mode_pixelate": { "message": "Piksel" },
+  "prop_blur_strength": { "message": "Kekuatan" },
+
+  "blur_warning_title": { "message": "Memburamkan tidak selalu aman" },
+  "blur_warning_body": { "message": "Teks yang diburamkan atau dipikselkan kadang masih bisa dipulihkan. Untuk menyembunyikan kata sandi, dokumen, atau data pribadi, gunakan Sensor: alat ini menutup dengan blok padat yang tidak bisa dibatalkan." },
+  "blur_warning_switch": { "message": "Ganti ke Sensor" },
+  "blur_warning_keep": { "message": "Tetap pakai Buramkan" },
+  "blur_warning_dont_show": { "message": "Jangan tampilkan lagi" },
+
+  "export_format": { "message": "Format" },
+  "export_format_png": { "message": "PNG (tanpa kehilangan kualitas)" },
+  "export_format_jpg": { "message": "JPEG (berkas lebih kecil)" },
+  "export_quality": { "message": "Kualitas JPEG" },
+
+  "toast_copied": { "message": "Disalin ke papan klip" },
+  "toast_saved": {
+    "message": "Disimpan sebagai $FILENAME$",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": { "message": "Pengaturan disimpan" },
+
+  "options_title": { "message": "Pengaturan" },
+  "opt_section_general": { "message": "Umum" },
+  "opt_section_capture": { "message": "Tangkapan" },
+  "opt_section_editor": { "message": "Bawaan editor" },
+  "opt_section_privacy": { "message": "Privasi" },
+  "opt_section_about": { "message": "Tentang" },
+
+  "opt_language": { "message": "Bahasa" },
+  "opt_language_auto": { "message": "Sama seperti peramban" },
+  "opt_theme": { "message": "Tema" },
+  "opt_theme_auto": { "message": "Sama seperti sistem" },
+  "opt_theme_light": { "message": "Terang" },
+  "opt_theme_dark": { "message": "Gelap" },
+
+  "opt_after_capture": { "message": "Setelah menangkap" },
+  "opt_after_capture_editor": { "message": "Buka editor" },
+  "opt_after_capture_clipboard": { "message": "Salin ke papan klip" },
+  "opt_after_capture_save": { "message": "Simpan ke disk" },
+  "opt_delay_seconds": { "message": "Jeda sebelum menangkap" },
+  "opt_seconds_value": {
+    "message": "$COUNT$ detik",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": { "message": "Setelah memilih area" },
+  "opt_area_confirm_ask": { "message": "Tampilkan bilah tindakan" },
+  "opt_area_confirm_instant": { "message": "Langsung tangkap" },
+
+  "opt_ask_location": { "message": "Tanyakan lokasi penyimpanan setiap berkas" },
+  "opt_filename_pattern": { "message": "Pola nama berkas" },
+  "opt_filename_pattern_hint": { "message": "Tag yang tersedia: {date} {time} {title} {domain} {counter}" },
+  "opt_hide_fixed": { "message": "Sembunyikan header mengambang saat menangkap seluruh halaman" },
+  "opt_scroll_delay": { "message": "Jeda antar guliran" },
+  "opt_default_color": { "message": "Warna bawaan" },
+  "opt_default_stroke": { "message": "Ketebalan bawaan" },
+  "opt_manage_shortcuts": { "message": "Kelola pintasan keyboard" },
+  "opt_reset": { "message": "Kembalikan ke bawaan" },
+  "opt_reset_confirm": { "message": "Kembalikan semua pengaturan ke nilai bawaan?" },
+
+  "privacy_headline": { "message": "Semuanya tetap di perangkat Anda" },
+  "privacy_no_network": { "message": "Tangkapan layar Anda tidak pernah diunggah. Ekstensi ini sama sekali tidak melakukan permintaan jaringan." },
+  "privacy_no_account": { "message": "Tanpa akun, tanpa masuk, tanpa pelacakan, tanpa iklan." },
+  "privacy_local_storage": { "message": "Pengaturan hanya disimpan di peramban ini, di komputer ini." },
+  "privacy_policy_link": { "message": "Baca kebijakan privasi" },
+
+  "about_version": {
+    "message": "Versi $VERSION$",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": { "message": "Dukung proyek ini" },
+  "about_translate": { "message": "Bantu menerjemahkan" },
+  "about_report_bug": { "message": "Laporkan masalah" },
+  "about_source": { "message": "Kode sumber" },
+  "about_rate": { "message": "Beri nilai ekstensi ini" },
+
+  "err_restricted_page": { "message": "Halaman ini tidak bisa ditangkap" },
+  "err_restricted_page_detail": { "message": "Peramban memblokir ekstensi di halaman internal, di toko ekstensi, dan di penampil PDF. Coba pada situs web biasa." },
+  "err_capture_failed": { "message": "Penangkapan gagal. Silakan coba lagi." },
+  "err_no_active_tab": { "message": "Tidak ada tab aktif yang ditemukan." },
+  "err_page_too_large": { "message": "Halaman ini terlalu panjang untuk satu gambar. Coba tangkap area terpilih saja." },
+  "err_clipboard": { "message": "Tidak bisa menyalin ke papan klip. Gambar Anda aman: coba simpan saja." },
+  "err_save_failed": { "message": "Tidak bisa menyimpan berkas." },
+  "err_generic": { "message": "Terjadi kesalahan." },
+
+  "common_ok": { "message": "OK" },
+  "common_cancel": { "message": "Batal" },
+  "common_close": { "message": "Tutup" },
+  "common_retry": { "message": "Coba lagi" },
+  "common_delete": { "message": "Hapus" },
+  "common_learn_more": { "message": "Pelajari lebih lanjut" }
+}

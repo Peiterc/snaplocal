@@ -1,0 +1,200 @@
+{
+  "locale_name": { "message": "Deutsch" },
+
+  "appName": { "message": "SnapLocal" },
+  "appShortName": { "message": "SnapLocal" },
+  "appDesc": { "message": "Screenshots aufnehmen, beschriften und unkenntlich machen. 100 % lokal: kein Konto, keine Cloud, kein Tracking." },
+
+  "mode_area": { "message": "Bereich wählen" },
+  "mode_area_desc": { "message": "Ziehen, um einen Teil der Seite aufzunehmen" },
+  "mode_visible": { "message": "Sichtbarer Bereich" },
+  "mode_visible_desc": { "message": "Nimmt auf, was gerade zu sehen ist" },
+  "mode_fullpage": { "message": "Ganze Seite" },
+  "mode_fullpage_desc": { "message": "Scrollt und fügt die ganze Seite zusammen" },
+  "mode_delay": { "message": "Zeitversetzt" },
+  "mode_delay_desc": { "message": "Warten, dann sichtbaren Bereich aufnehmen" },
+
+  "popup_settings": { "message": "Einstellungen" },
+  "popup_shortcuts_hint": { "message": "Tipp: Mit Tastenkürzeln geht das Aufnehmen schneller." },
+
+  "ctx_parent": { "message": "SnapLocal" },
+  "ctx_area": { "message": "Gewählten Bereich aufnehmen" },
+  "ctx_visible": { "message": "Sichtbaren Bereich aufnehmen" },
+  "ctx_fullpage": { "message": "Ganze Seite aufnehmen" },
+  "ctx_delay": { "message": "Zeitversetzt aufnehmen" },
+
+  "cmd_capture_area": { "message": "Gewählten Bereich aufnehmen" },
+  "cmd_capture_visible": { "message": "Sichtbaren Bereich aufnehmen" },
+  "cmd_capture_fullpage": { "message": "Ganze Seite aufnehmen" },
+
+  "overlay_hint": { "message": "Ziehen, um einen Bereich zu wählen" },
+  "overlay_hint_fullscreen": { "message": "Leertaste für den ganzen Bildschirm" },
+  "overlay_hint_cancel": { "message": "Esc zum Abbrechen" },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": { "message": "Aufnehmen" },
+  "overlay_action_copy": { "message": "Kopieren" },
+  "overlay_action_save": { "message": "Speichern" },
+  "overlay_action_cancel": { "message": "Abbrechen" },
+
+  "delay_countdown": {
+    "message": "Aufnahme in $SECONDS$ s",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": { "message": "Countdown abbrechen" },
+
+  "fullpage_preparing": { "message": "Seite wird vorbereitet…" },
+  "fullpage_progress": {
+    "message": "Aufnahme $CURRENT$ von $TOTAL$",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": { "message": "Bild wird zusammengefügt…" },
+  "fullpage_cancel": { "message": "Aufnahme abbrechen" },
+
+  "editor_title": { "message": "Editor" },
+  "editor_untitled": { "message": "Aufnahme ohne Titel" },
+
+  "tool_move": { "message": "Auswählen und verschieben" },
+  "tool_pencil": { "message": "Stift" },
+  "tool_line": { "message": "Linie" },
+  "tool_arrow": { "message": "Pfeil" },
+  "tool_rectangle": { "message": "Rechteck" },
+  "tool_ellipse": { "message": "Ellipse" },
+  "tool_text": { "message": "Text" },
+  "tool_highlighter": { "message": "Textmarker" },
+  "tool_blur": { "message": "Weichzeichnen" },
+  "tool_redact": { "message": "Schwärzen" },
+  "tool_crop": { "message": "Zuschneiden" },
+
+  "action_undo": { "message": "Rückgängig" },
+  "action_redo": { "message": "Wiederholen" },
+  "action_copy": { "message": "In die Zwischenablage kopieren" },
+  "action_save": { "message": "Bild speichern" },
+  "action_delete": { "message": "Auswahl löschen" },
+  "action_clear": { "message": "Alle Markierungen entfernen" },
+  "action_new_capture": { "message": "Neue Aufnahme" },
+  "action_zoom_in": { "message": "Vergrößern" },
+  "action_zoom_out": { "message": "Verkleinern" },
+  "action_zoom_fit": { "message": "An Fenster anpassen" },
+  "action_zoom_reset": { "message": "Originalgröße" },
+  "action_crop_apply": { "message": "Zuschnitt anwenden" },
+  "action_crop_cancel": { "message": "Zuschnitt abbrechen" },
+
+  "prop_color": { "message": "Farbe" },
+  "prop_stroke_width": { "message": "Stärke" },
+  "prop_fill": { "message": "Füllung" },
+  "prop_opacity": { "message": "Deckkraft" },
+  "prop_font_size": { "message": "Größe" },
+  "prop_font_bold": { "message": "Fett" },
+  "prop_font_italic": { "message": "Kursiv" },
+  "prop_text_outline": { "message": "Kontur" },
+  "prop_arrowhead": { "message": "Pfeilspitze" },
+  "prop_blur_mode": { "message": "Modus" },
+  "prop_blur_mode_blur": { "message": "Unschärfe" },
+  "prop_blur_mode_pixelate": { "message": "Verpixeln" },
+  "prop_blur_strength": { "message": "Stärke" },
+
+  "blur_warning_title": { "message": "Weichzeichnen ist nicht immer sicher" },
+  "blur_warning_body": { "message": "Weichgezeichneter oder verpixelter Text lässt sich manchmal wiederherstellen. Um Passwörter, Dokumente oder persönliche Daten zu verbergen, nutze stattdessen Schwärzen: Das setzt einen deckenden Block, der sich nicht rückgängig machen lässt." },
+  "blur_warning_switch": { "message": "Zu Schwärzen wechseln" },
+  "blur_warning_keep": { "message": "Weichzeichnen behalten" },
+  "blur_warning_dont_show": { "message": "Nicht mehr anzeigen" },
+
+  "export_format": { "message": "Format" },
+  "export_format_png": { "message": "PNG (verlustfrei)" },
+  "export_format_jpg": { "message": "JPEG (kleinere Datei)" },
+  "export_quality": { "message": "JPEG-Qualität" },
+
+  "toast_copied": { "message": "In die Zwischenablage kopiert" },
+  "toast_saved": {
+    "message": "Gespeichert als $FILENAME$",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": { "message": "Einstellungen gespeichert" },
+
+  "options_title": { "message": "Einstellungen" },
+  "opt_section_general": { "message": "Allgemein" },
+  "opt_section_capture": { "message": "Aufnahme" },
+  "opt_section_editor": { "message": "Editor-Vorgaben" },
+  "opt_section_privacy": { "message": "Datenschutz" },
+  "opt_section_about": { "message": "Über" },
+
+  "opt_language": { "message": "Sprache" },
+  "opt_language_auto": { "message": "Wie der Browser" },
+  "opt_theme": { "message": "Design" },
+  "opt_theme_auto": { "message": "Wie das System" },
+  "opt_theme_light": { "message": "Hell" },
+  "opt_theme_dark": { "message": "Dunkel" },
+
+  "opt_after_capture": { "message": "Nach der Aufnahme" },
+  "opt_after_capture_editor": { "message": "Editor öffnen" },
+  "opt_after_capture_clipboard": { "message": "In die Zwischenablage kopieren" },
+  "opt_after_capture_save": { "message": "Auf der Festplatte speichern" },
+  "opt_delay_seconds": { "message": "Verzögerung vor der Aufnahme" },
+  "opt_seconds_value": {
+    "message": "$COUNT$ Sekunden",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": { "message": "Nach dem Wählen des Bereichs" },
+  "opt_area_confirm_ask": { "message": "Aktionsleiste anzeigen" },
+  "opt_area_confirm_instant": { "message": "Sofort aufnehmen" },
+
+  "opt_ask_location": { "message": "Bei jeder Datei nach dem Speicherort fragen" },
+  "opt_filename_pattern": { "message": "Muster für den Dateinamen" },
+  "opt_filename_pattern_hint": { "message": "Verfügbare Platzhalter: {date} {time} {title} {domain} {counter}" },
+  "opt_hide_fixed": { "message": "Feste Kopfzeilen bei der Ganzseiten-Aufnahme ausblenden" },
+  "opt_scroll_delay": { "message": "Wartezeit zwischen den Scrollschritten" },
+  "opt_default_color": { "message": "Standardfarbe" },
+  "opt_default_stroke": { "message": "Standardstärke" },
+  "opt_manage_shortcuts": { "message": "Tastenkürzel verwalten" },
+  "opt_reset": { "message": "Auf Standard zurücksetzen" },
+  "opt_reset_confirm": { "message": "Alle Einstellungen auf die Standardwerte zurücksetzen?" },
+
+  "privacy_headline": { "message": "Alles bleibt auf deinem Gerät" },
+  "privacy_no_network": { "message": "Deine Screenshots werden nie hochgeladen. Diese Erweiterung stellt überhaupt keine Netzwerkanfragen." },
+  "privacy_no_account": { "message": "Kein Konto, keine Anmeldung, kein Tracking, keine Werbung." },
+  "privacy_local_storage": { "message": "Die Einstellungen liegen nur in diesem Browser, auf diesem Computer." },
+  "privacy_policy_link": { "message": "Datenschutzerklärung lesen" },
+
+  "about_version": {
+    "message": "Version $VERSION$",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": { "message": "Projekt unterstützen" },
+  "about_translate": { "message": "Beim Übersetzen helfen" },
+  "about_report_bug": { "message": "Problem melden" },
+  "about_source": { "message": "Quellcode" },
+  "about_rate": { "message": "Diese Erweiterung bewerten" },
+
+  "err_restricted_page": { "message": "Diese Seite kann nicht aufgenommen werden" },
+  "err_restricted_page_detail": { "message": "Browser sperren Erweiterungen auf internen Seiten, in den Erweiterungs-Stores und im PDF-Viewer. Versuche es auf einer normalen Website." },
+  "err_capture_failed": { "message": "Die Aufnahme ist fehlgeschlagen. Bitte versuche es erneut." },
+  "err_no_active_tab": { "message": "Es wurde kein aktiver Tab gefunden." },
+  "err_page_too_large": { "message": "Diese Seite ist zu lang für ein einzelnes Bild. Nimm stattdessen einen gewählten Bereich auf." },
+  "err_clipboard": { "message": "Kopieren in die Zwischenablage nicht möglich. Dein Bild ist sicher: Versuche, es zu speichern." },
+  "err_save_failed": { "message": "Die Datei konnte nicht gespeichert werden." },
+  "err_generic": { "message": "Etwas ist schiefgelaufen." },
+
+  "common_ok": { "message": "OK" },
+  "common_cancel": { "message": "Abbrechen" },
+  "common_close": { "message": "Schließen" },
+  "common_retry": { "message": "Erneut versuchen" },
+  "common_delete": { "message": "Löschen" },
+  "common_learn_more": { "message": "Mehr erfahren" }
+}

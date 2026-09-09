@@ -1,0 +1,200 @@
+{
+  "locale_name": { "message": "Русский" },
+
+  "appName": { "message": "SnapLocal" },
+  "appShortName": { "message": "SnapLocal" },
+  "appDesc": { "message": "Снимки экрана: захват, разметка и размытие. Всё локально: без аккаунта, без облака, без слежки." },
+
+  "mode_area": { "message": "Выбрать область" },
+  "mode_area_desc": { "message": "Потяните, чтобы снять часть страницы" },
+  "mode_visible": { "message": "Видимая часть" },
+  "mode_visible_desc": { "message": "Снимок того, что видно сейчас" },
+  "mode_fullpage": { "message": "Вся страница" },
+  "mode_fullpage_desc": { "message": "Прокручивает и склеивает всю страницу" },
+  "mode_delay": { "message": "Снимок с задержкой" },
+  "mode_delay_desc": { "message": "Подождать и снять видимую часть" },
+
+  "popup_settings": { "message": "Настройки" },
+  "popup_shortcuts_hint": { "message": "Совет: с горячими клавишами снимать быстрее." },
+
+  "ctx_parent": { "message": "SnapLocal" },
+  "ctx_area": { "message": "Снять выбранную область" },
+  "ctx_visible": { "message": "Снять видимую часть" },
+  "ctx_fullpage": { "message": "Снять всю страницу" },
+  "ctx_delay": { "message": "Снимок с задержкой" },
+
+  "cmd_capture_area": { "message": "Снять выбранную область" },
+  "cmd_capture_visible": { "message": "Снять видимую часть" },
+  "cmd_capture_fullpage": { "message": "Снять всю страницу" },
+
+  "overlay_hint": { "message": "Потяните, чтобы выбрать область" },
+  "overlay_hint_fullscreen": { "message": "Пробел — снять весь экран" },
+  "overlay_hint_cancel": { "message": "Esc — отмена" },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": { "message": "Снять" },
+  "overlay_action_copy": { "message": "Копировать" },
+  "overlay_action_save": { "message": "Сохранить" },
+  "overlay_action_cancel": { "message": "Отмена" },
+
+  "delay_countdown": {
+    "message": "Снимок через $SECONDS$ с",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": { "message": "Отменить отсчёт" },
+
+  "fullpage_preparing": { "message": "Подготовка страницы…" },
+  "fullpage_progress": {
+    "message": "Снято $CURRENT$ из $TOTAL$",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": { "message": "Склейка изображения…" },
+  "fullpage_cancel": { "message": "Отменить съёмку" },
+
+  "editor_title": { "message": "Редактор" },
+  "editor_untitled": { "message": "Снимок без названия" },
+
+  "tool_move": { "message": "Выделить и переместить" },
+  "tool_pencil": { "message": "Карандаш" },
+  "tool_line": { "message": "Линия" },
+  "tool_arrow": { "message": "Стрелка" },
+  "tool_rectangle": { "message": "Прямоугольник" },
+  "tool_ellipse": { "message": "Эллипс" },
+  "tool_text": { "message": "Текст" },
+  "tool_highlighter": { "message": "Маркер" },
+  "tool_blur": { "message": "Размытие" },
+  "tool_redact": { "message": "Закрасить" },
+  "tool_crop": { "message": "Обрезать" },
+
+  "action_undo": { "message": "Отменить" },
+  "action_redo": { "message": "Повторить" },
+  "action_copy": { "message": "Копировать в буфер обмена" },
+  "action_save": { "message": "Сохранить изображение" },
+  "action_delete": { "message": "Удалить выделенное" },
+  "action_clear": { "message": "Убрать все пометки" },
+  "action_new_capture": { "message": "Новый снимок" },
+  "action_zoom_in": { "message": "Увеличить" },
+  "action_zoom_out": { "message": "Уменьшить" },
+  "action_zoom_fit": { "message": "Вписать в окно" },
+  "action_zoom_reset": { "message": "Реальный размер" },
+  "action_crop_apply": { "message": "Применить обрезку" },
+  "action_crop_cancel": { "message": "Отменить обрезку" },
+
+  "prop_color": { "message": "Цвет" },
+  "prop_stroke_width": { "message": "Толщина" },
+  "prop_fill": { "message": "Заливка" },
+  "prop_opacity": { "message": "Непрозрачность" },
+  "prop_font_size": { "message": "Размер" },
+  "prop_font_bold": { "message": "Полужирный" },
+  "prop_font_italic": { "message": "Курсив" },
+  "prop_text_outline": { "message": "Обводка" },
+  "prop_arrowhead": { "message": "Наконечник стрелки" },
+  "prop_blur_mode": { "message": "Режим" },
+  "prop_blur_mode_blur": { "message": "Размытие" },
+  "prop_blur_mode_pixelate": { "message": "Пиксели" },
+  "prop_blur_strength": { "message": "Сила" },
+
+  "blur_warning_title": { "message": "Размытие не всегда надёжно" },
+  "blur_warning_body": { "message": "Размытый или пиксельный текст иногда можно восстановить. Чтобы скрыть пароли, документы или личные данные, используйте «Закрасить»: инструмент кладёт сплошной блок, который нельзя отменить." },
+  "blur_warning_switch": { "message": "Перейти к «Закрасить»" },
+  "blur_warning_keep": { "message": "Оставить размытие" },
+  "blur_warning_dont_show": { "message": "Больше не показывать" },
+
+  "export_format": { "message": "Формат" },
+  "export_format_png": { "message": "PNG (без потерь)" },
+  "export_format_jpg": { "message": "JPEG (файл меньше)" },
+  "export_quality": { "message": "Качество JPEG" },
+
+  "toast_copied": { "message": "Скопировано в буфер обмена" },
+  "toast_saved": {
+    "message": "Сохранено как $FILENAME$",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": { "message": "Настройки сохранены" },
+
+  "options_title": { "message": "Настройки" },
+  "opt_section_general": { "message": "Общие" },
+  "opt_section_capture": { "message": "Съёмка" },
+  "opt_section_editor": { "message": "Настройки редактора" },
+  "opt_section_privacy": { "message": "Конфиденциальность" },
+  "opt_section_about": { "message": "О расширении" },
+
+  "opt_language": { "message": "Язык" },
+  "opt_language_auto": { "message": "Как в браузере" },
+  "opt_theme": { "message": "Тема" },
+  "opt_theme_auto": { "message": "Как в системе" },
+  "opt_theme_light": { "message": "Светлая" },
+  "opt_theme_dark": { "message": "Тёмная" },
+
+  "opt_after_capture": { "message": "После съёмки" },
+  "opt_after_capture_editor": { "message": "Открыть редактор" },
+  "opt_after_capture_clipboard": { "message": "Копировать в буфер обмена" },
+  "opt_after_capture_save": { "message": "Сохранить на диск" },
+  "opt_delay_seconds": { "message": "Задержка перед съёмкой" },
+  "opt_seconds_value": {
+    "message": "$COUNT$ секунд",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": { "message": "После выбора области" },
+  "opt_area_confirm_ask": { "message": "Показывать панель действий" },
+  "opt_area_confirm_instant": { "message": "Снимать сразу" },
+
+  "opt_ask_location": { "message": "Спрашивать, куда сохранять каждый файл" },
+  "opt_filename_pattern": { "message": "Шаблон имени файла" },
+  "opt_filename_pattern_hint": { "message": "Доступные метки: {date} {time} {title} {domain} {counter}" },
+  "opt_hide_fixed": { "message": "Скрывать плавающие шапки при съёмке всей страницы" },
+  "opt_scroll_delay": { "message": "Пауза между прокрутками" },
+  "opt_default_color": { "message": "Цвет по умолчанию" },
+  "opt_default_stroke": { "message": "Толщина по умолчанию" },
+  "opt_manage_shortcuts": { "message": "Управление горячими клавишами" },
+  "opt_reset": { "message": "Сбросить настройки" },
+  "opt_reset_confirm": { "message": "Сбросить все настройки к значениям по умолчанию?" },
+
+  "privacy_headline": { "message": "Всё остаётся на вашем устройстве" },
+  "privacy_no_network": { "message": "Ваши снимки никуда не загружаются. Это расширение вообще не обращается к сети." },
+  "privacy_no_account": { "message": "Без аккаунта, без входа, без слежки, без рекламы." },
+  "privacy_local_storage": { "message": "Настройки хранятся только в этом браузере, на этом компьютере." },
+  "privacy_policy_link": { "message": "Прочитать политику конфиденциальности" },
+
+  "about_version": {
+    "message": "Версия $VERSION$",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": { "message": "Поддержать проект" },
+  "about_translate": { "message": "Помочь с переводом" },
+  "about_report_bug": { "message": "Сообщить о проблеме" },
+  "about_source": { "message": "Исходный код" },
+  "about_rate": { "message": "Оценить расширение" },
+
+  "err_restricted_page": { "message": "Эту страницу снять нельзя" },
+  "err_restricted_page_detail": { "message": "Браузеры блокируют расширения на внутренних страницах, в магазинах расширений и в просмотрщике PDF. Попробуйте на обычном сайте." },
+  "err_capture_failed": { "message": "Не удалось сделать снимок. Попробуйте ещё раз." },
+  "err_no_active_tab": { "message": "Активная вкладка не найдена." },
+  "err_page_too_large": { "message": "Страница слишком длинная для одного изображения. Попробуйте снять выбранную область." },
+  "err_clipboard": { "message": "Не удалось скопировать в буфер обмена. Изображение не потеряно: попробуйте сохранить его." },
+  "err_save_failed": { "message": "Не удалось сохранить файл." },
+  "err_generic": { "message": "Что-то пошло не так." },
+
+  "common_ok": { "message": "ОК" },
+  "common_cancel": { "message": "Отмена" },
+  "common_close": { "message": "Закрыть" },
+  "common_retry": { "message": "Повторить" },
+  "common_delete": { "message": "Удалить" },
+  "common_learn_more": { "message": "Подробнее" }
+}

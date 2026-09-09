@@ -3,7 +3,7 @@
 Extensão de captura de tela com anotação e borrão. Tudo local: sem conta, sem
 nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
-Estado atual: **esqueleto de desenvolvimento (0.1.0)** — i18n completo, captura
+Estado atual: **esqueleto de desenvolvimento (0.1.0)** — 11 idiomas, captura
 `Visible part` e `Delayed` funcionando, **área selecionada** e o **editor completo**:
 borrar, tarja, retângulo, elipse, seta, linha, lápis, marca-texto, texto,
 recorte, undo/redo e exportação. As quatro capturas estão completas.
@@ -53,7 +53,7 @@ reabrir a página.
 ```
 src/
   manifest.json          MV3, __MSG_* para nome/descrição, permissões mínimas
-  _locales/<loc>/        dicionários; en é a referência com notas de tradução
+  _locales/<loc>/        11 idiomas; en é a referência com notas de tradução
   lib/i18n.js            carregador híbrido + troca manual de idioma
   lib/imaging.js         recorte e costura, sem depender de chrome.*
   lib/ui.css             tokens de tema e componentes compartilhados
@@ -120,7 +120,8 @@ BOM no arquivo ou `appDesc` acima de 132 caracteres.
 ## Pendências conhecidas
 
 - ícones são gerados por script; servem para a loja, mas vale um passe de design
-- 9 dos 11 locales previstos ainda não foram traduzidos (só `en` e `pt_BR`)
+- alemão, russo, polonês, turco e indonésio precisam de revisão nativa,
+  principalmente o diálogo de aviso do blur (`blur_warning_*`)
 - o pacote do Firefox nunca foi carregado num Firefox de verdade: ES module em
   background script é o ponto a confirmar
 - o botão de doação fica para depois da 1.0; a string `about_donate` já existe no

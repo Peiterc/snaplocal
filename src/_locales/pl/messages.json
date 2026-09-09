@@ -1,0 +1,200 @@
+{
+  "locale_name": { "message": "Polski" },
+
+  "appName": { "message": "SnapLocal" },
+  "appShortName": { "message": "SnapLocal" },
+  "appDesc": { "message": "Rób zrzuty ekranu, opisuj je i rozmywaj. W 100% lokalnie: bez konta, bez chmury, bez śledzenia." },
+
+  "mode_area": { "message": "Zaznacz obszar" },
+  "mode_area_desc": { "message": "Przeciągnij, aby uchwycić część strony" },
+  "mode_visible": { "message": "Widoczna część" },
+  "mode_visible_desc": { "message": "Uchwyć to, co widzisz teraz" },
+  "mode_fullpage": { "message": "Cała strona" },
+  "mode_fullpage_desc": { "message": "Przewija i łączy całą stronę" },
+  "mode_delay": { "message": "Zrzut z opóźnieniem" },
+  "mode_delay_desc": { "message": "Poczekaj i uchwyć widoczną część" },
+
+  "popup_settings": { "message": "Ustawienia" },
+  "popup_shortcuts_hint": { "message": "Wskazówka: skróty klawiszowe przyspieszają robienie zrzutów." },
+
+  "ctx_parent": { "message": "SnapLocal" },
+  "ctx_area": { "message": "Uchwyć zaznaczony obszar" },
+  "ctx_visible": { "message": "Uchwyć widoczną część" },
+  "ctx_fullpage": { "message": "Uchwyć całą stronę" },
+  "ctx_delay": { "message": "Zrzut z opóźnieniem" },
+
+  "cmd_capture_area": { "message": "Uchwyć zaznaczony obszar" },
+  "cmd_capture_visible": { "message": "Uchwyć widoczną część" },
+  "cmd_capture_fullpage": { "message": "Uchwyć całą stronę" },
+
+  "overlay_hint": { "message": "Przeciągnij, aby zaznaczyć obszar" },
+  "overlay_hint_fullscreen": { "message": "Spacja — cały ekran" },
+  "overlay_hint_cancel": { "message": "Esc — anuluj" },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": { "message": "Uchwyć" },
+  "overlay_action_copy": { "message": "Kopiuj" },
+  "overlay_action_save": { "message": "Zapisz" },
+  "overlay_action_cancel": { "message": "Anuluj" },
+
+  "delay_countdown": {
+    "message": "Zrzut za $SECONDS$ s",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": { "message": "Anuluj odliczanie" },
+
+  "fullpage_preparing": { "message": "Przygotowywanie strony…" },
+  "fullpage_progress": {
+    "message": "Uchwycono $CURRENT$ z $TOTAL$",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": { "message": "Łączenie obrazu…" },
+  "fullpage_cancel": { "message": "Anuluj przechwytywanie" },
+
+  "editor_title": { "message": "Edytor" },
+  "editor_untitled": { "message": "Zrzut bez tytułu" },
+
+  "tool_move": { "message": "Zaznacz i przesuń" },
+  "tool_pencil": { "message": "Ołówek" },
+  "tool_line": { "message": "Linia" },
+  "tool_arrow": { "message": "Strzałka" },
+  "tool_rectangle": { "message": "Prostokąt" },
+  "tool_ellipse": { "message": "Elipsa" },
+  "tool_text": { "message": "Tekst" },
+  "tool_highlighter": { "message": "Zakreślacz" },
+  "tool_blur": { "message": "Rozmycie" },
+  "tool_redact": { "message": "Zamaluj" },
+  "tool_crop": { "message": "Przytnij" },
+
+  "action_undo": { "message": "Cofnij" },
+  "action_redo": { "message": "Ponów" },
+  "action_copy": { "message": "Kopiuj do schowka" },
+  "action_save": { "message": "Zapisz obraz" },
+  "action_delete": { "message": "Usuń zaznaczone" },
+  "action_clear": { "message": "Wyczyść wszystkie adnotacje" },
+  "action_new_capture": { "message": "Nowy zrzut" },
+  "action_zoom_in": { "message": "Powiększ" },
+  "action_zoom_out": { "message": "Pomniejsz" },
+  "action_zoom_fit": { "message": "Dopasuj do okna" },
+  "action_zoom_reset": { "message": "Rozmiar rzeczywisty" },
+  "action_crop_apply": { "message": "Zastosuj przycięcie" },
+  "action_crop_cancel": { "message": "Anuluj przycięcie" },
+
+  "prop_color": { "message": "Kolor" },
+  "prop_stroke_width": { "message": "Grubość" },
+  "prop_fill": { "message": "Wypełnienie" },
+  "prop_opacity": { "message": "Krycie" },
+  "prop_font_size": { "message": "Rozmiar" },
+  "prop_font_bold": { "message": "Pogrubienie" },
+  "prop_font_italic": { "message": "Kursywa" },
+  "prop_text_outline": { "message": "Obrys" },
+  "prop_arrowhead": { "message": "Grot strzałki" },
+  "prop_blur_mode": { "message": "Tryb" },
+  "prop_blur_mode_blur": { "message": "Rozmycie" },
+  "prop_blur_mode_pixelate": { "message": "Pikseloza" },
+  "prop_blur_strength": { "message": "Siła" },
+
+  "blur_warning_title": { "message": "Rozmycie nie zawsze jest bezpieczne" },
+  "blur_warning_body": { "message": "Rozmyty lub spikselowany tekst czasami da się odtworzyć. Aby ukryć hasła, dokumenty lub dane osobowe, użyj narzędzia Zamaluj: kładzie ono pełny blok, którego nie da się cofnąć." },
+  "blur_warning_switch": { "message": "Przełącz na Zamaluj" },
+  "blur_warning_keep": { "message": "Zostań przy Rozmyciu" },
+  "blur_warning_dont_show": { "message": "Nie pokazuj ponownie" },
+
+  "export_format": { "message": "Format" },
+  "export_format_png": { "message": "PNG (bezstratny)" },
+  "export_format_jpg": { "message": "JPEG (mniejszy plik)" },
+  "export_quality": { "message": "Jakość JPEG" },
+
+  "toast_copied": { "message": "Skopiowano do schowka" },
+  "toast_saved": {
+    "message": "Zapisano jako $FILENAME$",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": { "message": "Ustawienia zapisane" },
+
+  "options_title": { "message": "Ustawienia" },
+  "opt_section_general": { "message": "Ogólne" },
+  "opt_section_capture": { "message": "Przechwytywanie" },
+  "opt_section_editor": { "message": "Domyślne ustawienia edytora" },
+  "opt_section_privacy": { "message": "Prywatność" },
+  "opt_section_about": { "message": "O rozszerzeniu" },
+
+  "opt_language": { "message": "Język" },
+  "opt_language_auto": { "message": "Tak jak przeglądarka" },
+  "opt_theme": { "message": "Motyw" },
+  "opt_theme_auto": { "message": "Tak jak system" },
+  "opt_theme_light": { "message": "Jasny" },
+  "opt_theme_dark": { "message": "Ciemny" },
+
+  "opt_after_capture": { "message": "Po przechwyceniu" },
+  "opt_after_capture_editor": { "message": "Otwórz edytor" },
+  "opt_after_capture_clipboard": { "message": "Kopiuj do schowka" },
+  "opt_after_capture_save": { "message": "Zapisz na dysku" },
+  "opt_delay_seconds": { "message": "Opóźnienie przed przechwyceniem" },
+  "opt_seconds_value": {
+    "message": "$COUNT$ sekund",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": { "message": "Po zaznaczeniu obszaru" },
+  "opt_area_confirm_ask": { "message": "Pokaż pasek akcji" },
+  "opt_area_confirm_instant": { "message": "Przechwyć od razu" },
+
+  "opt_ask_location": { "message": "Pytaj, gdzie zapisać każdy plik" },
+  "opt_filename_pattern": { "message": "Wzorzec nazwy pliku" },
+  "opt_filename_pattern_hint": { "message": "Dostępne znaczniki: {date} {time} {title} {domain} {counter}" },
+  "opt_hide_fixed": { "message": "Ukrywaj pływające nagłówki przy przechwytywaniu całej strony" },
+  "opt_scroll_delay": { "message": "Odstęp między przewinięciami" },
+  "opt_default_color": { "message": "Kolor domyślny" },
+  "opt_default_stroke": { "message": "Domyślna grubość" },
+  "opt_manage_shortcuts": { "message": "Zarządzaj skrótami klawiszowymi" },
+  "opt_reset": { "message": "Przywróć ustawienia domyślne" },
+  "opt_reset_confirm": { "message": "Przywrócić wszystkie ustawienia do wartości domyślnych?" },
+
+  "privacy_headline": { "message": "Wszystko zostaje na Twoim urządzeniu" },
+  "privacy_no_network": { "message": "Twoje zrzuty nigdy nie są wysyłane. To rozszerzenie w ogóle nie łączy się z siecią." },
+  "privacy_no_account": { "message": "Bez konta, bez logowania, bez śledzenia, bez reklam." },
+  "privacy_local_storage": { "message": "Ustawienia są przechowywane tylko w tej przeglądarce, na tym komputerze." },
+  "privacy_policy_link": { "message": "Przeczytaj politykę prywatności" },
+
+  "about_version": {
+    "message": "Wersja $VERSION$",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": { "message": "Wesprzyj projekt" },
+  "about_translate": { "message": "Pomóż w tłumaczeniu" },
+  "about_report_bug": { "message": "Zgłoś problem" },
+  "about_source": { "message": "Kod źródłowy" },
+  "about_rate": { "message": "Oceń to rozszerzenie" },
+
+  "err_restricted_page": { "message": "Tej strony nie można przechwycić" },
+  "err_restricted_page_detail": { "message": "Przeglądarki blokują rozszerzenia na stronach wewnętrznych, w sklepach z rozszerzeniami i w przeglądarce PDF. Spróbuj na zwykłej stronie." },
+  "err_capture_failed": { "message": "Przechwytywanie nie powiodło się. Spróbuj ponownie." },
+  "err_no_active_tab": { "message": "Nie znaleziono aktywnej karty." },
+  "err_page_too_large": { "message": "Ta strona jest za długa jak na jeden obraz. Spróbuj przechwycić zaznaczony obszar." },
+  "err_clipboard": { "message": "Nie udało się skopiować do schowka. Twój obraz jest bezpieczny: spróbuj go zapisać." },
+  "err_save_failed": { "message": "Nie udało się zapisać pliku." },
+  "err_generic": { "message": "Coś poszło nie tak." },
+
+  "common_ok": { "message": "OK" },
+  "common_cancel": { "message": "Anuluj" },
+  "common_close": { "message": "Zamknij" },
+  "common_retry": { "message": "Spróbuj ponownie" },
+  "common_delete": { "message": "Usuń" },
+  "common_learn_more": { "message": "Dowiedz się więcej" }
+}

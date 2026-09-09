@@ -1,0 +1,200 @@
+{
+  "locale_name": { "message": "Türkçe" },
+
+  "appName": { "message": "SnapLocal" },
+  "appShortName": { "message": "SnapLocal" },
+  "appDesc": { "message": "Ekran görüntüsü alın, işaretleyin ve bulanıklaştırın. %100 yerel: hesap yok, bulut yok, takip yok." },
+
+  "mode_area": { "message": "Alan seç" },
+  "mode_area_desc": { "message": "Sayfanın bir bölümünü almak için sürükleyin" },
+  "mode_visible": { "message": "Görünen bölüm" },
+  "mode_visible_desc": { "message": "Şu anda gördüğünüzü alır" },
+  "mode_fullpage": { "message": "Tüm sayfa" },
+  "mode_fullpage_desc": { "message": "Sayfayı kaydırıp tamamını birleştirir" },
+  "mode_delay": { "message": "Gecikmeli çekim" },
+  "mode_delay_desc": { "message": "Bekleyin, sonra görünen bölümü alın" },
+
+  "popup_settings": { "message": "Ayarlar" },
+  "popup_shortcuts_hint": { "message": "İpucu: klavye kısayollarıyla daha hızlı çekim yapın." },
+
+  "ctx_parent": { "message": "SnapLocal" },
+  "ctx_area": { "message": "Seçili alanı al" },
+  "ctx_visible": { "message": "Görünen bölümü al" },
+  "ctx_fullpage": { "message": "Tüm sayfayı al" },
+  "ctx_delay": { "message": "Gecikmeli çekim" },
+
+  "cmd_capture_area": { "message": "Seçili alanı al" },
+  "cmd_capture_visible": { "message": "Görünen bölümü al" },
+  "cmd_capture_fullpage": { "message": "Tüm sayfayı al" },
+
+  "overlay_hint": { "message": "Bir alan seçmek için sürükleyin" },
+  "overlay_hint_fullscreen": { "message": "Tüm ekran için Boşluk" },
+  "overlay_hint_cancel": { "message": "İptal için Esc" },
+  "overlay_dimensions": {
+    "message": "$WIDTH$ × $HEIGHT$",
+    "placeholders": {
+      "width": { "content": "$1", "example": "1024" },
+      "height": { "content": "$2", "example": "768" }
+    }
+  },
+  "overlay_action_capture": { "message": "Çek" },
+  "overlay_action_copy": { "message": "Kopyala" },
+  "overlay_action_save": { "message": "Kaydet" },
+  "overlay_action_cancel": { "message": "İptal" },
+
+  "delay_countdown": {
+    "message": "$SECONDS$ sn sonra çekiliyor",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "3" }
+    }
+  },
+  "delay_cancel": { "message": "Geri sayımı iptal et" },
+
+  "fullpage_preparing": { "message": "Sayfa hazırlanıyor…" },
+  "fullpage_progress": {
+    "message": "$TOTAL$ ekrandan $CURRENT$ alındı",
+    "placeholders": {
+      "current": { "content": "$1", "example": "3" },
+      "total": { "content": "$2", "example": "8" }
+    }
+  },
+  "fullpage_stitching": { "message": "Görüntü birleştiriliyor…" },
+  "fullpage_cancel": { "message": "Çekimi iptal et" },
+
+  "editor_title": { "message": "Düzenleyici" },
+  "editor_untitled": { "message": "Adsız çekim" },
+
+  "tool_move": { "message": "Seç ve taşı" },
+  "tool_pencil": { "message": "Kalem" },
+  "tool_line": { "message": "Çizgi" },
+  "tool_arrow": { "message": "Ok" },
+  "tool_rectangle": { "message": "Dikdörtgen" },
+  "tool_ellipse": { "message": "Elips" },
+  "tool_text": { "message": "Metin" },
+  "tool_highlighter": { "message": "Fosforlu kalem" },
+  "tool_blur": { "message": "Bulanıklaştır" },
+  "tool_redact": { "message": "Karart" },
+  "tool_crop": { "message": "Kırp" },
+
+  "action_undo": { "message": "Geri al" },
+  "action_redo": { "message": "Yinele" },
+  "action_copy": { "message": "Panoya kopyala" },
+  "action_save": { "message": "Görüntüyü kaydet" },
+  "action_delete": { "message": "Seçileni sil" },
+  "action_clear": { "message": "Tüm işaretlemeleri temizle" },
+  "action_new_capture": { "message": "Yeni çekim" },
+  "action_zoom_in": { "message": "Yakınlaştır" },
+  "action_zoom_out": { "message": "Uzaklaştır" },
+  "action_zoom_fit": { "message": "Pencereye sığdır" },
+  "action_zoom_reset": { "message": "Gerçek boyut" },
+  "action_crop_apply": { "message": "Kırpmayı uygula" },
+  "action_crop_cancel": { "message": "Kırpmayı iptal et" },
+
+  "prop_color": { "message": "Renk" },
+  "prop_stroke_width": { "message": "Kalınlık" },
+  "prop_fill": { "message": "Dolgu" },
+  "prop_opacity": { "message": "Saydamlık" },
+  "prop_font_size": { "message": "Boyut" },
+  "prop_font_bold": { "message": "Kalın" },
+  "prop_font_italic": { "message": "İtalik" },
+  "prop_text_outline": { "message": "Dış çizgi" },
+  "prop_arrowhead": { "message": "Ok ucu" },
+  "prop_blur_mode": { "message": "Mod" },
+  "prop_blur_mode_blur": { "message": "Bulanıklık" },
+  "prop_blur_mode_pixelate": { "message": "Pikselleştir" },
+  "prop_blur_strength": { "message": "Şiddet" },
+
+  "blur_warning_title": { "message": "Bulanıklaştırmak her zaman güvenli değildir" },
+  "blur_warning_body": { "message": "Bulanıklaştırılmış veya piksellenmiş metin bazen geri getirilebilir. Parolaları, belgeleri veya kişisel verileri gizlemek için bunun yerine Karart aracını kullanın: geri alınamayan dolu bir blok basar." },
+  "blur_warning_switch": { "message": "Karart aracına geç" },
+  "blur_warning_keep": { "message": "Bulanıklaştırmaya devam et" },
+  "blur_warning_dont_show": { "message": "Bunu bir daha gösterme" },
+
+  "export_format": { "message": "Biçim" },
+  "export_format_png": { "message": "PNG (kayıpsız)" },
+  "export_format_jpg": { "message": "JPEG (daha küçük dosya)" },
+  "export_quality": { "message": "JPEG kalitesi" },
+
+  "toast_copied": { "message": "Panoya kopyalandı" },
+  "toast_saved": {
+    "message": "$FILENAME$ olarak kaydedildi",
+    "placeholders": {
+      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+    }
+  },
+  "toast_settings_saved": { "message": "Ayarlar kaydedildi" },
+
+  "options_title": { "message": "Ayarlar" },
+  "opt_section_general": { "message": "Genel" },
+  "opt_section_capture": { "message": "Çekim" },
+  "opt_section_editor": { "message": "Düzenleyici varsayılanları" },
+  "opt_section_privacy": { "message": "Gizlilik" },
+  "opt_section_about": { "message": "Hakkında" },
+
+  "opt_language": { "message": "Dil" },
+  "opt_language_auto": { "message": "Tarayıcıyla aynı" },
+  "opt_theme": { "message": "Tema" },
+  "opt_theme_auto": { "message": "Sistemle aynı" },
+  "opt_theme_light": { "message": "Açık" },
+  "opt_theme_dark": { "message": "Koyu" },
+
+  "opt_after_capture": { "message": "Çekimden sonra" },
+  "opt_after_capture_editor": { "message": "Düzenleyiciyi aç" },
+  "opt_after_capture_clipboard": { "message": "Panoya kopyala" },
+  "opt_after_capture_save": { "message": "Diske kaydet" },
+  "opt_delay_seconds": { "message": "Çekimden önceki gecikme" },
+  "opt_seconds_value": {
+    "message": "$COUNT$ saniye",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "opt_area_confirm": { "message": "Alanı seçtikten sonra" },
+  "opt_area_confirm_ask": { "message": "İşlem çubuğunu göster" },
+  "opt_area_confirm_instant": { "message": "Hemen çek" },
+
+  "opt_ask_location": { "message": "Her dosyanın nereye kaydedileceğini sor" },
+  "opt_filename_pattern": { "message": "Dosya adı deseni" },
+  "opt_filename_pattern_hint": { "message": "Kullanılabilir etiketler: {date} {time} {title} {domain} {counter}" },
+  "opt_hide_fixed": { "message": "Tüm sayfa çekiminde sabit başlıkları gizle" },
+  "opt_scroll_delay": { "message": "Kaydırmalar arasındaki bekleme" },
+  "opt_default_color": { "message": "Varsayılan renk" },
+  "opt_default_stroke": { "message": "Varsayılan kalınlık" },
+  "opt_manage_shortcuts": { "message": "Klavye kısayollarını yönet" },
+  "opt_reset": { "message": "Varsayılanlara sıfırla" },
+  "opt_reset_confirm": { "message": "Tüm ayarlar varsayılan değerlerine sıfırlansın mı?" },
+
+  "privacy_headline": { "message": "Her şey cihazınızda kalır" },
+  "privacy_no_network": { "message": "Ekran görüntüleriniz hiçbir zaman yüklenmez. Bu uzantı hiçbir ağ isteği yapmaz." },
+  "privacy_no_account": { "message": "Hesap yok, oturum açma yok, takip yok, reklam yok." },
+  "privacy_local_storage": { "message": "Ayarlar yalnızca bu tarayıcıda, bu bilgisayarda saklanır." },
+  "privacy_policy_link": { "message": "Gizlilik politikasını oku" },
+
+  "about_version": {
+    "message": "Sürüm $VERSION$",
+    "placeholders": {
+      "version": { "content": "$1", "example": "1.0.0" }
+    }
+  },
+  "about_donate": { "message": "Projeye destek ol" },
+  "about_translate": { "message": "Çeviriye yardım et" },
+  "about_report_bug": { "message": "Sorun bildir" },
+  "about_source": { "message": "Kaynak kodu" },
+  "about_rate": { "message": "Bu uzantıyı değerlendir" },
+
+  "err_restricted_page": { "message": "Bu sayfa çekilemez" },
+  "err_restricted_page_detail": { "message": "Tarayıcılar; dahili sayfalarda, uzantı mağazalarında ve PDF görüntüleyicide uzantıları engeller. Normal bir web sitesinde deneyin." },
+  "err_capture_failed": { "message": "Çekim başarısız oldu. Lütfen tekrar deneyin." },
+  "err_no_active_tab": { "message": "Etkin sekme bulunamadı." },
+  "err_page_too_large": { "message": "Bu sayfa tek bir görüntüye sığmayacak kadar uzun. Bunun yerine seçili bir alanı çekmeyi deneyin." },
+  "err_clipboard": { "message": "Panoya kopyalanamadı. Görüntünüz güvende: kaydetmeyi deneyin." },
+  "err_save_failed": { "message": "Dosya kaydedilemedi." },
+  "err_generic": { "message": "Bir şeyler ters gitti." },
+
+  "common_ok": { "message": "Tamam" },
+  "common_cancel": { "message": "İptal" },
+  "common_close": { "message": "Kapat" },
+  "common_retry": { "message": "Tekrar dene" },
+  "common_delete": { "message": "Sil" },
+  "common_learn_more": { "message": "Daha fazla bilgi" }
+}
