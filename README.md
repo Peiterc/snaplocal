@@ -3,10 +3,15 @@
 Extensão de captura de tela com anotação e borrão. Tudo local: sem conta, sem
 nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
-Estado atual: **1.0.0, completa e pronta para submissão** — 11 idiomas, captura
-`Visible part` e `Delayed` funcionando, **área selecionada** e o **editor completo**:
-borrar, tarja, retângulo, elipse, seta, linha, lápis, marca-texto, texto,
-recorte, undo/redo e exportação. As quatro capturas estão completas.
+Estado atual: **1.0.0 em análise na Microsoft Edge Add-ons**, enviada em
+09/09/2026.
+
+As quatro capturas — área selecionada, parte visível, página inteira e com
+atraso — e o editor completo estão prontos: borrar, tarja, retângulo, elipse,
+seta, linha, lápis, marca-texto, texto, recorte, undo/redo e exportação. A
+interface vem em 11 idiomas.
+
+Chrome Web Store e Firefox AMO ainda não receberam submissão.
 
 ## Testar no Edge
 
