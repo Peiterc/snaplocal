@@ -76,8 +76,13 @@ def main():
 
     found = 0
     for name, aliases in SHOTS.items():
-        # Aceita o nome que o navegador deu ao arquivo, nao so o combinado.
-        match = next((available[a] for a in aliases if a in available), None)
+        # Aceita o nome que o navegador deu ao arquivo, nao so o combinado. E
+        # entre varios apelidos presentes vence o mais recente: uma recaptura
+        # com nome diferente deve ganhar do arquivo velho, nao perder para ele.
+        candidates = [available[a] for a in aliases if a in available]
+        match = max(candidates,
+                    key=lambda f: os.path.getmtime(os.path.join(source, f)),
+                    default=None)
         if not match:
             print("%-24s ausente (procurei por: %s)" % (name, ", ".join(aliases)))
             continue

@@ -7,7 +7,14 @@
     body { margin: 0; font: 15px/1.6 "Segoe UI", system-ui, sans-serif; color: #1b1f24; }
     .page { max-width: 760px; margin: 0 auto; padding: 40px 24px; }
     h1 { font-size: 28px; }
-    .card { border: 1px solid #dfe3ea; border-radius: 10px; padding: 20px; margin: 20px 0; }
+    .card { border: 1px solid #dfe3ea; border-radius: 10px; padding: 20px; margin: 20px 0;
+            background: #fff; }
+    h2 { font-size: 19px; margin: 28px 0 8px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid #eceef2; }
+    th { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: #6b7280; }
+    td:last-child, th:last-child { text-align: right; }
+    .dica { color: #6b7280; font-size: 14px; margin-top: 28px; }
     /* Deliberately hostile page CSS: the overlay must ignore all of it. */
     div { outline: 0 !important; }
     * { box-sizing: border-box; }
@@ -17,17 +24,40 @@
   </style>
 </head>
 <body>
+  <!--
+    A página precisa encher a viewport inteira. Numa página curta, o overlay
+    escurece um vazio cinza enorme, e o screenshot da loja — que é a miniatura
+    — fica com metade da imagem sem nada.
+  -->
   <div class="page">
-    <h1>Página de teste do overlay</h1>
-    <p>Esta página existe só para o overlay de seleção ter algo por baixo. O CSS
-      aqui é propositalmente agressivo para confirmar que nada vaza para dentro
-      do shadow root.</p>
-    <div class="card">
+    <h1>Painel do cliente</h1>
+    <p>Esta página existe para o overlay de seleção ter algo por baixo. O CSS
+      aqui é propositalmente agressivo, para confirmar que nada vaza para dentro
+      do shadow root do overlay.</p>
+
+    <h2>Dados cadastrais</h2>
+    <p>Titular: Maria Aparecida de Souza Lima · Cliente desde março de 2019 ·
+      Plano Essencial · Faturamento mensal na modalidade pós-paga.</p>
+
+    <div class="card" id="alvo">
       <strong>CPF:</strong> 123.456.789-09<br>
       <strong>Token:</strong> sk-9f4c2ae17b0d8e635a91cc47<br>
       <strong>Conta:</strong> 88192-6
     </div>
-    <p>Arraste para selecionar. Espaço captura a tela toda, Esc cancela.</p>
+
+    <h2>Últimos lançamentos</h2>
+    <table>
+      <tr><th>Data</th><th>Descrição</th><th>Valor</th></tr>
+      <tr><td>02/09</td><td>Mensalidade do plano</td><td>R$ 189,00</td></tr>
+      <tr><td>21/08</td><td>Serviço adicional de armazenamento</td><td>R$ 42,50</td></tr>
+      <tr><td>14/08</td><td>Ajuste proporcional</td><td>R$ 7,80</td></tr>
+      <tr><td>03/08</td><td>Mensalidade do plano</td><td>R$ 189,00</td></tr>
+    </table>
+
+    <h2>Preferências</h2>
+    <p>Notificações por e-mail estão ativas. Cobrança automática desativada.
+      Endereço de entrega cadastrado em Rua das Acacias, 412 - apto 73.</p>
+    <p class="dica">Arraste para selecionar. Espaço captura a tela toda, Esc cancela.</p>
   </div>
 
   <div id="log">aguardando seleção…</div>
@@ -82,7 +112,7 @@
     if (new URLSearchParams(location.search).get('shot') === 'area') {
       const layer = document.getElementById('snaplocal-area-overlay')
                             .shadowRoot.querySelector('.layer');
-      const box = document.querySelector('.card').getBoundingClientRect();
+      const box = document.getElementById('alvo').getBoundingClientRect();
       const pad = 18;
       const send = (type, x, y) => layer.dispatchEvent(new PointerEvent(type, {
         clientX: x, clientY: y, button: 0, buttons: type === 'pointerup' ? 0 : 1,
