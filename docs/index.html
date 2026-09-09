@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SnapLocal — screenshots that stay on your computer</title>
+<meta name="description" content="Capture, annotate and blur screenshots in your browser. 100% local: no account, no cloud, no tracking, no network requests.">
+<link rel="icon" href="store-assets/logo-300.png">
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f7f8fa; --border: #e3e5e9;
+    --text: #1b1f24; --dim: #5c636d; --accent: #2563eb; --accent-soft: #eff4ff;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181d; --surface: #1e2126; --border: #32363d;
+      --text: #e8eaed; --dim: #9aa1ab; --accent: #6b9bff; --accent-soft: #1d2740;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.65 "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 64px 24px 96px; }
+
+  .hero { display: flex; gap: 26px; align-items: center; margin-bottom: 12px; }
+  .hero img { width: 92px; height: 92px; flex: none; }
+  h1 { font-size: 42px; margin: 0; letter-spacing: -.02em; }
+  .tagline { font-size: 19px; color: var(--dim); margin: 6px 0 0; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; }
+  .badge {
+    font-size: 13px; padding: 4px 11px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--border); color: var(--dim);
+  }
+
+  .status {
+    margin: 32px 0; padding: 16px 20px; border-radius: 10px;
+    background: var(--accent-soft); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent); font-size: 15px;
+  }
+  .status p { margin: 0; }
+
+  h2 { font-size: 24px; margin: 56px 0 14px; letter-spacing: -.01em; }
+  h3 { font-size: 17px; margin: 0 0 6px; }
+  p { margin: 0 0 14px; }
+
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .cell {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px;
+  }
+  .cell p { margin: 0; color: var(--dim); font-size: 15px; }
+
+  figure { margin: 26px 0; }
+  figure img {
+    width: 100%; border: 1px solid var(--border); border-radius: 10px; display: block;
+  }
+  figcaption { color: var(--dim); font-size: 14px; margin-top: 10px; }
+
+  ul { padding-left: 20px; }
+  li { margin: 8px 0; }
+  a { color: var(--accent); }
+
+  footer {
+    margin-top: 72px; padding-top: 26px; border-top: 1px solid var(--border);
+    color: var(--dim); font-size: 15px;
+  }
+  .links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="hero">
+    <img src="store-assets/logo-300.png" alt="">
+    <div>
+      <h1>SnapLocal</h1>
+      <p class="tagline">Screenshots that stay on your computer.</p>
+    </div>
+  </div>
+
+  <div class="badges">
+    <span class="badge">Manifest V3</span>
+    <span class="badge">11 languages</span>
+    <span class="badge">GPL-3.0</span>
+    <span class="badge">No network requests</span>
+    <span class="badge">Free, no upsell</span>
+  </div>
+
+  <div class="status">
+    <p><strong>Version 1.0.0 is under review</strong> at Microsoft Edge Add-ons.
+    The store link will appear here once it is published. Chrome Web Store and
+    Firefox AMO are next.</p>
+  </div>
+
+  <h2>Four ways to capture</h2>
+  <div class="grid">
+    <div class="cell">
+      <h3>Select area</h3>
+      <p>Drag a rectangle over any part of the page.</p>
+    </div>
+    <div class="cell">
+      <h3>Visible part</h3>
+      <p>Exactly what is on screen right now.</p>
+    </div>
+    <div class="cell">
+      <h3>Full page</h3>
+      <p>Scrolls the page and stitches it into one image.</p>
+    </div>
+    <div class="cell">
+      <h3>Delayed</h3>
+      <p>A countdown first, for menus and hover states.</p>
+    </div>
+  </div>
+
+  <figure>
+    <img src="store-assets/screenshots/01-area-selecionada-1280x800.png"
+         alt="Selecting a region of a page, with the rest of the page dimmed">
+    <figcaption>Drag to select. The size readout follows the selection.</figcaption>
+  </figure>
+
+  <h2>A real editor</h2>
+  <p>Rectangle, ellipse, arrow, line, pencil, highlighter and text, with colour,
+  thickness and font controls. Undo and redo everything — including the crop,
+  which is non-destructive, so undoing it brings the discarded pixels back.</p>
+  <p>Copy straight to the clipboard, or save as PNG.</p>
+
+  <figure>
+    <img src="store-assets/screenshots/04-anotacoes-1280x800.png"
+         alt="The editor with a highlight, a rectangle, an arrow and a text label">
+    <figcaption>Annotating a capture. Text gets a contrasting outline so it stays
+    readable on any background.</figcaption>
+  </figure>
+
+  <h2>Blur that tells you the truth</h2>
+  <p>Blur and pixelate are here. But blurred text can sometimes be
+  reconstructed, so SnapLocal also gives you <strong>Redact</strong>: a solid
+  block that cannot be reversed. The first time you blur something, it says so,
+  and offers to convert that region to a redaction.</p>
+  <p>A privacy tool that quietly lets you leak a password is not a privacy
+  tool.</p>
+
+  <figure>
+    <img src="store-assets/screenshots/02-borrao-e-tarja-1280x800.png"
+         alt="A capture with one line redacted behind a solid bar and another blurred">
+    <figcaption>Redaction on top, blur below. Only one of them is irreversible.</figcaption>
+  </figure>
+
+  <h2>Private by construction, not by promise</h2>
+  <ul>
+    <li><strong>No network requests at all.</strong> No analytics, no crash
+    reporting, no CDN, no remote code.</li>
+    <li><strong>No account, no sign-in.</strong></li>
+    <li><strong>No host permissions.</strong> It can only read a page at the
+    moment you start a capture on it.</li>
+    <li><strong>Settings stay in this browser,</strong> on this computer.</li>
+    <li><strong>Open source under GPL-3.0.</strong> Read the code yourself — and
+    any published fork has to stay open too.</li>
+  </ul>
+  <p>The extension ships unminified, so the code in the store is the code you
+  can read in the repository.</p>
+
+  <h2>Help translate</h2>
+  <p>The interface is available in English, Português (Brasil), Português,
+  Español, Français, Italiano, Deutsch, Русский, Polski, Türkçe and Bahasa
+  Indonesia. Adding a language means translating one JSON file — no coding, no
+  build step. See the
+  <a href="https://github.com/Peiterc/snaplocal/blob/main/CONTRIBUTING.md">contributing
+  guide</a>.</p>
+
+  <footer>
+    <div class="links">
+      <a href="https://github.com/Peiterc/snaplocal">Source code</a>
+      <a href="https://github.com/Peiterc/snaplocal/issues">Report a problem</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="https://github.com/Peiterc/snaplocal/blob/main/CONTRIBUTING.md">Contribute</a>
+    </div>
+    <p>SnapLocal is free software under the GNU General Public License v3.0.</p>
+  </footer>
+
+</main>
+</body>
+</html>
