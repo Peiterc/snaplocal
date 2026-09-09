@@ -259,8 +259,8 @@ python tools/build.py
 ```
 
 - [ ] `GECKO_ID` definitivo em `tools/build.py` — **permanente na AMO**
-- [ ] Versão `1.0.0` no `src/manifest.json` (hoje está `0.1.0`)
-- [ ] Ícones definitivos (os atuais são gerados por script)
+- [x] Ícones definitivos e logo 300×300 em `docs/store-assets/`
+- [x] Versão `1.0.0` no `src/manifest.json`
 - [ ] Pacote do Firefox carregado num Firefox real — ES module em background
       script ainda não foi confirmado
 - [ ] Política de privacidade respondendo na URL
@@ -290,7 +290,7 @@ o endereço de contato do desenvolvedor costuma aparecer na página pública.
 
 **Edge Add-ons** — grátis. A verificação de identidade do publisher leva alguns
 dias e trava a submissão, então **comece por ela** mesmo que o resto não esteja
-pronto. Logo da loja em 300×300, separado dos ícones da extensão.
+pronto. Logo da loja em 300×300: já gerado em `docs/store-assets/logo-300.png`.
 
 **Chrome Web Store** — taxa única de US$ 5, paga no próprio cadastro. Contas
 novas passam por um período de confiança maior antes da primeira publicação. O

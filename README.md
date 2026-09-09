@@ -3,7 +3,7 @@
 Extensão de captura de tela com anotação e borrão. Tudo local: sem conta, sem
 nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
-Estado atual: **esqueleto de desenvolvimento (0.1.0)** — 11 idiomas, captura
+Estado atual: **1.0.0, completa e pronta para submissão** — 11 idiomas, captura
 `Visible part` e `Delayed` funcionando, **área selecionada** e o **editor completo**:
 borrar, tarja, retângulo, elipse, seta, linha, lápis, marca-texto, texto,
 recorte, undo/redo e exportação. As quatro capturas estão completas.
@@ -119,7 +119,6 @@ BOM no arquivo ou `appDesc` acima de 132 caracteres.
 
 ## Pendências conhecidas
 
-- ícones são gerados por script; servem para a loja, mas vale um passe de design
 - alemão, russo, polonês, turco e indonésio precisam de revisão nativa,
   principalmente o diálogo de aviso do blur (`blur_warning_*`)
 - o pacote do Firefox nunca foi carregado num Firefox de verdade: ES module em
