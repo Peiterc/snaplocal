@@ -30,21 +30,28 @@ function area(bag) {
   };
 }
 
-/** A stand-in screenshot with small text, so blur strength can be judged by eye. */
+/**
+ * A stand-in screenshot, sized like a real one.
+ *
+ * The dimensions matter beyond looks: a small sample would sit in a sea of
+ * empty stage inside a maximised editor, and the store screenshots taken from
+ * it would be mostly blank. It also keeps small text in the frame, so blur
+ * strength can still be judged by eye.
+ */
 function fakeCapture() {
   const c = document.createElement('canvas');
-  c.width = 900; c.height = 560;
+  c.width = 1440; c.height = 900;
   const x = c.getContext('2d');
 
   x.fillStyle = '#f2f4f8'; x.fillRect(0, 0, c.width, c.height);
-  x.fillStyle = '#ffffff'; x.fillRect(40, 40, 820, 480);
-  x.strokeStyle = '#dfe3ea'; x.strokeRect(40.5, 40.5, 819, 479);
+  x.fillStyle = '#ffffff'; x.fillRect(60, 60, 1320, 780);
+  x.strokeStyle = '#dfe3ea'; x.strokeRect(60.5, 60.5, 1319, 779);
 
   x.fillStyle = '#1b1f24';
-  x.font = '600 26px "Segoe UI", sans-serif';
-  x.fillText('Painel da conta', 72, 92);
+  x.font = '600 40px "Segoe UI", sans-serif';
+  x.fillText('Painel da conta', 110, 145);
 
-  x.font = '15px "Segoe UI", sans-serif';
+  x.font = '22px "Segoe UI", sans-serif';
   x.fillStyle = '#454b54';
   const lines = [
     'Titular: Maria Aparecida de Souza Lima',
@@ -54,19 +61,19 @@ function fakeCapture() {
     'Endereco: Rua das Acacias, 412 - apto 73 - Sao Paulo/SP',
     'Telefone: (11) 98765-4321      Agencia: 0341   Conta: 88192-6'
   ];
-  lines.forEach((line, i) => x.fillText(line, 72, 140 + i * 30));
+  lines.forEach((line, i) => x.fillText(line, 110, 215 + i * 44));
 
-  x.fillStyle = '#2563eb'; x.fillRect(72, 330, 150, 38);
-  x.fillStyle = '#fff'; x.font = '600 14px "Segoe UI", sans-serif';
-  x.fillText('Salvar alteracoes', 92, 354);
+  x.fillStyle = '#2563eb'; x.fillRect(110, 490, 240, 56);
+  x.fillStyle = '#fff'; x.font = '600 20px "Segoe UI", sans-serif';
+  x.fillText('Salvar alteracoes', 138, 526);
 
-  x.fillStyle = '#0f172a'; x.fillRect(72, 400, 756, 90);
-  x.fillStyle = '#93c5fd'; x.font = '13px ui-monospace, Consolas, monospace';
-  x.fillText('$ curl -H "Authorization: Bearer sk-9f4c2ae17b0d8e6" https://api.exemplo.com', 88, 428);
+  x.fillStyle = '#0f172a'; x.fillRect(110, 600, 1220, 150);
+  x.fillStyle = '#93c5fd'; x.font = '19px ui-monospace, Consolas, monospace';
+  x.fillText('$ curl -H "Authorization: Bearer sk-9f4c2ae17b0d8e6" https://api.exemplo.com', 136, 645);
   x.fillStyle = '#e2e8f0';
-  x.fillText('{ "status": "ok", "saldo": 12480.55, "id": 90128371 }', 88, 452);
-  x.fillStyle = '#64748b';
-  x.fillText('Texto pequeno de 11px para testar o piso do desfoque.', 88, 476);
+  x.fillText('{ "status": "ok", "saldo": 12480.55, "id": 90128371 }', 136, 685);
+  x.fillStyle = '#64748b'; x.font = '13px ui-monospace, Consolas, monospace';
+  x.fillText('Texto pequeno de 13px para testar o piso do desfoque.', 136, 722);
   return c.toDataURL('image/png');
 }
 
@@ -159,10 +166,10 @@ const SHOTS = {
   // Borrão e tarja lado a lado, para a diferença entre os dois ficar óbvia.
   async blur() {
     tool('blur');
-    drag(70, 214, 566, 240);
+    drag(104, 318, 902, 358);
     await raf();
     tool('redact');
-    drag(70, 154, 404, 180);
+    drag(104, 230, 660, 270);
     await raf();
     tool('move');
     deselect();
@@ -171,14 +178,14 @@ const SHOTS = {
   // O aviso de que borrão é reversível, que nenhum concorrente mostra.
   async warn() {
     tool('blur');
-    drag(70, 214, 566, 240);
+    drag(104, 318, 902, 358);
     await raf();
   },
 
   // O editor anotando de verdade: marca-texto, retângulo, seta e texto.
   async annotate() {
     tool('highlight');
-    drag(68, 156, 462, 182);
+    drag(102, 230, 700, 272);
     await raf();
     // Desenhar deixa a forma selecionada, então trocar a cor agora repintaria
     // o marca-texto em vez de definir o padrão das próximas formas.
@@ -186,20 +193,23 @@ const SHOTS = {
 
     swatch('#e11d48');
     const stroke = document.getElementById('stroke');
-    stroke.value = '5';
+    stroke.value = '7';
     stroke.dispatchEvent(new Event('input'));
+    const size = document.getElementById('fontSize');
+    size.value = '34';
+    size.dispatchEvent(new Event('input'));
 
     tool('rect');
-    drag(64, 322, 232, 376);
+    drag(96, 474, 366, 562);
     await raf();
     deselect();
 
     tool('arrow');
-    drag(430, 268, 252, 340);
+    drag(760, 404, 420, 512);
     await raf();
     deselect();
 
-    await label(438, 238, 'Confirme aqui');
+    await label(778, 372, 'Confirme aqui');
     tool('move');
     deselect();
   }
