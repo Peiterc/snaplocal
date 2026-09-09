@@ -201,11 +201,16 @@ certificações finais:
 | Loja | Tamanho | Quantidade |
 |---|---|---|
 | Chrome Web Store | 1280×800 | até 5 |
-| Edge Add-ons | 1366×768 | pelo menos 1, mande 4–5 |
+| Edge Add-ons | **1280×800** ou 640×400 | até 6 |
 | Firefox AMO | livre; 1280×800 serve | até 10 |
 
-Se for tirar um jogo só, use **1280×800** e mande o mesmo nas três. O corte que
-o Edge faz é aceitável.
+As três aceitam **1280×800**, então um jogo só serve para todas. O formulário do
+Edge é explícito: 1280×800 ou 640×400 — o 1366×768 que já circulou em
+documentação antiga não é o que ele pede hoje.
+
+O Edge tem ainda três campos opcionais: bloco promocional pequeno (440×280),
+grande (1400×560) e URL de vídeo no YouTube. Dá para publicar sem eles, mas os
+blocos são o que a loja usa ao destacar uma extensão em carrossel ou coleção.
 
 > ⚠️ **Nunca use dado real.** Screenshot de loja é público e permanente. Use
 > uma página fictícia — `tools/harness.html` do próprio repositório tem um
@@ -267,6 +272,20 @@ python tools/make-store-shots.py <pasta>
 O processador corta o rodapé morto, encaixa pelo menor fator (a tela de Opções
 é uma coluna em pé e seria cortada se escalasse pela largura), centraliza numa
 moldura da cor do próprio fundo e gera os dois formatos.
+
+### Termos de pesquisa
+
+Até sete termos, 30 caracteres cada, no máximo 21 palavras somadas.
+
+**Inglês:** `screenshot` · `screen capture` · `full page screenshot` ·
+`blur and redact` · `annotate screenshot` · `scrolling screenshot` ·
+`privacy screenshot tool`
+
+**Português:** `captura de tela` · `print de tela` · `screenshot` ·
+`borrar dados` · `tarja` · `pagina inteira` · `anotar captura`
+
+Não use nome de concorrente como termo: é marca de terceiro e motivo de
+rejeição.
 
 ---
 
