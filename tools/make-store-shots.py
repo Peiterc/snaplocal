@@ -18,11 +18,11 @@ from PIL import Image
 # Nome do arquivo de origem -> prefixo numerado da saída. A ordem importa: o
 # primeiro screenshot é a miniatura que a loja exibe na busca.
 SHOTS = {
-    "area": "01-area-selecionada",
-    "blur": "02-borrao-e-tarja",
-    "warn": "03-aviso-de-privacidade",
-    "annotate": "04-anotacoes",
-    "options": "05-privacidade",
+    "01-area-selecionada": ("area", "overlay-harness", "overlay"),
+    "02-borrao-e-tarja": ("blur",),
+    "03-aviso-de-privacidade": ("warn",),
+    "04-anotacoes": ("annotate",),
+    "05-privacidade": ("options", "settings"),
 }
 
 TARGETS = {
@@ -31,7 +31,11 @@ TARGETS = {
 }
 
 # A nota de debug do harness fica no rodapé; some junto com o espaço morto.
+# Só vale para os quadros que saem do harness: a tela de Opções não tem nota
+# nenhuma, e cortá-la comeria justamente a seção Sobre.
 TRIM_BOTTOM = 0.092
+TRIMMED = {"01-area-selecionada", "02-borrao-e-tarja",
+           "03-aviso-de-privacidade", "04-anotacoes"}
 
 
 def background(image):
@@ -40,18 +44,21 @@ def background(image):
 
 
 def fit(image, size, fill):
-    target_w, target_h = size
-    scale = target_w / image.width
-    scaled = image.resize((target_w, max(1, round(image.height * scale))), Image.LANCZOS)
+    """Encaixa inteiro dentro do quadro e preenche o resto.
 
-    if scaled.height > target_h:
-        # Alto demais mesmo depois de escalar: corta pelo rodapé, que é onde
-        # sobra espaço, preservando a barra de ferramentas no topo.
-        scaled = scaled.crop((0, 0, target_w, target_h))
-        return scaled
+    Escalar pela largura funcionava para as capturas deitadas, mas a tela de
+    Opcoes e uma coluna estreita e em pe: pela largura ela estouraria a altura e
+    seria cortada justamente na secao de privacidade, que e o motivo do
+    screenshot existir. Entao o fator e o menor dos dois.
+    """
+    target_w, target_h = size
+    scale = min(target_w / image.width, target_h / image.height)
+    scaled = image.resize((max(1, round(image.width * scale)),
+                           max(1, round(image.height * scale))), Image.LANCZOS)
 
     frame = Image.new("RGB", size, fill)
-    frame.paste(scaled, (0, (target_h - scaled.height) // 2))
+    frame.paste(scaled, ((target_w - scaled.width) // 2,
+                         (target_h - scaled.height) // 2))
     return frame
 
 
@@ -64,25 +71,32 @@ def main():
     out_dir = os.path.join("docs", "store-assets", "screenshots")
     os.makedirs(out_dir, exist_ok=True)
 
+    available = {os.path.splitext(f)[0].lower(): f
+                 for f in os.listdir(source) if f.lower().endswith(".png")}
+
     found = 0
-    for stem, name in SHOTS.items():
-        path = os.path.join(source, stem + ".png")
-        if not os.path.isfile(path):
-            print("%-12s ausente" % stem)
+    for name, aliases in SHOTS.items():
+        # Aceita o nome que o navegador deu ao arquivo, nao so o combinado.
+        match = next((available[a] for a in aliases if a in available), None)
+        if not match:
+            print("%-24s ausente (procurei por: %s)" % (name, ", ".join(aliases)))
             continue
         found += 1
+        path = os.path.join(source, match)
 
         image = Image.open(path).convert("RGB")
         fill = background(image)
-        cropped = image.crop((0, 0, image.width, round(image.height * (1 - TRIM_BOTTOM))))
+        trim = TRIM_BOTTOM if name in TRIMMED else 0.0
+        cropped = image.crop((0, 0, image.width, round(image.height * (1 - trim))))
 
         sizes = []
         for store, size in TARGETS.items():
             out = os.path.join(out_dir, "%s-%dx%d.png" % (name, size[0], size[1]))
             fit(cropped, size, fill).save(out, "PNG", optimize=True)
             sizes.append("%dx%d" % size)
-        print("%-12s %4dx%-4d -> %s  (fundo %s)"
-              % (stem, image.width, image.height, ", ".join(sizes), "#%02x%02x%02x" % fill))
+        print("%-24s %s  %4dx%-4d -> %s  (fundo %s)"
+              % (name, match, image.width, image.height,
+                 ", ".join(sizes), "#%02x%02x%02x" % fill))
 
     print("\n%d de %d quadros processados, em %s" % (found, len(SHOTS), out_dir))
     if found < len(SHOTS):

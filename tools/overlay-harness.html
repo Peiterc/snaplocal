@@ -48,6 +48,21 @@
       }
     };
   </script>
+  <script>
+    // O overlay usa shadow root fechado de propósito, então nem a página nem
+    // este harness alcançam o conteúdo. Para conseguir montar uma seleção sem
+    // depender de alguém arrastar o mouse igualzinho duas vezes, o harness
+    // força o modo aberto — só aqui, nunca no pacote.
+    if (new URLSearchParams(location.search).get('shot')) {
+      const attach = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = function (init) {
+        return attach.call(this, { ...init, mode: 'open' });
+      };
+      // Eventos de ponteiro sintéticos não têm pointerId ativo, e
+      // setPointerCapture lança NotFoundError nesse caso.
+      HTMLElement.prototype.setPointerCapture = function () {};
+    }
+  </script>
   <script src="../src/content/overlay.js"></script>
   <script>
     // ?instant=1 exercises the no-confirmation path, which is the shipping default.
@@ -60,6 +75,27 @@
       cancelAction: 'Cancel',
       dimensions: '{w} × {h}'
     }, { instant: new URLSearchParams(location.search).has('instant') });
+
+    // ?shot=area monta a seleção em volta do cartão de dados sensíveis, para o
+    // screenshot da loja sair sempre igual. As coordenadas vêm do elemento, não
+    // fixas, então funciona em qualquer tamanho de janela.
+    if (new URLSearchParams(location.search).get('shot') === 'area') {
+      const layer = document.getElementById('snaplocal-area-overlay')
+                            .shadowRoot.querySelector('.layer');
+      const box = document.querySelector('.card').getBoundingClientRect();
+      const pad = 18;
+      const send = (type, x, y) => layer.dispatchEvent(new PointerEvent(type, {
+        clientX: x, clientY: y, button: 0, buttons: type === 'pointerup' ? 0 : 1,
+        bubbles: true, pointerId: 1, isPrimary: true
+      }));
+      const x0 = box.left - pad, y0 = box.top - pad;
+      const x1 = box.right + pad, y1 = box.bottom + pad;
+      send('pointerdown', x0, y0);
+      send('pointermove', (x0 + x1) / 2, (y0 + y1) / 2);
+      send('pointermove', x1, y1);
+      send('pointerup', x1, y1);
+      document.getElementById('log').textContent = 'quadro: area';
+    }
   </script>
 </body>
 </html>
