@@ -144,6 +144,11 @@ abrir o código dela também. Num produto cujo argumento central é privacidade
 auditável, isso impede que alguém pegue a SnapLocal, adicione rastreamento e
 publique um clone fechado.
 
+## Submissão às lojas
+
+Textos prontos, justificativa das permissões, roteiro dos screenshots e onde
+criar as contas: [docs/store-listing.md](docs/store-listing.md).
+
 ## Privacidade
 
 A política está em [docs/privacy.html](docs/privacy.html), publicada via GitHub
