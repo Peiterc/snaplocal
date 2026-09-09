@@ -212,6 +212,14 @@ O Edge tem ainda três campos opcionais: bloco promocional pequeno (440×280),
 grande (1400×560) e URL de vídeo no YouTube. Dá para publicar sem eles, mas os
 blocos são o que a loja usa ao destacar uma extensão em carrossel ou coleção.
 
+Os dois blocos já existem, gerados por `tools/make-promo-tiles.py` a partir do
+mesmo logo dos ícones:
+
+| Arquivo | Onde entra |
+|---|---|
+| `docs/store-assets/promo-440x280.png` | bloco promocional pequeno |
+| `docs/store-assets/promo-1400x560.png` | bloco promocional grande |
+
 > ⚠️ **Nunca use dado real.** Screenshot de loja é público e permanente. Use
 > uma página fictícia — `tools/harness.html` do próprio repositório tem um
 > painel de conta falso, com CPF, token e conta bancária inventados, feito
