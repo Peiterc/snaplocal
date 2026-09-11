@@ -199,9 +199,14 @@ python tools/check-locales.py
 python tools/build.py
 ```
 
-Subir a versão para `1.0.1` em `src/manifest.json` **por último**, junto da
-submissão. Os screenshots não precisam ser refeitos: nenhuma correção muda a
-aparência do que eles mostram.
+Os screenshots não precisam ser refeitos: nenhuma correção muda a aparência do
+que eles mostram.
+
+> **A versão sobe no primeiro commit de código, não na submissão.** O plano
+> original mandava subir por último; isso estava errado. Enquanto o manifesto
+> diz `1.0.0`, o build local e o pacote publicado têm o mesmo número e código
+> diferente, e não há como distinguir os dois ao carregar sem pacote. O número
+> da versão existe justamente para isso.
 
 ---
 
