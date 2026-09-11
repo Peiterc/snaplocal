@@ -107,9 +107,13 @@ A página inteira já tem `reportFailure()` para exatamente isso.
 
 ## Fase 2 — robustez
 
-Nada aqui é visível no uso normal, mas cada um é uma falha esperando condição.
+2.1, 2.2 e 2.3 feitas. **2.4 continua aberta: não há Firefox nesta máquina.**
 
-### 2.1 — Histórico de undo sem teto
+2.1 e 2.2 foram verificadas no harness. A de seta e linha valia também para o
+lápis — as três guardam geometria em frações da própria caixa, então o mesmo
+defeito e a mesma correção servem para todas.
+
+### 2.1 ✅ — Histórico de undo sem teto
 
 Cada entrada de `pushHistory()` é o JSON de **todas** as formas, e um traço de
 lápis guarda centenas de pontos. Sessão longa cresce sem limite.
@@ -117,7 +121,7 @@ lápis guarda centenas de pontos. Sessão longa cresce sem limite.
 **Correção:** teto de ~100 entradas, descartando as mais antigas e ajustando o
 `historyIndex`.
 
-### 2.2 — Seta e linha invertem ao redimensionar
+### 2.2 ✅ — Seta e linha invertem ao redimensionar
 
 As frações `a`/`b` só são recalculadas no `pointermove` de desenho
 (`editor.js:578`). Arrastar uma alça para além da borda oposta normaliza a
@@ -125,7 +129,7 @@ caixa mas não a direção: a ponta da seta troca de lado.
 
 **Correção:** detectar a inversão no resize e trocar as frações junto.
 
-### 2.3 — Manifesto sem versão mínima
+### 2.3 ✅ — Manifesto sem versão mínima
 
 O código usa `storage.session` (Chrome 102+), `crypto.randomUUID` (92+) e
 `OffscreenCanvas` no service worker. Num Chromium antigo a extensão instala e
@@ -140,9 +144,15 @@ quebra em silêncio.
 verificado. O `strict_min_version` está em `128.0` por estimativa, não por
 teste.
 
-**Correção:** carregar `dist/snaplocal-firefox-1.0.1.zip` via `about:debugging`,
-exercitar os quatro modos de captura e o editor, e ajustar a versão mínima
-conforme o resultado. **Bloqueia a submissão à AMO**, nada mais.
+**Correção:** carregar `dist/snaplocal-firefox-1.0.1.zip` via `about:debugging`
+→ *Este Firefox* → *Carregar extensão temporária*, apontando para o
+`manifest.json` de `dist/firefox/`. Exercitar os quatro modos de captura e o
+editor, e ajustar `FIREFOX_MIN` em `tools/build.py` conforme o resultado.
+
+**Bloqueia a submissão à AMO**, nada mais — Edge e Chrome não dependem disto.
+
+Não há Firefox instalado nesta máquina. Se a AMO não for prioridade, dá para
+adiar sem custo: o pacote continua sendo gerado e o código não muda.
 
 ---
 

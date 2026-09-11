@@ -11,6 +11,7 @@ const textInput = document.getElementById('textInput');
 
 const MIN_SIZE = 6;    // image px below which a drawn region is discarded
 const HANDLE_PX = 9;   // screen px
+const HISTORY_LIMIT = 100;
 
 const PALETTE = ['#e11d48', '#f59e0b', '#facc15', '#22c55e',
                  '#2563eb', '#a855f7', '#111827', '#ffffff'];
@@ -192,11 +193,18 @@ function render() {
 
 /* ---------------- history ---------------- */
 
-/** A history entry carries the crop window too, so undoing a crop restores the
- *  discarded pixels instead of only the annotations. */
+/**
+ * A history entry carries the crop window too, so undoing a crop restores the
+ * discarded pixels instead of only the annotations.
+ *
+ * Entries are whole snapshots, and a pencil stroke holds hundreds of points, so
+ * the stack is capped: without it a long session grows without bound. A
+ * hundred steps is far past what anyone undoes by hand.
+ */
 function pushHistory() {
   history = history.slice(0, historyIndex + 1);
   history.push(JSON.stringify({ shapes: state.shapes, crop: state.crop }));
+  if (history.length > HISTORY_LIMIT) history = history.slice(-HISTORY_LIMIT);
   historyIndex = history.length - 1;
   syncToolbar();
 }
@@ -504,7 +512,15 @@ board.addEventListener('pointerdown', (event) => {
     const handle = hitHandle(point);
     if (handle) {
       const shape = selectedShape();
-      drag = { mode: 'resize', handle, shape, origin: boxOf(bctx, shape) };
+      drag = {
+        mode: 'resize', handle, shape, origin: boxOf(bctx, shape),
+        // Geometry stored as fractions reads against the *normalised* box, so
+        // dragging a handle past the opposite edge flips the box under it. Keep
+        // the starting fractions to mirror them when that happens.
+        a: shape.a && [...shape.a],
+        b: shape.b && [...shape.b],
+        pts: shape.pts && shape.pts.map((p) => [...p])
+      };
       return;
     }
     const shape = hitShape(point);
@@ -593,9 +609,24 @@ board.addEventListener('pointermove', (event) => {
     if (drag.handle.includes('n')) { h = o.y + o.h - point.y; y = point.y; }
     if (drag.handle.includes('s')) { h = point.y - o.y; }
     Object.assign(drag.shape, { x, y, w, h });
+    mirrorGeometry(drag, w < 0, h < 0);
   }
   render();
 });
+
+/**
+ * Mirrors fraction-based geometry when a resize turns the box inside out.
+ *
+ * Fractions are read against the normalised box, so once the box flips, what
+ * used to be its left edge is now its right. Without this an arrow dragged past
+ * its own tail would swap ends, and a scribble would come out reflected.
+ */
+function mirrorGeometry(drag, flipX, flipY) {
+  const at = (p) => [flipX ? 1 - p[0] : p[0], flipY ? 1 - p[1] : p[1]];
+  if (drag.a) drag.shape.a = at(drag.a);
+  if (drag.b) drag.shape.b = at(drag.b);
+  if (drag.pts) drag.shape.pts = drag.pts.map(at);
+}
 
 /** Freehand points are stored as fractions of the stroke's own bounding box
  *  so that moving and resizing the scribble needs no special case. */
