@@ -1,5 +1,9 @@
 # Plano da 1.0.1
 
+**Submetida ao Edge em 11/09/2026, em análise.** Fases 0 a 3 feitas e
+verificadas numa instalação real; só o item 2.4, o teste no Firefox, segue
+aberto — e ele bloqueia apenas a AMO.
+
 A 1.0.0 está publicada na Microsoft Edge Add-ons:
 <https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn>
 

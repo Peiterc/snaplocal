@@ -337,9 +337,10 @@ detalhes num relato de problema, e é ele que forma a URL pública da loja.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
-| 1.0.0 | Edge Add-ons | 09/09/2026 | **publicada em 11/09/2026** |
-| 1.0.0 | Chrome Web Store | — | não submetida |
-| 1.0.0 | Firefox AMO | — | não submetida |
+| 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
+| 1.0.0 | Edge Add-ons | 09/09/2026 | publicada em 11/09/2026 |
+| 1.0.1 | Chrome Web Store | — | não submetida |
+| 1.0.1 | Firefox AMO | — | não submetida |
 
 URL pública no Edge:
 <https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn>
