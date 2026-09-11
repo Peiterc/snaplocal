@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Применить обрезку" },
   "action_crop_cancel": { "message": "Отменить обрезку" },
 
+  "color_red": { "message": "Красный" },
+  "color_orange": { "message": "Оранжевый" },
+  "color_yellow": { "message": "Жёлтый" },
+  "color_green": { "message": "Зелёный" },
+  "color_blue": { "message": "Синий" },
+  "color_purple": { "message": "Фиолетовый" },
+  "color_black": { "message": "Чёрный" },
+  "color_white": { "message": "Белый" },
+
   "prop_color": { "message": "Цвет" },
   "prop_stroke_width": { "message": "Толщина" },
   "prop_fill": { "message": "Заливка" },

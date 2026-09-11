@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Zuschnitt anwenden" },
   "action_crop_cancel": { "message": "Zuschnitt abbrechen" },
 
+  "color_red": { "message": "Rot" },
+  "color_orange": { "message": "Orange" },
+  "color_yellow": { "message": "Gelb" },
+  "color_green": { "message": "Grün" },
+  "color_blue": { "message": "Blau" },
+  "color_purple": { "message": "Lila" },
+  "color_black": { "message": "Schwarz" },
+  "color_white": { "message": "Weiß" },
+
   "prop_color": { "message": "Farbe" },
   "prop_stroke_width": { "message": "Stärke" },
   "prop_fill": { "message": "Füllung" },

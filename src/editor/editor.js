@@ -1,5 +1,6 @@
 import { initI18n, applyI18n, t } from '../lib/i18n.js';
 import { drawShape, boxOf, measureText, textFont, norm, REGION_TOOLS, VECTOR_TOOLS } from './shapes.js';
+import { captureFilename } from '../lib/naming.js';
 
 const board = document.getElementById('board');
 const bctx = board.getContext('2d', { willReadFrequently: true });
@@ -13,8 +14,14 @@ const MIN_SIZE = 6;    // image px below which a drawn region is discarded
 const HANDLE_PX = 9;   // screen px
 const HISTORY_LIMIT = 100;
 
-const PALETTE = ['#e11d48', '#f59e0b', '#facc15', '#22c55e',
-                 '#2563eb', '#a855f7', '#111827', '#ffffff'];
+// Cada cor carrega o nome da sua chave de tradução: um botão de cor sem nome
+// acessível é anunciado como "botão" e nada mais, oito vezes seguidas.
+const PALETTE = [
+  ['#e11d48', 'color_red'], ['#f59e0b', 'color_orange'],
+  ['#facc15', 'color_yellow'], ['#22c55e', 'color_green'],
+  ['#2563eb', 'color_blue'], ['#a855f7', 'color_purple'],
+  ['#111827', 'color_black'], ['#ffffff', 'color_white']
+];
 
 const state = {
   tool: 'blur',
@@ -705,11 +712,16 @@ el('remove').addEventListener('click', () => {
 });
 
 const swatches = el('swatches');
-for (const color of PALETTE) {
+for (const [color, nameKey] of PALETTE) {
   const button = document.createElement('button');
   button.className = 'swatch';
   button.dataset.color = color;
   button.style.background = color;
+  // Por atributo, não por t() aqui: os swatches são criados no topo do módulo,
+  // antes de initI18n() rodar no boot, e nesse instante t() devolveria a chave.
+  // applyI18n() preenche os dois depois, como faz com o resto da interface.
+  button.dataset.i18nAria = nameKey;
+  button.dataset.i18nTitle = nameKey;
   button.addEventListener('click', () => setProp({ color }));
   swatches.append(button);
 }
@@ -795,13 +807,6 @@ function flatten() {
 
 const exportBlob = () => new Promise((resolve) => flatten().toBlob(resolve, 'image/png'));
 
-function filename() {
-  const pad = (n) => String(n).padStart(2, '0');
-  const d = new Date();
-  return `snaplocal-${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-       + `-${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}.png`;
-}
-
 function flash(message, isError = false) {
   toast.textContent = message;
   toast.classList.toggle('error', isError);
@@ -819,7 +824,7 @@ el('copy').addEventListener('click', async () => {
 });
 
 el('save').addEventListener('click', async () => {
-  const name = filename();
+  const name = captureFilename();
   let url;
   try {
     const { askSaveLocation = false } = await chrome.storage.local.get('askSaveLocation');

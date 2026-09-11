@@ -1,4 +1,4 @@
-import json, os, re, sys
+import glob, json, os, re, sys
 
 BASE = "src/_locales"
 REF = "en"
@@ -50,5 +50,34 @@ for loc in locales:
             print("  ERRO: %s com tags alteradas: %s" % (k, sorted(tags))); ok = False
     print("")
 
+def codigo_fonte():
+    texto = ""
+    for p in (glob.glob("src/**/*.js", recursive=True)
+              + glob.glob("src/**/*.html", recursive=True)
+              + ["src/manifest.json"]):
+        texto += open(p, encoding="utf-8").read()
+    return texto
+
+
+# Procura o nome da chave como texto solto, nao um padrao como t('chave').
+# Padrao erra: ctx_area chega ao t() por uma variavel, err_tab_changed nasce
+# dentro de um throw, e um aviso que manda apagar chave em uso e pior do que
+# aviso nenhum. Procurar o nome inteiro pode deixar passar uma chave morta que
+# aparece por coincidencia, e esse e o erro certo a cometer aqui.
+#
+# Aviso, nao falha: escrever as strings antes de implementar a tela foi
+# deliberado neste projeto e funcionou. O que isto evita e o acumulo silencioso.
+fonte = codigo_fonte()
+sem_uso = sorted(k for k in ref if k not in fonte)
+print()
+if sem_uso:
+    print("AVISO: %d chaves nunca aparecem em src/ (%d strings a espera de uso)"
+          % (len(sem_uso), len(sem_uso) * len(locales)))
+    for k in sem_uso:
+        print("   ", k)
+else:
+    print("Todas as chaves estao em uso.")
+
+print()
 print("RESULTADO: %s" % ("TUDO OK" if ok else "HA ERROS"))
 sys.exit(0 if ok else 1)

@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Applica ritaglio" },
   "action_crop_cancel": { "message": "Annulla ritaglio" },
 
+  "color_red": { "message": "Rosso" },
+  "color_orange": { "message": "Arancione" },
+  "color_yellow": { "message": "Giallo" },
+  "color_green": { "message": "Verde" },
+  "color_blue": { "message": "Blu" },
+  "color_purple": { "message": "Viola" },
+  "color_black": { "message": "Nero" },
+  "color_white": { "message": "Bianco" },
+
   "prop_color": { "message": "Colore" },
   "prop_stroke_width": { "message": "Spessore" },
   "prop_fill": { "message": "Riempimento" },

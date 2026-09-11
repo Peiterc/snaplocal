@@ -270,6 +270,39 @@
     "description": "Discards the crop rectangle."
   },
 
+  "color_red": {
+    "message": "Red",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_orange": {
+    "message": "Orange",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_yellow": {
+    "message": "Yellow",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_green": {
+    "message": "Green",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_blue": {
+    "message": "Blue",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_purple": {
+    "message": "Purple",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_black": {
+    "message": "Black",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+  "color_white": {
+    "message": "White",
+    "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
+  },
+
   "prop_color": {
     "message": "Color",
     "description": "Editor properties panel label."

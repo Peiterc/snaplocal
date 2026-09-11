@@ -156,11 +156,15 @@ adiar sem custo: o pacote continua sendo gerado e o código não muda.
 
 ---
 
-## Fase 3 — higiene
+## Fase 3 — higiene ✅
 
-Não muda nada para o usuário. Faz diferença para quem mantém.
+Feita. Uma correção mudou de forma ao ser implementada: os nomes das cores não
+podiam ser resolvidos com `t()` no lugar onde os swatches são criados, porque
+isso acontece no topo do módulo, antes de `initI18n()` rodar no boot — `t()`
+devolvia a própria chave. Passaram a usar `data-i18n-aria`, como o resto da
+interface.
 
-### 3.1 — Chaves de i18n sem uso
+### 3.1 ✅ — Chaves de i18n sem uso
 
 39 das 143 não são referenciadas em `src/`. Mas a maioria **não é lixo**: são
 recursos planejados (`export_format_*`, `opt_reset*`, `prop_opacity`) ou passam
@@ -172,17 +176,17 @@ a ser usadas pelas próprias correções acima — `opt_ask_location` pelo item 
 deliberado e funcionou. Decidir a remoção caso a caso, depois das Fases 0 a 2,
 quando a lista já tiver encolhido sozinha.
 
-### 3.2 — Swatches de cor sem nome acessível
+### 3.2 ✅ — Swatches de cor sem nome acessível
 
 Os oito botões de cor do editor não têm `aria-label`. Um leitor de tela anuncia
 "botão" oito vezes seguidas.
 
-### 3.3 — `captureName()` e `filename()` duplicados
+### 3.3 ✅ — `captureName()` e `filename()` duplicados
 
 Mesma lógica de nome de arquivo no service worker e no editor. Cabe em
 `lib/imaging.js` ou num `lib/naming.js`.
 
-### 3.4 — Miudezas
+### 3.4 ✅ — Miudezas
 
 - `import re` sem uso em `tools/build.py`
 - `document.title = t("appName")` com aspas duplas em `popup.js` e `options.js`,

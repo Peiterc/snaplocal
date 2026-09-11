@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Aplicar recorte" },
   "action_crop_cancel": { "message": "Cancelar recorte" },
 
+  "color_red": { "message": "Rojo" },
+  "color_orange": { "message": "Naranja" },
+  "color_yellow": { "message": "Amarillo" },
+  "color_green": { "message": "Verde" },
+  "color_blue": { "message": "Azul" },
+  "color_purple": { "message": "Morado" },
+  "color_black": { "message": "Negro" },
+  "color_white": { "message": "Blanco" },
+
   "prop_color": { "message": "Color" },
   "prop_stroke_width": { "message": "Grosor" },
   "prop_fill": { "message": "Relleno" },

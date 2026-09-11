@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Zastosuj przycięcie" },
   "action_crop_cancel": { "message": "Anuluj przycięcie" },
 
+  "color_red": { "message": "Czerwony" },
+  "color_orange": { "message": "Pomarańczowy" },
+  "color_yellow": { "message": "Żółty" },
+  "color_green": { "message": "Zielony" },
+  "color_blue": { "message": "Niebieski" },
+  "color_purple": { "message": "Fioletowy" },
+  "color_black": { "message": "Czarny" },
+  "color_white": { "message": "Biały" },
+
   "prop_color": { "message": "Kolor" },
   "prop_stroke_width": { "message": "Grubość" },
   "prop_fill": { "message": "Wypełnienie" },

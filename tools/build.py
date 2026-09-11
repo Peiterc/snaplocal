@@ -15,7 +15,6 @@ todos aplicados aqui e nenhum no código-fonte:
   3. A AMO exige um id de extensão declarado em browser_specific_settings.
 """
 import json
-import re
 import os
 import shutil
 import stat

@@ -106,4 +106,4 @@ document.getElementById('shortcuts').addEventListener('click', () => {
   chrome.tabs.create({ url: `${scheme}://extensions/shortcuts` });
 });
 
-document.title = t("appName");
+document.title = t('appName');

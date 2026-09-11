@@ -30,4 +30,4 @@ document.getElementById('settings').addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
 });
 
-document.title = t("appName");
+document.title = t('appName');

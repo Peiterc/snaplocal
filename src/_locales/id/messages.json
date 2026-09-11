@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Terapkan pangkas" },
   "action_crop_cancel": { "message": "Batalkan pangkas" },
 
+  "color_red": { "message": "Merah" },
+  "color_orange": { "message": "Oranye" },
+  "color_yellow": { "message": "Kuning" },
+  "color_green": { "message": "Hijau" },
+  "color_blue": { "message": "Biru" },
+  "color_purple": { "message": "Ungu" },
+  "color_black": { "message": "Hitam" },
+  "color_white": { "message": "Putih" },
+
   "prop_color": { "message": "Warna" },
   "prop_stroke_width": { "message": "Ketebalan" },
   "prop_fill": { "message": "Isian" },

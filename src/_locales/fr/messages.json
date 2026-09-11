@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Appliquer le rognage" },
   "action_crop_cancel": { "message": "Annuler le rognage" },
 
+  "color_red": { "message": "Rouge" },
+  "color_orange": { "message": "Orange" },
+  "color_yellow": { "message": "Jaune" },
+  "color_green": { "message": "Vert" },
+  "color_blue": { "message": "Bleu" },
+  "color_purple": { "message": "Violet" },
+  "color_black": { "message": "Noir" },
+  "color_white": { "message": "Blanc" },
+
   "prop_color": { "message": "Couleur" },
   "prop_stroke_width": { "message": "Épaisseur" },
   "prop_fill": { "message": "Remplissage" },

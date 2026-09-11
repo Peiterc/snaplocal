@@ -90,6 +90,15 @@
   "action_crop_apply": { "message": "Kırpmayı uygula" },
   "action_crop_cancel": { "message": "Kırpmayı iptal et" },
 
+  "color_red": { "message": "Kırmızı" },
+  "color_orange": { "message": "Turuncu" },
+  "color_yellow": { "message": "Sarı" },
+  "color_green": { "message": "Yeşil" },
+  "color_blue": { "message": "Mavi" },
+  "color_purple": { "message": "Mor" },
+  "color_black": { "message": "Siyah" },
+  "color_white": { "message": "Beyaz" },
+
   "prop_color": { "message": "Renk" },
   "prop_stroke_width": { "message": "Kalınlık" },
   "prop_fill": { "message": "Dolgu" },

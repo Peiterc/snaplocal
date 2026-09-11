@@ -1,5 +1,6 @@
 import { initI18n, t } from '../lib/i18n.js';
 import { cropCapture, stitchTiles } from '../lib/imaging.js';
+import { captureFilename } from '../lib/naming.js';
 
 /**
  * Pages where browsers refuse to run extensions. Hitting one is not a bug, so
@@ -43,13 +44,6 @@ async function activeTab() {
   if (!tab) throw new Error('err_no_active_tab');
   if (RESTRICTED.test(tab.url || '')) throw new Error('err_restricted_page');
   return tab;
-}
-
-function captureName() {
-  const pad = (n) => String(n).padStart(2, '0');
-  const d = new Date();
-  return `snaplocal-${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-       + `-${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}.png`;
 }
 
 async function openEditor(dataUrl, tab) {
@@ -225,7 +219,7 @@ async function handleAreaSelected(message, sender) {
 
   if (message.action === 'save') {
     const { askSaveLocation = false } = await chrome.storage.local.get('askSaveLocation');
-    await chrome.downloads.download({ url: cropped, filename: captureName(), saveAs: askSaveLocation });
+    await chrome.downloads.download({ url: cropped, filename: captureFilename(), saveAs: askSaveLocation });
     return;
   }
   await openEditor(cropped, tab);
