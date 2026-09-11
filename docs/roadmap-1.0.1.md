@@ -43,8 +43,11 @@ aprender a **dizer o motivo** — senão o erro novo seria tão mudo quanto o bu
 que ele corrige. `reportFailure` agora põe a mensagem no tooltip do ícone, o
 que melhora também a página inteira e a área.
 
-Falta verificar no Edge: 1.1, 1.2 e 1.4 dependem de APIs reais. O 1.3 foi
-verificado no harness — a classe acompanha o zoom em 33%, 100%, 195% e 51%.
+**Verificada no Edge em 11/09/2026**: a caixa "Perguntar onde salvar" abre o
+diálogo do Windows, o popup fecha na hora ao disparar o atraso, trocar de aba
+durante a contagem avisa em vez de capturar a página errada, e o texto do print
+está liso ao abrir o editor. O 1.4 não foi exercitado — depende de estourar a
+quota de captura, difícil de provocar de propósito.
 
 ### 1.1 ✅ — "Perguntar onde salvar" não existe na interface
 
