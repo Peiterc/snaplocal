@@ -3,15 +3,18 @@
 Extensão de captura de tela com anotação e borrão. Tudo local: sem conta, sem
 nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
-Estado atual: **1.0.0 em análise na Microsoft Edge Add-ons**, enviada em
-09/09/2026.
+**[Instalar no Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn)** · [Site do projeto](https://peiterc.github.io/snaplocal/) · [Política de privacidade](https://peiterc.github.io/snaplocal/privacy.html)
+
+Estado atual: **1.0.0 publicada na Microsoft Edge Add-ons** em 11/09/2026.
 
 As quatro capturas — área selecionada, parte visível, página inteira e com
 atraso — e o editor completo estão prontos: borrar, tarja, retângulo, elipse,
 seta, linha, lápis, marca-texto, texto, recorte, undo/redo e exportação. A
 interface vem em 11 idiomas.
 
-Chrome Web Store e Firefox AMO ainda não receberam submissão.
+Chrome Web Store e Firefox AMO ainda não receberam submissão. As correções
+previstas para a próxima versão estão em
+[docs/roadmap-1.0.1.md](docs/roadmap-1.0.1.md).
 
 ## Testar no Edge
 
@@ -130,8 +133,9 @@ BOM no arquivo ou `appDesc` acima de 132 caracteres.
   background script é o ponto a confirmar
 - o botão de doação fica para depois da 1.0; a string `about_donate` já existe no
   dicionário, mas o link está fora da interface enquanto não houver destino
-- o repositório precisa existir no GitHub para os links das Opções e a política
-  de privacidade responderem
+
+O plano completo da próxima versão está em
+[docs/roadmap-1.0.1.md](docs/roadmap-1.0.1.md).
 
 ## Licença
 

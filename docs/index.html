@@ -37,12 +37,15 @@
     background: var(--surface); border: 1px solid var(--border); color: var(--dim);
   }
 
-  .status {
-    margin: 32px 0; padding: 16px 20px; border-radius: 10px;
-    background: var(--accent-soft); border: 1px solid var(--border);
-    border-left: 3px solid var(--accent); font-size: 15px;
+  .install { margin: 34px 0 8px; display: flex; align-items: center;
+             gap: 22px; flex-wrap: wrap; }
+  .button {
+    display: inline-block; background: var(--accent); color: #fff;
+    text-decoration: none; font-size: 17px; font-weight: 600;
+    padding: 14px 28px; border-radius: 10px;
   }
-  .status p { margin: 0; }
+  .button:hover { filter: brightness(1.08); }
+  .note { margin: 0; color: var(--dim); font-size: 15px; }
 
   h2 { font-size: 24px; margin: 56px 0 14px; letter-spacing: -.01em; }
   h3 { font-size: 17px; margin: 0 0 6px; }
@@ -91,10 +94,10 @@
     <span class="badge">Free, no upsell</span>
   </div>
 
-  <div class="status">
-    <p><strong>Version 1.0.0 is under review</strong> at Microsoft Edge Add-ons.
-    The store link will appear here once it is published. Chrome Web Store and
-    Firefox AMO are next.</p>
+  <div class="install">
+    <a class="button" href="https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn">Add to Microsoft Edge</a>
+    <p class="note">Version 1.0.0, free and open source.<br>
+    Chrome Web Store and Firefox are next.</p>
   </div>
 
   <h2>Four ways to capture</h2>
