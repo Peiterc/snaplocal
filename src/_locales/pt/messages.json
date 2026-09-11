@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Esta página é demasiado longa para caber numa única imagem. Experimente capturar uma área selecionada." },
   "err_clipboard": { "message": "Não foi possível copiar para a área de transferência. A sua imagem está segura: experimente guardá-la." },
   "err_save_failed": { "message": "Não foi possível guardar o ficheiro." },
+  "err_tab_changed": { "message": "Mudou de separador durante a contagem, por isso nada foi capturado. Comece de novo no separador que pretende." },
   "err_generic": { "message": "Algo correu mal." },
 
   "common_ok": { "message": "OK" },

@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Ta strona jest za długa jak na jeden obraz. Spróbuj przechwycić zaznaczony obszar." },
   "err_clipboard": { "message": "Nie udało się skopiować do schowka. Twój obraz jest bezpieczny: spróbuj go zapisać." },
   "err_save_failed": { "message": "Nie udało się zapisać pliku." },
+  "err_tab_changed": { "message": "W trakcie odliczania przełączono kartę, więc nic nie zostało uchwycone. Zacznij ponownie na właściwej karcie." },
   "err_generic": { "message": "Coś poszło nie tak." },
 
   "common_ok": { "message": "OK" },

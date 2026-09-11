@@ -162,9 +162,13 @@ body.editor {
   display: block;
   background: #fff;
   box-shadow: var(--shadow);
-  /* Nothing here is a photo: keep edges sharp when zoomed past 100%. */
-  image-rendering: pixelated;
 }
+
+/* Nothing here is a photo, so past 100% the pixels should stay square instead
+   of being smeared. Below 100% the opposite is true: nearest-neighbour on a
+   downscale makes text crawl, and the editor opens fitted to the window, so
+   that is the state the user sees first. */
+#board.crisp { image-rendering: pixelated; }
 
 .stage:not([data-tool="move"]) #board { cursor: crosshair; }
 .stage[data-tool="text"] #board { cursor: text; }

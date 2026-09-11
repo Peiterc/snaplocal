@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Questa pagina è troppo lunga per stare in una sola immagine. Prova a catturare un'area selezionata." },
   "err_clipboard": { "message": "Impossibile copiare negli appunti. La tua immagine è al sicuro: prova a salvarla." },
   "err_save_failed": { "message": "Impossibile salvare il file." },
+  "err_tab_changed": { "message": "Hai cambiato scheda durante il conto alla rovescia, quindi non è stato catturato nulla. Riprova sulla scheda che ti interessa." },
   "err_generic": { "message": "Qualcosa è andato storto." },
 
   "common_ok": { "message": "OK" },

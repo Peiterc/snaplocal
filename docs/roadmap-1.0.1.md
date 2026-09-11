@@ -12,7 +12,7 @@ publicamente desatualizadas. Depois a **Fase 1**, que é o miolo da 1.0.1.
 
 ---
 
-## Fase 0 — a publicação (sem código)
+## Fase 0 — a publicação (sem código) ✅
 
 A extensão está no ar e nada no projeto aponta para ela.
 
@@ -35,11 +35,18 @@ preenchimento do formulário.
 
 ---
 
-## Fase 1 — bugs que o usuário sente
+## Fase 1 — bugs que o usuário sente ✅
 
-O miolo da 1.0.1. Quatro itens, todos confirmados no código.
+Feita. Quatro itens, mais uma consequência que apareceu ao implementar: como a
+captura com atraso passou a rodar destacada do popup, o `!` no ícone precisou
+aprender a **dizer o motivo** — senão o erro novo seria tão mudo quanto o bug
+que ele corrige. `reportFailure` agora põe a mensagem no tooltip do ícone, o
+que melhora também a página inteira e a área.
 
-### 1.1 — "Perguntar onde salvar" não existe na interface
+Falta verificar no Edge: 1.1, 1.2 e 1.4 dependem de APIs reais. O 1.3 foi
+verificado no harness — a classe acompanha o zoom em 33%, 100%, 195% e 51%.
+
+### 1.1 ✅ — "Perguntar onde salvar" não existe na interface
 
 `askSaveLocation` é lido em dois lugares e nunca pode ser ligado:
 
@@ -54,7 +61,7 @@ nos 11 idiomas e nunca aparece na tela. Resultado: a opção é sempre `false`.
 **Correção:** um checkbox na seção Captura, espelhando o de `hideFixed`, mais
 leitura e gravação em `options.js`. É o mesmo padrão já usado ali.
 
-### 1.2 — Captura com atraso trava o popup e quebra se a aba mudar
+### 1.2 ✅ — Captura com atraso trava o popup e quebra se a aba mudar
 
 Dois defeitos no mesmo fluxo.
 
@@ -74,7 +81,7 @@ abortar com mensagem específica.
 > Requer **uma chave nova** (`err_tab_changed`) nos 11 idiomas. É a única string
 > nova prevista nesta versão.
 
-### 1.3 — O editor mostra o print pior do que ele é
+### 1.3 ✅ — O editor mostra o print pior do que ele é
 
 `#board` tem `image-rendering: pixelated` sem condição
 (`editor/editor.css:166`). A regra existe para o zoom acima de 100%, mas o
@@ -86,7 +93,7 @@ O usuário abre a ferramenta e vê a captura degradada logo no primeiro contato.
 **Correção:** alternar uma classe em `applyZoom()` conforme `state.zoom >= 1`, e
 mover a regra para essa classe.
 
-### 1.4 — Falha na captura de área é silenciosa
+### 1.4 ✅ — Falha na captura de área é silenciosa
 
 Em `service-worker.js`, o `.catch` de `handleAreaSelected` só limpa o badge. Se
 `captureVisibleTab` estourar a quota ou o recorte falhar, o overlay some e **não

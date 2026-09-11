@@ -585,6 +585,10 @@
     "message": "Could not save the file.",
     "description": "Error shown when the download fails."
   },
+  "err_tab_changed": {
+    "message": "You switched tabs during the countdown, so nothing was captured. Start the capture again on the tab you want.",
+    "description": "Shown when the active tab changes while a delayed capture is counting down. The capture is aborted rather than photographing the wrong page."
+  },
   "err_generic": {
     "message": "Something went wrong.",
     "description": "Last-resort error message."

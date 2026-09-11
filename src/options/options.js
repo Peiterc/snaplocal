@@ -40,13 +40,15 @@ async function buildLanguagePicker(selected) {
 
 const areaSelect = document.getElementById('areaConfirm');
 const hideFixedInput = document.getElementById('hideFixed');
+const askSaveInput = document.getElementById('askSaveLocation');
 
 const settings = await chrome.storage.local.get({
   language: 'auto',
   theme: 'auto',
   delaySeconds: 3,
   areaConfirm: 'instant',
-  hideFixed: true
+  hideFixed: true,
+  askSaveLocation: false
 });
 
 await initI18n();
@@ -58,6 +60,7 @@ themeSelect.value = settings.theme;
 delaySelect.value = String(settings.delaySeconds);
 areaSelect.value = settings.areaConfirm;
 hideFixedInput.checked = settings.hideFixed;
+askSaveInput.checked = settings.askSaveLocation;
 
 languageSelect.addEventListener('change', async () => {
   await chrome.storage.local.set({ language: languageSelect.value });
@@ -88,6 +91,11 @@ areaSelect.addEventListener('change', async () => {
 
 hideFixedInput.addEventListener('change', async () => {
   await chrome.storage.local.set({ hideFixed: hideFixedInput.checked });
+  flashSaved();
+});
+
+askSaveInput.addEventListener('change', async () => {
+  await chrome.storage.local.set({ askSaveLocation: askSaveInput.checked });
   flashSaved();
 });
 

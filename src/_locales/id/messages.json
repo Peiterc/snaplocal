@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Halaman ini terlalu panjang untuk satu gambar. Coba tangkap area terpilih saja." },
   "err_clipboard": { "message": "Tidak bisa menyalin ke papan klip. Gambar Anda aman: coba simpan saja." },
   "err_save_failed": { "message": "Tidak bisa menyimpan berkas." },
+  "err_tab_changed": { "message": "Anda berpindah tab saat hitung mundur, jadi tidak ada yang ditangkap. Mulai lagi di tab yang Anda inginkan." },
   "err_generic": { "message": "Terjadi kesalahan." },
 
   "common_ok": { "message": "OK" },

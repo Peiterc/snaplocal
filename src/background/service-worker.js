@@ -136,13 +136,24 @@ function fpRestore() {
   delete globalThis.__snapLocalFull;
 }
 
-/** The full page run is detached from the popup, so a late failure has nowhere
- *  to report to: the badge is the only channel left. */
-async function reportFailure() {
+/**
+ * A detached capture has no popup left to report to, so the toolbar icon is the
+ * only channel. The badge catches the eye; the tooltip carries the reason,
+ * because a bare "!" tells the user nothing about what to do differently.
+ */
+async function reportFailure(error) {
+  const message = String(error?.message ?? '');
+  const key = message.startsWith('err_') ? message : 'err_capture_failed';
+  await initI18n();
+
   await chrome.action.setBadgeBackgroundColor({ color: '#b42318' });
   await chrome.action.setBadgeText({ text: '!' });
-  await wait(4000);
+  await chrome.action.setTitle({ title: `${t('appName')} — ${t(key)}` });
+
+  await wait(6000);
   await chrome.action.setBadgeText({ text: '' });
+  // Empty restores the name from the manifest.
+  await chrome.action.setTitle({ title: '' });
 }
 
 async function captureFullPage() {
@@ -220,8 +231,8 @@ async function handleAreaSelected(message, sender) {
   await openEditor(cropped, tab);
 }
 
-async function captureVisible() {
-  const tab = await activeTab();
+async function captureVisible(known) {
+  const tab = known ?? await activeTab();
   const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, { format: 'png' });
 
   // storage.session keeps the capture out of disk and dies with the browser.
@@ -232,25 +243,42 @@ async function captureVisible() {
 
 async function captureDelayed() {
   const { delaySeconds = 3 } = await chrome.storage.local.get('delaySeconds');
-  await activeTab(); // fail fast, before making the user wait
+  // The tab is pinned before the countdown, not after it. captureVisibleTab
+  // always photographs whatever is active *now*, so without this the user could
+  // switch tabs mid-countdown and get a picture of the wrong page — or a bare
+  // failure, since activeTab was never granted on the new one.
+  const tab = await activeTab();
+  await chrome.action.setBadgeBackgroundColor({ color: '#2563eb' });
 
-  for (let left = delaySeconds; left > 0; left--) {
-    await chrome.action.setBadgeText({ text: String(left) });
-    await new Promise((r) => setTimeout(r, 1000));
+  try {
+    for (let left = delaySeconds; left > 0; left--) {
+      await chrome.action.setBadgeText({ text: String(left) });
+      await wait(1000);
+    }
+  } finally {
+    await chrome.action.setBadgeText({ text: '' });
   }
-  await chrome.action.setBadgeText({ text: '' });
-  await captureVisible();
+
+  const current = await activeTab();
+  if (current.id !== tab.id) throw new Error('err_tab_changed');
+  await captureVisible(current);
 }
 
 async function run(action) {
   try {
     if (action === 'capture-visible') return { ok: true, ...(await captureVisible()) };
-    if (action === 'capture-delay') return { ok: true, ...(await captureDelayed()) };
     if (action === 'capture-area') return { ok: true, ...(await captureArea()) };
+
+    // These two take seconds. Both check the page first, so a restricted tab
+    // still reports through the popup, and only then detach: holding the popup
+    // open for the whole countdown or scroll would just look frozen. The badge
+    // reports progress, and reportFailure reports anything that goes wrong.
+    if (action === 'capture-delay') {
+      await activeTab();
+      captureDelayed().catch(reportFailure);
+      return { ok: true };
+    }
     if (action === 'capture-fullpage') {
-      // Fail fast on a page that cannot be captured, then let the scrolling run
-      // in the background: it takes seconds, and holding the popup open for all
-      // of it would just look frozen. The badge reports progress instead.
       await activeTab();
       captureFullPage().catch(reportFailure);
       return { ok: true };
@@ -272,7 +300,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     // The overlay waits for this reply before removing itself, so the page is
     // left untouched only once the capture has actually been taken.
     handleAreaSelected(msg, sender)
-      .catch(() => chrome.action.setBadgeText({ text: '' }))
+      .catch(reportFailure)
       .then(() => sendResponse({ ok: true }));
     return true;
   }

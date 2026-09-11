@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Cette page est trop longue pour tenir dans une seule image. Essayez plutôt de capturer une zone sélectionnée." },
   "err_clipboard": { "message": "Impossible de copier dans le presse-papiers. Votre image n'est pas perdue : essayez de l'enregistrer." },
   "err_save_failed": { "message": "Impossible d'enregistrer le fichier." },
+  "err_tab_changed": { "message": "Vous avez changé d'onglet pendant le compte à rebours, donc rien n'a été capturé. Relancez la capture sur l'onglet voulu." },
   "err_generic": { "message": "Une erreur s'est produite." },
 
   "common_ok": { "message": "OK" },

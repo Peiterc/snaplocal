@@ -310,6 +310,7 @@ function setProp(patch, commit = true) {
 function applyZoom() {
   board.style.width = `${board.width * state.zoom}px`;
   board.style.height = `${board.height * state.zoom}px`;
+  board.classList.toggle('crisp', state.zoom >= 1);
   syncToolbar();
   render();
   if (editing) placeTextInput();

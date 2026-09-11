@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Esta página é longa demais para virar uma imagem só. Tente capturar uma área selecionada." },
   "err_clipboard": { "message": "Não foi possível copiar para a área de transferência. Sua imagem está segura: tente salvá-la." },
   "err_save_failed": { "message": "Não foi possível salvar o arquivo." },
+  "err_tab_changed": { "message": "Você trocou de aba durante a contagem, então nada foi capturado. Comece de novo na aba que você quer." },
   "err_generic": { "message": "Algo deu errado." },
 
   "common_ok": { "message": "OK" },

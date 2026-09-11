@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Bu sayfa tek bir görüntüye sığmayacak kadar uzun. Bunun yerine seçili bir alanı çekmeyi deneyin." },
   "err_clipboard": { "message": "Panoya kopyalanamadı. Görüntünüz güvende: kaydetmeyi deneyin." },
   "err_save_failed": { "message": "Dosya kaydedilemedi." },
+  "err_tab_changed": { "message": "Geri sayım sırasında sekme değiştirdiniz, bu yüzden hiçbir şey çekilmedi. İstediğiniz sekmede yeniden başlatın." },
   "err_generic": { "message": "Bir şeyler ters gitti." },
 
   "common_ok": { "message": "Tamam" },

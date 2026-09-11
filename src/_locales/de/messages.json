@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Diese Seite ist zu lang für ein einzelnes Bild. Nimm stattdessen einen gewählten Bereich auf." },
   "err_clipboard": { "message": "Kopieren in die Zwischenablage nicht möglich. Dein Bild ist sicher: Versuche, es zu speichern." },
   "err_save_failed": { "message": "Die Datei konnte nicht gespeichert werden." },
+  "err_tab_changed": { "message": "Während des Countdowns wurde der Tab gewechselt, deshalb wurde nichts aufgenommen. Starte die Aufnahme erneut im gewünschten Tab." },
   "err_generic": { "message": "Etwas ist schiefgelaufen." },
 
   "common_ok": { "message": "OK" },

@@ -189,6 +189,7 @@
   "err_page_too_large": { "message": "Esta página es demasiado larga para una sola imagen. Prueba a capturar un área seleccionada." },
   "err_clipboard": { "message": "No se ha podido copiar al portapapeles. Tu imagen está a salvo: prueba a guardarla." },
   "err_save_failed": { "message": "No se ha podido guardar el archivo." },
+  "err_tab_changed": { "message": "Cambiaste de pestaña durante la cuenta atrás, así que no se capturó nada. Empieza de nuevo en la pestaña que quieras." },
   "err_generic": { "message": "Algo ha salido mal." },
 
   "common_ok": { "message": "Aceptar" },
