@@ -39,9 +39,16 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.language) buildMenus();
 });
 
-async function activeTab() {
+/** The active tab, whatever it is. Separate from activeTab() because the
+ *  delayed capture needs to know *which* tab it is before judging it. */
+async function currentTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab) throw new Error('err_no_active_tab');
+  return tab;
+}
+
+async function activeTab() {
+  const tab = await currentTab();
   if (RESTRICTED.test(tab.url || '')) throw new Error('err_restricted_page');
   return tab;
 }
@@ -146,8 +153,10 @@ async function reportFailure(error) {
 
   await wait(6000);
   await chrome.action.setBadgeText({ text: '' });
-  // Empty restores the name from the manifest.
-  await chrome.action.setTitle({ title: '' });
+  // Restores the name explicitly. Passing an empty string here would be a
+  // guess: the reference documents no reset value for setTitle, so '' may well
+  // write an empty tooltip that outlives the failure for the whole session.
+  await chrome.action.setTitle({ title: t('appName') });
 }
 
 async function captureFullPage() {
@@ -253,8 +262,14 @@ async function captureDelayed() {
     await chrome.action.setBadgeText({ text: '' });
   }
 
-  const current = await activeTab();
+  // Which tab first, then whether it can be captured. Validating the URL up
+  // front would answer "this page cannot be captured" when the user switched to
+  // a browser page mid-countdown — true, but the wrong thing to tell them,
+  // since what they need to do differently is not switch tabs.
+  const current = await currentTab();
   if (current.id !== tab.id) throw new Error('err_tab_changed');
+  // Same tab, but it may have navigated somewhere restricted while waiting.
+  if (RESTRICTED.test(current.url || '')) throw new Error('err_restricted_page');
   await captureVisible(current);
 }
 
