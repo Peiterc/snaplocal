@@ -350,6 +350,13 @@ A AMO exige dois itens que as outras lojas não pedem, ambos já no build:
 - Nenhuma atribuição a `innerHTML`. A validação sinaliza mesmo template
   estático, então o overlay monta o shadow root nó a nó.
 
+**Dois avisos da validação são esperados e não devem ser "corrigidos".** O
+`data_collection_permissions` só é entendido a partir do Firefox 140 (142 no
+Android), e o piso declarado é 115. A chave é inerte nas versões anteriores —
+por isso o validador a trata como aviso e não erro. Subir o piso para 140
+limparia o relatório ao custo de excluir todo mundo entre 115 e 139, incluindo
+quem usa ESR.
+
 URL pública no Edge:
 <https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn>
 

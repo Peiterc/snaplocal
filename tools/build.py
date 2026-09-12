@@ -46,6 +46,13 @@ GECKO_ID = "snaplocal@peiterc.github.io"
 # Estava em 128 por estimativa, o que excluía de graça quem está entre 115 e
 # 127. A validação da AMO reclama se este número ficar abaixo do que o
 # manifesto exige, então ele é conferível na submissão.
+#
+# A validação emite dois avisos aqui, e eles são esperados: o
+# data_collection_permissions abaixo só é entendido a partir do Firefox 140
+# (142 no Android). Não subir o piso para 140 é deliberado. A chave é inerte
+# nas versões antigas — o validador a trata como aviso, não erro, justamente
+# porque não quebra instalação — e subir custaria todo mundo entre 115 e 139,
+# incluindo quem está em ESR. Alcance real vale mais que relatório limpo.
 FIREFOX_MIN = "115.0"
 
 SHIM = """/**
