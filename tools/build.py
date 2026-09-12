@@ -127,16 +127,23 @@ def firefox_manifest(manifest):
 
 
 def inject_shim(html_path, out_root):
-    """Carrega o shim como script clássico antes de qualquer módulo da página."""
+    """Carrega o shim como script clássico antes de qualquer módulo da página.
+
+    Em binário de propósito. Em modo texto o Windows traduz \\n para \\r\\n na
+    escrita, então o build reescrevia o arquivo inteiro com outra quebra de
+    linha: um `diff -r` entre o fonte e o pacote acusava as 180 linhas do HTML
+    em vez da única que mudou, e o mesmo fonte gerava bytes diferentes conforme
+    o sistema de quem compila.
+    """
     rel = "/".join([".."] * (len(html_path.relative_to(out_root).parts) - 1)) or "."
-    text = html_path.read_text(encoding="utf-8")
-    tag = f'\n  <script src="{rel}/{SHIM_PATH}"></script>'
-    if '<meta charset="utf-8">' not in text:
+    raw = html_path.read_bytes().decode("utf-8")
+    # A linha inserida segue a convenção do próprio arquivo.
+    newline = "\r\n" if "\r\n" in raw else "\n"
+    anchor = '<meta charset="utf-8">'
+    if anchor not in raw:
         fail(f"{html_path.name} sem <meta charset>, não sei onde inserir o shim")
-    html_path.write_text(
-        text.replace('<meta charset="utf-8">', '<meta charset="utf-8">' + tag, 1),
-        encoding="utf-8",
-    )
+    tag = f'{newline}  <script src="{rel}/{SHIM_PATH}"></script>'
+    html_path.write_bytes(raw.replace(anchor, anchor + tag, 1).encode("utf-8"))
 
 
 def build(target, make_zip):
@@ -148,13 +155,16 @@ def build(target, make_zip):
     manifest = json.loads((SRC / "manifest.json").read_text(encoding="utf-8"))
 
     if target == "firefox":
-        (out / SHIM_PATH).write_text(SHIM, encoding="utf-8")
+        (out / SHIM_PATH).write_bytes(SHIM.encode("utf-8"))
         for html in sorted(out.rglob("*.html")):
             inject_shim(html, out)
         manifest = firefox_manifest(manifest)
 
-    (out / "manifest.json").write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    # Binário pelo mesmo motivo do inject_shim: em modo texto o Windows
+    # traduziria cada \n para \r\n, e o mesmo fonte geraria um pacote com bytes
+    # diferentes conforme o sistema de quem compila.
+    (out / "manifest.json").write_bytes(
+        (json.dumps(manifest, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
     )
 
     files = sorted(p for p in out.rglob("*") if p.is_file())
