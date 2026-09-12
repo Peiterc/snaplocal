@@ -1,8 +1,7 @@
 # Plano da 1.0.1
 
-**Submetida ao Edge em 11/09/2026, em análise.** Fases 0 a 3 feitas e
-verificadas numa instalação real; só o item 2.4, o teste no Firefox, segue
-aberto — e ele bloqueia apenas a AMO.
+**Submetida ao Edge em 11/09/2026, em análise. Plano concluído**: as quatro
+fases feitas e verificadas em navegador real, incluindo o Firefox.
 
 A 1.0.0 está publicada na Microsoft Edge Add-ons:
 <https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn>
@@ -112,9 +111,9 @@ A página inteira já tem `reportFailure()` para exatamente isso.
 
 ---
 
-## Fase 2 — robustez
+## Fase 2 — robustez ✅
 
-2.1, 2.2 e 2.3 feitas. **2.4 continua aberta: não há Firefox nesta máquina.**
+Feita.
 
 2.1 e 2.2 foram verificadas no harness. A de seta e linha valia também para o
 lápis — as três guardam geometria em frações da própria caixa, então o mesmo
@@ -145,7 +144,7 @@ quebra em silêncio.
 **Correção:** `"minimum_chrome_version": "102"`. Aproveitar e adicionar
 `homepage_url`, que agora existe.
 
-### 2.4 — Firefox nunca foi carregado num Firefox
+### 2.4 ✅ — Firefox nunca foi carregado num Firefox
 
 `background.type: "module"` é o maior risco do pacote AMO e segue não
 verificado. O `strict_min_version` está em `128.0` por estimativa, não por
@@ -156,10 +155,17 @@ teste.
 `manifest.json` de `dist/firefox/`. Exercitar os quatro modos de captura e o
 editor, e ajustar `FIREFOX_MIN` em `tools/build.py` conforme o resultado.
 
-**Bloqueia a submissão à AMO**, nada mais — Edge e Chrome não dependem disto.
+**Verificado no Firefox 155.0.1 em 11/09/2026.** A extensão carregou, o popup
+abriu traduzido — o que prova o shim `chrome = browser` —, e os quatro modos de
+captura mais o editor funcionaram. `background.type: "module"` era o maior risco
+do pacote e está resolvido.
 
-Não há Firefox instalado nesta máquina. Se a AMO não for prioridade, dá para
-adiar sem custo: o pacote continua sendo gerado e o código não muda.
+**O `strict_min_version` foi corrigido de `128.0` para `115.0`.** O 128 era
+estimativa; o 115 vem dos dados de compatibilidade do MDN, onde
+`storage.session` é o gargalo entre as APIs que a extensão usa. O número não foi
+testado num Firefox 115 — testar exigiria instalar uma versão antiga — mas
+deriva de compatibilidade documentada em vez de palpite, e a validação da AMO
+reclama se ficar abaixo do que o manifesto exige.
 
 ---
 

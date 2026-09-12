@@ -33,9 +33,20 @@ TARGETS = ("edge", "chrome", "firefox")
 # Trocar pelo id definitivo quando o repositório existir; a AMO amarra o id ao
 # add-on para sempre, então mudá-lo depois cria uma extensão nova.
 GECKO_ID = "snaplocal@peiterc.github.io"
-# ES modules em background script exigem Firefox recente. Confirmar num Firefox
-# de verdade antes de submeter: é o único ponto do build ainda não verificado.
-FIREFOX_MIN = "128.0"
+# Derivado das APIs que a extensão usa, não estimado. Pelos dados de
+# compatibilidade do MDN, o piso de cada uma é:
+#
+#   storage.session          115   <- o gargalo
+#   background.type module   112
+#   action.setBadgeText      109
+#   scripting.executeScript  102
+#   tabs.captureVisibleTab    47
+#   downloads.download        47
+#
+# Estava em 128 por estimativa, o que excluía de graça quem está entre 115 e
+# 127. A validação da AMO reclama se este número ficar abaixo do que o
+# manifesto exige, então ele é conferível na submissão.
+FIREFOX_MIN = "115.0"
 
 SHIM = """/**
  * Firefox expõe as APIs com promise em `browser`; o namespace `chrome` dele é

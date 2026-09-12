@@ -129,8 +129,6 @@ BOM no arquivo ou `appDesc` acima de 132 caracteres.
 
 - alemão, russo, polonês, turco e indonésio precisam de revisão nativa,
   principalmente o diálogo de aviso do blur (`blur_warning_*`)
-- o pacote do Firefox nunca foi carregado num Firefox de verdade: ES module em
-  background script é o ponto a confirmar
 - o botão de doação fica para depois da 1.0; a string `about_donate` já existe no
   dicionário, mas o link está fora da interface enquanto não houver destino
 
