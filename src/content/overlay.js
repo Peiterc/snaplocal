@@ -64,39 +64,47 @@
     host.id = HOST_ID;
     host.style.cssText = 'all:initial;position:fixed;inset:0;z-index:2147483647;';
     const root = host.attachShadow({ mode: 'closed' });
-    root.innerHTML = `
-      <style>${CSS}</style>
-      <div class="layer">
-        <div class="dim"></div>
-        <div class="cross v"></div>
-        <div class="cross h"></div>
-        <div class="hint">
-          <b></b><span></span><span></span>
-        </div>
-        <div class="sel" hidden><div class="size"></div></div>
-        <div class="bar" hidden>
-          <button class="cancel"></button>
-          <button class="save"></button>
-          <button class="primary capture"></button>
-        </div>
-      </div>`;
+
+    // Montado nó a nó em vez de por innerHTML. O template era estático e não
+    // levava dado do usuário, mas a validação da AMO sinaliza a atribuição
+    // mesmo assim, e um aviso de segurança numa extensão que se vende como
+    // auditável custa mais do que este punhado de linhas.
+    const make = (tag, className, text) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    };
+
+    const style = make('style');
+    style.textContent = CSS;
+
+    const dim = make('div', 'dim');
+    const crossV = make('div', 'cross v');
+    const crossH = make('div', 'cross h');
+
+    const hint = make('div', 'hint');
+    hint.append(make('b', null, strings.hint),
+                make('span', null, strings.fullscreen),
+                make('span', null, strings.cancel));
+
+    const size = make('div', 'size');
+    const sel = make('div', 'sel');
+    sel.hidden = true;
+    sel.append(size);
+
+    const cancelButton = make('button', 'cancel', strings.cancelAction);
+    const saveButton = make('button', 'save', strings.save);
+    const captureButton = make('button', 'primary capture', strings.capture);
+    const bar = make('div', 'bar');
+    bar.hidden = true;
+    bar.append(cancelButton, saveButton, captureButton);
+
+    const layer = make('div', 'layer');
+    layer.append(dim, crossV, crossH, hint, sel, bar);
+
+    root.append(style, layer);
     document.documentElement.append(host);
-
-    const $ = (sel) => root.querySelector(sel);
-    const dim = $('.dim');
-    const sel = $('.sel');
-    const size = $('.size');
-    const bar = $('.bar');
-    const hint = $('.hint');
-    const crossV = $('.cross.v');
-    const crossH = $('.cross.h');
-
-    hint.querySelector('b').textContent = strings.hint;
-    hint.querySelectorAll('span')[0].textContent = strings.fullscreen;
-    hint.querySelectorAll('span')[1].textContent = strings.cancel;
-    $('.capture').textContent = strings.capture;
-    $('.save').textContent = strings.save;
-    $('.cancel').textContent = strings.cancelAction;
 
     let start = null;
     let rect = null;
@@ -169,19 +177,19 @@
       paint();
     }
 
-    $('.layer').addEventListener('pointerdown', (event) => {
+    layer.addEventListener('pointerdown', (event) => {
       if (event.button !== 0 || done) return;
       if (bar.contains(event.composedPath()[0])) return;
       event.preventDefault();
       bar.hidden = true;
       start = { x: event.clientX, y: event.clientY };
       rect = { x: start.x, y: start.y, w: 0, h: 0 };
-      $('.layer').setPointerCapture(event.pointerId);
+      layer.setPointerCapture(event.pointerId);
     });
 
-    $('.layer').addEventListener('pointermove', onMove);
+    layer.addEventListener('pointermove', onMove);
 
-    $('.layer').addEventListener('pointerup', () => {
+    layer.addEventListener('pointerup', () => {
       if (!start) return;
       start = null;
       crossV.hidden = crossH.hidden = true;
@@ -198,9 +206,9 @@
       else placeBar();
     });
 
-    $('.capture').addEventListener('click', () => confirm('edit'));
-    $('.save').addEventListener('click', () => confirm('save'));
-    $('.cancel').addEventListener('click', close);
+    captureButton.addEventListener('click', () => confirm('edit'));
+    saveButton.addEventListener('click', () => confirm('save'));
+    cancelButton.addEventListener('click', close);
 
     function onKey(event) {
       if (done) return;

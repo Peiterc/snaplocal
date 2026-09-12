@@ -105,7 +105,16 @@ def firefox_manifest(manifest):
         "type": "module",
     }
     manifest["browser_specific_settings"] = {
-        "gecko": {"id": GECKO_ID, "strict_min_version": FIREFOX_MIN}
+        "gecko": {
+            "id": GECKO_ID,
+            "strict_min_version": FIREFOX_MIN,
+            # Obrigatório para toda extensão nova na AMO desde 2025: o Firefox
+            # mostra ao usuário, na instalação, o que a extensão coleta.
+            # "none" é a declaração de que não coleta nada — que aqui é
+            # literalmente verdade, e a mesma coisa que a política de
+            # privacidade e o formulário do Chrome já afirmam.
+            "data_collection_permissions": {"required": ["none"]}
+        }
     }
     return manifest
 

@@ -337,10 +337,18 @@ detalhes num relato de problema, e é ele que forma a URL pública da loja.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.0.2 | Firefox AMO | — | a submeter |
 | 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
 | 1.0.0 | Edge Add-ons | 09/09/2026 | publicada em 11/09/2026 |
-| 1.0.1 | Chrome Web Store | — | não submetida |
-| 1.0.1 | Firefox AMO | — | não submetida |
+| 1.0.2 | Chrome Web Store | — | não submetida |
+
+A AMO exige dois itens que as outras lojas não pedem, ambos já no build:
+
+- `data_collection_permissions` em `browser_specific_settings.gecko`,
+  obrigatório para toda extensão nova. O valor é `{"required": ["none"]}` — a
+  declaração de que não se coleta nada, que aqui é literalmente verdade.
+- Nenhuma atribuição a `innerHTML`. A validação sinaliza mesmo template
+  estático, então o overlay monta o shadow root nó a nó.
 
 URL pública no Edge:
 <https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn>
