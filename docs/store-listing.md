@@ -303,12 +303,13 @@ rejeição.
 python tools/build.py
 ```
 
-- [ ] `GECKO_ID` definitivo em `tools/build.py` — **permanente na AMO**
+- [x] `GECKO_ID` definitivo em `tools/build.py` — **permanente na AMO**
 - [x] Ícones definitivos e logo 300×300 em `docs/store-assets/`
-- [x] Versão `1.0.0` no `src/manifest.json`
-- [ ] Pacote do Firefox carregado num Firefox real — ES module em background
-      script ainda não foi confirmado
-- [ ] Política de privacidade respondendo na URL
+- [x] Versão certa no `src/manifest.json` — sobe no primeiro commit de código
+      *depois* de uma publicação, não na hora de submeter
+- [x] Pacote do Firefox carregado num Firefox real (155.0.1) — o ES module no
+      background funciona
+- [x] Política de privacidade respondendo na URL
 - [x] Screenshots sem nenhum dado real, em `docs/store-assets/screenshots/`
 
 ---
@@ -337,10 +338,10 @@ detalhes num relato de problema, e é ele que forma a URL pública da loja.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
-| 1.0.2 | Firefox AMO | — | a submeter |
+| 1.0.2 | Firefox AMO | 11/09/2026 | enviada, com código-fonte |
 | 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
 | 1.0.0 | Edge Add-ons | 09/09/2026 | publicada em 11/09/2026 |
-| 1.0.2 | Chrome Web Store | — | não submetida |
+| 1.0.2 | Chrome Web Store | — | conta criada em 18/09/2026 |
 
 A AMO exige dois itens que as outras lojas não pedem, ambos já no build:
 
@@ -393,6 +394,8 @@ pronto. Logo da loja em 300×300: já gerado em `docs/store-assets/logo-300.png`
 novas passam por um período de confiança maior antes da primeira publicação. O
 formulário de Privacy Practices é obrigatório (respostas na seção 4).
 
-**Firefox AMO** — grátis. Como não há minificação, o código enviado já é o
-código-fonte, o que satisfaz a exigência de envio de fonte da Mozilla. Reserve o
-`GECKO_ID` antes de qualquer outra coisa: ele é permanente.
+**Firefox AMO** — grátis. Mesmo sem minificação, a resposta à pergunta de
+código-fonte é **Sim**: o build gera o polyfill, injeta uma tag nos HTMLs e
+reescreve o manifesto, e isso basta para a Mozilla pedir o fonte. Envie
+`dist/snaplocal-source-<versão>.zip`, gerado por `tools/make-source-zip.py`; as
+instruções para o revisor estão no `BUILD.md`. O `GECKO_ID` é permanente.
