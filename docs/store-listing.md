@@ -330,9 +330,24 @@ pacote assinado — nada aqui é segredo.
 O CRX ID é o que identifica a extensão instalada no Edge — use-o ao pedir
 detalhes num relato de problema, e é ele que forma a URL pública da loja.
 
-> A ID do Chrome Web Store será **diferente**: cada loja gera a sua. Só o
+**Chrome Web Store**
+
+| Campo | Valor |
+|---|---|
+| ID da extensão | `lbiffdmehabmombfigmpmfgidngiphnh` |
+
+URL pública no Chrome:
+<https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh>
+
+> Cada loja gera a sua ID, por isso a do Chrome difere do CRX ID do Edge. Só o
 > `browser_specific_settings.gecko.id` do Firefox é definido por nós, em
 > `tools/build.py`.
+>
+> **"Not trusted by Enhanced Safe Browsing"** aparece na instalação para quem
+> usa a Proteção reforçada do Chrome. Não é defeito: o Google só dá o selo a
+> desenvolvedores com histórico, e para contas novas isso "geralmente leva
+> alguns meses". A conta foi criada em 18/09/2026. Não há pedido a fazer; uma
+> violação de política nesse período é o que atrasaria.
 
 **Histórico de envios**
 
@@ -340,11 +355,11 @@ detalhes num relato de problema, e é ele que forma a URL pública da loja.
 |---|---|---|---|
 | 1.0.3 | Edge Add-ons | — | a enviar — Ctrl+C no editor |
 | 1.0.3 | Firefox AMO | — | a enviar, com `snaplocal-source-1.0.3.zip` |
-| 1.0.3 | Chrome Web Store | — | a enviar, substituindo a 1.0.2 do rascunho |
+| 1.0.3 | Chrome Web Store | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Chrome |
 | 1.0.2 | Firefox AMO | 11/09/2026 | enviada, com código-fonte |
 | 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
 | 1.0.0 | Edge Add-ons | 09/09/2026 | publicada em 11/09/2026 |
-| 1.0.2 | Chrome Web Store | 21/09/2026 | carregada no rascunho, substituída pela 1.0.3 |
+| 1.0.2 | Chrome Web Store | — | só carregada no rascunho; nunca publicada |
 
 A AMO exige dois itens que as outras lojas não pedem, ambos já no build:
 
