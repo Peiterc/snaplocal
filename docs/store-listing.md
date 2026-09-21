@@ -338,10 +338,13 @@ detalhes num relato de problema, e é ele que forma a URL pública da loja.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.0.3 | Edge Add-ons | — | a enviar — Ctrl+C no editor |
+| 1.0.3 | Firefox AMO | — | a enviar, com `snaplocal-source-1.0.3.zip` |
+| 1.0.3 | Chrome Web Store | — | a enviar, substituindo a 1.0.2 do rascunho |
 | 1.0.2 | Firefox AMO | 11/09/2026 | enviada, com código-fonte |
 | 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
 | 1.0.0 | Edge Add-ons | 09/09/2026 | publicada em 11/09/2026 |
-| 1.0.2 | Chrome Web Store | — | conta criada em 18/09/2026 |
+| 1.0.2 | Chrome Web Store | 21/09/2026 | carregada no rascunho, substituída pela 1.0.3 |
 
 A AMO exige dois itens que as outras lojas não pedem, ambos já no build:
 
