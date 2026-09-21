@@ -353,7 +353,7 @@ URL pública no Chrome:
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
-| 1.0.3 | Edge Add-ons | — | a enviar — Ctrl+C no editor |
+| 1.0.3 | Edge Add-ons | 21/09/2026 | **em análise** — Ctrl+C no editor |
 | 1.0.3 | Firefox AMO | — | a enviar, com `snaplocal-source-1.0.3.zip` |
 | 1.0.3 | Chrome Web Store | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Chrome |
 | 1.0.2 | Firefox AMO | 11/09/2026 | enviada, com código-fonte |
