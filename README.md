@@ -3,10 +3,10 @@
 Extensão de captura de tela com anotação e borrão. Tudo local: sem conta, sem
 nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
-**[Instalar no Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn)** · **[Instalar no Chrome](https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh)** · [Site do projeto](https://peiterc.github.io/snaplocal/) · [Política de privacidade](https://peiterc.github.io/snaplocal/privacy.html)
+**[Instalar no Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn)** · **[Instalar no Chrome](https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh)** · **[Instalar no Firefox](https://addons.mozilla.org/firefox/addon/snaplocal/)** · [Site do projeto](https://peiterc.github.io/snaplocal/) · [Política de privacidade](https://peiterc.github.io/snaplocal/privacy.html)
 
-Estado atual: publicada na **Microsoft Edge Add-ons** (desde 11/09/2026) e na
-**Chrome Web Store** (desde 21/09/2026). Firefox AMO em revisão.
+Estado atual: publicada nas três lojas — **Microsoft Edge Add-ons** (desde
+11/09/2026), **Chrome Web Store** e **Firefox AMO** (ambas desde 21/09/2026).
 
 As quatro capturas — área selecionada, parte visível, página inteira e com
 atraso — e o editor completo estão prontos: borrar, tarja, retângulo, elipse,

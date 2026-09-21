@@ -339,6 +339,20 @@ detalhes num relato de problema, e é ele que forma a URL pública da loja.
 URL pública no Chrome:
 <https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh>
 
+**Firefox AMO**
+
+| Campo | Valor |
+|---|---|
+| ID da extensão (definido por nós) | `snaplocal@peiterc.github.io` |
+| ID numérico da AMO | `3070629` |
+| Slug | `snaplocal` |
+
+URL pública no Firefox:
+<https://addons.mozilla.org/firefox/addon/snaplocal/>
+
+Sem o prefixo de idioma (`/en-US/`): a AMO redireciona cada visitante para o
+próprio idioma.
+
 > Cada loja gera a sua ID, por isso a do Chrome difere do CRX ID do Edge. Só o
 > `browser_specific_settings.gecko.id` do Firefox é definido por nós, em
 > `tools/build.py`.
@@ -354,7 +368,7 @@ URL pública no Chrome:
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
 | 1.0.3 | Edge Add-ons | 21/09/2026 | **em análise** — Ctrl+C no editor |
-| 1.0.3 | Firefox AMO | 21/09/2026 | **em análise**, com `snaplocal-source-1.0.3.zip` |
+| 1.0.3 | Firefox AMO | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Firefox |
 | 1.0.3 | Chrome Web Store | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Chrome |
 | 1.0.2 | Firefox AMO | 11/09/2026 | enviada com código-fonte; substituída pela 1.0.3 na fila |
 | 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
