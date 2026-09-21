@@ -814,14 +814,40 @@ function flash(message, isError = false) {
   setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
-el('copy').addEventListener('click', async () => {
+async function copyImage() {
   try {
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': await exportBlob() })]);
     flash(t('toast_copied'));
   } catch {
     flash(t('err_clipboard'), true);
   }
+}
+
+el('copy').addEventListener('click', copyImage);
+
+// Ctrl+C copies the finished image, as Lightshot did. The keydown handler
+// below is the main path; this `copy` listener catches the other ways a system
+// can ask for a copy (Ctrl+Insert, a mouse button that sends the copy command
+// rather than the keystroke). When keydown handles Ctrl+C it cancels the
+// default, so the browser never fires this too and the image is copied once.
+document.addEventListener('copy', (event) => {
+  if (!wantsImageCopy()) return;
+  event.preventDefault();
+  copyImage();
 });
+
+// Copying text stays copying text: inside the text tool's box, or when the user
+// has actually selected some text on the page.
+function wantsImageCopy() {
+  return !dialog.open && !editing && !String(getSelection());
+}
+
+// Ctrl+C by character, or by physical key when the layout isn't Latin: on a
+// Russian keyboard the same keystroke reports a Cyrillic letter.
+function isCopyKey(event) {
+  const key = event.key.toLowerCase();
+  return key === 'c' || (event.code === 'KeyC' && !/^[a-z]$/.test(key));
+}
 
 el('save').addEventListener('click', async () => {
   const name = captureFilename();
@@ -864,6 +890,11 @@ document.addEventListener('keydown', (event) => {
   } else if (ctrl && event.key.toLowerCase() === 'y') {
     event.preventDefault();
     canRedo() && restore(historyIndex + 1);
+  } else if (ctrl && !event.shiftKey && !event.altKey && isCopyKey(event)) {
+    if (wantsImageCopy()) {
+      event.preventDefault();
+      copyImage();
+    }
   } else if ((event.key === 'Delete' || event.key === 'Backspace') && state.selected) {
     event.preventDefault();
     el('remove').click();
@@ -887,6 +918,8 @@ await initI18n();
 applyI18n();
 await applyTheme();
 document.title = t('appName');
+// The shortcut only helps if people know it exists.
+el('copy').title = `${t('action_copy')} (${/Mac/.test(navigator.platform) ? '⌘C' : 'Ctrl+C'})`;
 
 const { lastCapture } = await chrome.storage.session.get('lastCapture');
 if (!lastCapture) {
