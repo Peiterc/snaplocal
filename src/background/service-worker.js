@@ -21,22 +21,35 @@ const MENUS = [
   ['capture-delay', 'ctx_delay']
 ];
 
-async function buildMenus() {
+// The menu list is shared by both copies of this worker (the private-window
+// copy that split incognito mode creates has no list of its own), and install,
+// startup, the language picker and that second copy can all ask for a rebuild
+// at once. Two rebuilds interleaved would clear the menus and then both try to
+// create the same ids, so they are queued one after another.
+let menuWork = Promise.resolve();
+
+function buildMenus() {
+  menuWork = menuWork.catch(() => {}).then(rebuildMenus);
+  return menuWork;
+}
+
+// A create that loses a race is harmless: the item it wanted is already there.
+// Reading lastError is what tells the runtime the failure was dealt with.
+function addItem(props) {
+  chrome.contextMenus.create(props, () => void chrome.runtime.lastError);
+}
+
+async function rebuildMenus() {
   await initI18n();
   await chrome.contextMenus.removeAll();
-  chrome.contextMenus.create({ id: 'root', title: t('ctx_parent'), contexts: ['page', 'image', 'selection'] });
+  addItem({ id: 'root', title: t('ctx_parent'), contexts: ['page', 'image', 'selection'] });
   for (const [id, key] of MENUS) {
-    chrome.contextMenus.create({ id, parentId: 'root', title: t(key), contexts: ['page', 'image', 'selection'] });
+    addItem({ id, parentId: 'root', title: t(key), contexts: ['page', 'image', 'selection'] });
   }
 }
 
 chrome.runtime.onInstalled.addListener(buildMenus);
 chrome.runtime.onStartup.addListener(buildMenus);
-// The manifest asks for split incognito mode, so a private window gets its own
-// copy of this worker with its own, separate menu list. Neither event above
-// ever fires in that copy, so without this the right-click menu would simply
-// be missing in InPrivate/incognito windows.
-if (chrome.extension?.inIncognitoContext) buildMenus();
 
 // The picker in Options changes the language at runtime, so the native menus
 // have to be rebuilt: unlike the DOM, they cannot be re-rendered on the fly.
