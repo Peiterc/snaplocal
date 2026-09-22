@@ -21,11 +21,10 @@ const MENUS = [
   ['capture-delay', 'ctx_delay']
 ];
 
-// The menu list is shared by both copies of this worker (the private-window
-// copy that split incognito mode creates has no list of its own), and install,
-// startup, the language picker and that second copy can all ask for a rebuild
-// at once. Two rebuilds interleaved would clear the menus and then both try to
-// create the same ids, so they are queued one after another.
+// Install, startup, the language picker and the private-window copy below can
+// all ask for a rebuild at once. Two rebuilds interleaved would clear the menus
+// and then both try to create the same ids, so they are queued one after
+// another.
 let menuWork = Promise.resolve();
 
 function buildMenus() {
@@ -50,6 +49,17 @@ async function rebuildMenus() {
 
 chrome.runtime.onInstalled.addListener(buildMenus);
 chrome.runtime.onStartup.addListener(buildMenus);
+
+// Split incognito mode gives private windows their own copy of this worker,
+// with its own menu list, and neither event above fires in it: without this
+// the right-click menu is simply missing in InPrivate windows. Verified in
+// Edge, where the SnapLocal entry was absent there.
+//
+// Chrome's docs do not say whether chrome.extension exists inside a service
+// worker, so a missing property is not read as "regular copy": when we cannot
+// tell which copy we are, every startup rebuilds. That costs one menu rebuild
+// per wake-up and is safe because rebuilds are queued.
+if (chrome.extension?.inIncognitoContext !== false) buildMenus();
 
 // The picker in Options changes the language at runtime, so the native menus
 // have to be rebuilt: unlike the DOM, they cannot be re-rendered on the fly.
