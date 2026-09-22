@@ -111,6 +111,12 @@ def firefox_manifest(manifest):
         "scripts": [SHIM_PATH, "background/service-worker.js"],
         "type": "module",
     }
+    # Chromium precisa de "split" para abrir o editor (uma página da própria
+    # extensão) numa janela anônima. O Firefox não tem esse modo e, pior,
+    # instala quem o pede como "not_allowed" — a extensão sumiria das janelas
+    # privadas. Sem a chave ele fica no padrão, "spanning", que é o que a
+    # própria Mozilla recomenda para extensões vindas do Chromium.
+    manifest.pop("incognito", None)
     manifest["browser_specific_settings"] = {
         "gecko": {
             "id": GECKO_ID,

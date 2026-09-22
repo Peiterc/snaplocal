@@ -67,7 +67,11 @@ module on the page. This one added line is the only difference between the
 packaged HTML and the source HTML.
 
 **3. `browser_specific_settings` is added**, carrying the add-on id, the
-minimum Firefox version, and `data_collection_permissions`.
+minimum Firefox version, and `data_collection_permissions`. In the same
+manifest, the `"incognito": "split"` key is removed: Chromium needs it to open
+the editor page in a private window, while Firefox does not support split mode
+and would install the extension as `"not_allowed"` in private windows. MDN
+recommends deleting the key so Firefox keeps its default, `"spanning"`.
 
 The whole script is about 170 lines of readable Python at `tools/build.py`, and
 each of these three steps is commented there.

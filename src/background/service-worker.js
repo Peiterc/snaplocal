@@ -32,6 +32,11 @@ async function buildMenus() {
 
 chrome.runtime.onInstalled.addListener(buildMenus);
 chrome.runtime.onStartup.addListener(buildMenus);
+// The manifest asks for split incognito mode, so a private window gets its own
+// copy of this worker with its own, separate menu list. Neither event above
+// ever fires in that copy, so without this the right-click menu would simply
+// be missing in InPrivate/incognito windows.
+if (chrome.extension?.inIncognitoContext) buildMenus();
 
 // The picker in Options changes the language at runtime, so the native menus
 // have to be rebuilt: unlike the DOM, they cannot be re-rendered on the fly.
