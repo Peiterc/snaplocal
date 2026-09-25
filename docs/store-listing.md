@@ -367,9 +367,9 @@ próprio idioma.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
-| 1.0.4 | Edge Add-ons | — | a enviar — InPrivate corrigido |
-| 1.0.4 | Chrome Web Store | — | a enviar — janela anônima corrigida |
-| 1.0.4 | Firefox AMO | — | a enviar, com `snaplocal-source-1.0.4.zip` |
+| 1.0.4 | Edge Add-ons | 25/09/2026 | **em análise** — InPrivate corrigido |
+| 1.0.4 | Chrome Web Store | 25/09/2026 | **em análise** — janela anônima corrigida |
+| 1.0.4 | Firefox AMO | 25/09/2026 | **publicada** em 25/09/2026, com código-fonte |
 | 1.0.3 | Edge Add-ons | 21/09/2026 | **em análise** — Ctrl+C no editor |
 | 1.0.3 | Firefox AMO | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Firefox |
 | 1.0.3 | Chrome Web Store | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Chrome |
