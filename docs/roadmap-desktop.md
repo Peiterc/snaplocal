@@ -44,25 +44,37 @@ tela do sistema operacional, e é código novo.
 
 ---
 
-## 3. Decisão pendente: Electron ou Tauri
+## 3. Decisão tomada: .NET + WebView2
 
-| | Electron | Tauri |
-|---|---|---|
-| Download | ~100 MB | ~10 MB |
-| Reuso do editor | direto | direto |
-| Captura de tela | API própria (`desktopCapturer`) | biblioteca Rust (`xcap`) |
-| Atalho global e bandeja | API própria | plugins oficiais |
-| Linguagem a mais | nenhuma | Rust |
-| Empacotamento MSIX | `electron-builder`, alvo `appx` | `tauri build`, alvo `msi`/`nsis` + conversão |
+Decidido em 25/09/2026.
 
-**Recomendação: começar por Electron.** O motivo não é gosto, é risco: no
-Electron a captura, o atalho global e a bandeja são API de primeira parte e
-documentada, então a Fase 1 vira um teste honesto do reuso em vez de uma
-pesquisa sobre bibliotecas de terceiros. Se o tamanho do download incomodar
-depois, a migração para Tauri mexe só na casca — a parte em HTML e JavaScript,
-que é a maior, vai inteira.
+| | Electron | Tauri | **.NET + WebView2** |
+|---|---|---|---|
+| Motor web | Chromium embarcado (~100 MB) | WebView2 do sistema | WebView2 do sistema |
+| Linguagem da casca | JavaScript | Rust | C# |
+| Empacotamento MSIX | `electron-builder`, alvo `appx` | conversão extra | nativo no Visual Studio |
+| Captura de tela | API própria | biblioteca de terceiros | API do Windows |
+| Reuso do editor | total | total | total |
 
-**Decisão sua, e é a única que trava o começo.**
+O motor de renderização **não vai dentro do pacote**: a documentação da
+Microsoft diz que o WebView2 já vem incluído no Windows 11, e que a grande
+maioria das máquinas com Windows 10 também já o tem. Embarcar um Chromium
+inteiro numa máquina que já tem o mesmo motor contradiz, na tela do tamanho do
+download, tudo o que o produto promete ser.
+
+A recomendação oficial da Microsoft para um app novo é WinUI 3 com o Windows
+App SDK. Ela foi descartada de propósito: parte do zero, e aqui há 1.400 linhas
+de editor prontas e traduzidas. WebView2 é o meio-termo da própria Microsoft
+para hospedar HTML dentro de uma casca nativa.
+
+**O que a casca em C# precisa ter**, e é só isso: janela hospedando o WebView2,
+atalho global (`RegisterHotKey`), ícone na bandeja (`NotifyIcon`), captura de
+tela (`Windows.Graphics.Capture`) e salvar arquivo. O editor, que é a parte
+grande, continua sendo o HTML que já existe.
+
+**Tauri continua sendo o plano B**, e o critério é um só: se um dia o app
+precisar rodar em macOS ou Linux. A casca é pequena em qualquer um dos três, e
+o HTML vai inteiro nos três.
 
 ---
 
@@ -102,9 +114,9 @@ são virtualizadas dentro do pacote, então provavelmente nem teriam efeito, e
 mudar configuração do sistema sem o usuário pedir é o tipo de coisa que atrai
 olhar na certificação da Store.
 
-O caminho é detectar e pedir: `globalShortcut.register` devolve `false` quando
-não consegue a tecla, e aí o app explica que o Windows está usando o Print
-Screen para a Ferramenta de Captura e abre a tela de configurações certa. A
+O caminho é detectar e pedir: `RegisterHotKey` falha quando não consegue a
+tecla, e aí o app explica que o Windows está usando o Print Screen para a
+Ferramenta de Captura e abre a tela de configurações certa. A
 mesma mensagem serve para o outro caso de disputa: outro app de captura
 instalado (ShareX, Greenshot) que tenha registrado a tecla antes.
 
@@ -130,7 +142,20 @@ mexe no que já está publicado sem que isso esteja dito.
 - **Reservar o nome "SnapLocal"** no Partner Center. É grátis, leva um minuto e
   impede que alguém registre o nome antes. Deve ser feito **agora**, mesmo que
   o código não comece hoje.
-- Decidir Electron ou Tauri (seção 3)
+- ~~Decidir a tecnologia~~ — decidido: .NET + WebView2 (seção 3)
+
+**Ferramentas nesta máquina**, conferido em 25/09/2026:
+
+| Item | Situação |
+|---|---|
+| Runtime do WebView2 | **instalado**, 153.0.4234.48, por máquina |
+| Runtime do .NET | instalado, 8.0.23, com `Microsoft.WindowsDesktop.App` |
+| **SDK do .NET** | **ausente** — é o que falta para compilar |
+| Empacotar MSIX | pelo Visual Studio, ou por `MakeAppx.exe` do Windows SDK |
+
+Instalar o SDK do .NET é o único pré-requisito da Fase 1. O Visual Studio
+completo não é obrigatório para compilar, só facilita o empacotamento MSIX
+depois; dá para fazer as duas coisas pela linha de comando.
 
 ### Fase 1 — Protótipo do reuso
 
@@ -196,14 +221,18 @@ Ficha da loja, classificação etária, capturas, política de privacidade.
 
 ## 7. Riscos
 
+**Testar DPI e múltiplos monitores.** Esta máquina é um servidor virtual, onde
+não dá para simular dois monitores com escalas diferentes. Esse teste vai
+precisar de hardware real, e é melhor descobrir isso agora do que na Fase 5.
+
 **DPI e múltiplos monitores.** É o clássico desse tipo de app: a seleção sai
 deslocada ou a imagem sai borrada quando os monitores têm escalas diferentes.
 Mitigação: tratar isso já na Fase 3, com um monitor secundário em escala
 diferente como caso de teste obrigatório.
 
-**Tamanho do download no Electron.** ~100 MB num app que se vende como leve.
-Mitigação: medir na Fase 5 e decidir com número na mão, sabendo que a migração
-para Tauri preserva a maior parte do código.
+**WebView2 ausente em alguns Windows 10.** Raro, mas existe. Mitigação: o MSIX
+declara o runtime como dependência, e o app verifica a presença antes de criar
+a janela, em vez de abrir uma tela branca sem explicação.
 
 **Quatro superfícies para manter.** Cada correção no editor passa a valer para
 Edge, Chrome, Firefox e Windows, cada um com sua fila de revisão. Mitigação: a
@@ -218,8 +247,7 @@ descrição honesta do que o app faz, que é o que já funcionou nas três lojas
 
 ## 8. Decisões que dependem de você
 
-1. **Electron ou Tauri** (recomendo Electron para a Fase 1)
-2. Reservar ou não o nome "SnapLocal" já nesta semana (recomendo reservar)
-3. Se o app entra **neste repositório**, numa pasta `app/`, ou em um repositório
+1. Reservar ou não o nome "SnapLocal" já nesta semana (recomendo reservar)
+2. Se o app entra **neste repositório**, numa pasta `app/`, ou em um repositório
    separado. Recomendo o mesmo repositório: o editor é compartilhado, e código
    compartilhado em dois repositórios separados vira duas cópias em três meses.
