@@ -5,3 +5,9 @@ Thumbs.db
 
 # gerado por tools/build-strings-preview.py
 tools/strings-preview.html
+
+# app de desktop: saida de compilacao e assets copiados de src/
+app/bin/
+app/obj/
+app/Assets/web/
+app/Assets/snaplocal.ico

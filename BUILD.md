@@ -92,5 +92,9 @@ macOS.
 
 ## Project home
 
-<https://github.com/Peiterc/snaplocal> — GPL-3.0. The published repository is
-the same tree as this source package.
+<https://github.com/Peiterc/snaplocal> — GPL-3.0.
+
+The published repository holds this tree plus two things this package leaves
+out, because neither is part of the extension: `app/`, a Windows desktop app
+that reuses the same editor, and the store artwork. Everything the extension is
+built from — `src/` and `tools/` — is here, complete.

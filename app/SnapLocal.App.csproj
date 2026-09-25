@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>SnapLocal</AssemblyName>
+    <RootNamespace>SnapLocal</RootNamespace>
+    <Version>0.1.0</Version>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <!-- SYSLIB1054 sugere trocar DllImport por LibraryImport; a troca exigiria
+         AllowUnsafeBlocks no projeto todo. Ver o comentário em HotkeyWindow.cs. -->
+    <NoWarn>$(NoWarn);SYSLIB1054</NoWarn>
+    <!-- O pacote do WebView2 traz junto a variante para WPF, que este projeto
+         nunca carrega; é dela que vem o conflito de WindowsBase. -->
+    <MSBuildWarningsAsMessages>MSB3277</MSBuildWarningsAsMessages>
+    <!-- Sem isto a seleção sai deslocada e a captura sai borrada em telas com
+         escala diferente de 100%. É o risco número um do projeto. -->
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationIcon>Assets\snaplocal.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O motor não vai dentro do pacote: este pacote é só o controle que fala
+         com o runtime do WebView2 já instalado no Windows. -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Assets/web/ é gerado por tools/sync-app-assets.py a partir de src/.
+         Nunca editar lá dentro. -->
+    <Content Include="Assets\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

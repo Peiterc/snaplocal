@@ -135,14 +135,37 @@ Decisões que vêm junto:
 Cada fase termina com algo que roda e que você consegue testar. Nenhuma fase
 mexe no que já está publicado sem que isso esteja dito.
 
-### Fase 0 — Conta e nome
+### Fase 0 — Conta e nome — **concluída em 25/09/2026**
 
-- Conta de desenvolvedor Microsoft (Apps & Games) verificada, publisher
-  `Peiterc`
-- **Reservar o nome "SnapLocal"** no Partner Center. É grátis, leva um minuto e
-  impede que alguém registre o nome antes. Deve ser feito **agora**, mesmo que
-  o código não comece hoje.
-- ~~Decidir a tecnologia~~ — decidido: .NET + WebView2 (seção 3)
+- [x] Conta de desenvolvedor Microsoft (Apps & Games), publisher `Peiterc`
+- [x] Nome **"SnapLocal" reservado** no Partner Center. A reserva vale **três
+      meses**: sem submissão até por volta de **25/12/2026**, ela cai.
+- [x] Tecnologia: **.NET + WebView2** (seção 3)
+- [x] **Um repositório só**, com o app em `app/`
+
+**Por que um repositório só:** o editor é compartilhado de verdade. Em dois
+repositórios, a primeira correção urgente vira cópia colada, e em poucos meses
+são duas versões divergentes — com 11 idiomas para manter iguais em cada uma.
+
+**A regra que protege o que já está publicado:** `src/` não muda de forma para
+acomodar o app. Ela é o que a Mozilla revisa e o que o `build.py` empacota.
+Quem se adapta é o projeto novo: o build do app **copia** o editor, as
+bibliotecas e os `_locales` para dentro de `app/`.
+
+```
+src/          extensão — intocada
+app/          casca em C#, o projeto .NET
+tools/        build.py, check-locales.py e o script que leva o editor ao app
+docs/         planos, material de loja, site
+```
+
+Duas consequências registradas aqui para não serem esquecidas:
+
+- **Tags separadas por produto**: `ext-1.0.4` e `app-1.0.0`. Sem isso ninguém
+  sabe a que "1.0.4" um commit se refere.
+- **Uma frase do `BUILD.md` fica falsa** quando `app/` existir: ela diz ao
+  revisor da Mozilla que "o repositório publicado é a mesma árvore que este
+  pacote de código-fonte". Corrigir no mesmo commit que criar a pasta.
 
 **Ferramentas nesta máquina**, conferido em 25/09/2026:
 
@@ -157,17 +180,44 @@ Instalar o SDK do .NET é o único pré-requisito da Fase 1. O Visual Studio
 completo não é obrigatório para compilar, só facilita o empacotamento MSIX
 depois; dá para fazer as duas coisas pela linha de comando.
 
-### Fase 1 — Protótipo do reuso
+### Fase 1 — Protótipo do reuso — **funcionando em 25/09/2026**
 
-Uma janela, um atalho, nada bonito:
-
-1. `Alt+Shift+S` captura a tela inteira
+1. `Alt+Shift+S` captura a tela onde está o ponteiro
 2. Abre o editor que já existe, com a imagem dentro
-3. Salvar gera um PNG no disco
+3. Salvar grava o PNG em `Imagens\SnapLocal`
 
-**Critério de pronto:** desenhar, borrar e salvar funcionam, usando o
-`editor.js` atual com o mínimo de mudança. Se isso custar muito mais do que as
-11 chamadas medidas sugerem, o plano volta para a mesa antes de continuar.
+**O reuso se confirmou.** O `editor.js`, o `editor.css`, as três bibliotecas e
+os 11 dicionários foram para o app **sem uma linha alterada**. O que fez a
+ponte foram 82 linhas de JavaScript (`app/Assets/bridge.js`) que devolvem um
+`chrome.*` suficiente: `storage.local`, `storage.session`, `runtime.getURL`,
+`i18n.getUILanguage` e `downloads.download`.
+
+O app em si:
+
+| Arquivo | O que faz |
+|---|---|
+| `Program.cs` | entrada e os modos de conferência |
+| `TrayContext.cs` | ícone na bandeja e o ciclo de vida |
+| `HotkeyWindow.cs` | atalho global, via `RegisterHotKey` |
+| `ScreenCapture.cs` | captura a tela do ponteiro |
+| `EditorWindow.cs` | hospeda o WebView2 e responde à ponte |
+| `Settings.cs` | o equivalente ao `chrome.storage.local`, em JSON |
+
+**Dois modos de conferência sem interface**, porque a Fase 1 precisava ser
+verificável sem alguém no teclado:
+
+```
+SnapLocal.exe --selftest      <saida.png>   captura a tela e grava
+SnapLocal.exe --selftest-save <entrada.png> abre o editor, clica em Salvar e sai
+```
+
+O segundo confirmou a ponte inteira: o arquivo saiu como
+`snaplocal-2026-09-25-17-01-02.png`, com o nome vindo do mesmo
+`src/lib/naming.js` que nomeia os arquivos da extensão.
+
+**Falta testar com mãos humanas:** desenhar, borrar, copiar para a área de
+transferência e o atalho global. São coisas que exigem mouse e teclado de
+verdade.
 
 ### Fase 2 — Camada de plataforma
 
