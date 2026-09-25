@@ -229,12 +229,19 @@ captura, salvar arquivo — com duas implementações: extensão e desktop.
 entra em uma versão própria, testada no Edge, no Chrome e no Firefox antes de
 qualquer coisa do app.
 
-### Fase 3 — Captura de verdade
+### Fase 3 — Captura de verdade — **em andamento**
 
-- Overlay de seleção sobre a tela congelada, nos moldes do que a extensão faz
-- **Múltiplos monitores** e **escalas de DPI diferentes** — a fonte de bug mais
-  provável do projeto inteiro
-- Captura com atraso
+- [x] Overlay de seleção sobre a tela congelada, nos moldes do que a extensão
+      faz. Congelar antes de mostrar é o ponto: nada se mexe embaixo do mouse
+      enquanto a pessoa escolhe.
+- [ ] **Múltiplos monitores** — hoje o overlay cobre só a tela onde está o
+      ponteiro, então não dá para selecionar uma área que cruze dois monitores
+- [ ] **Escalas de DPI diferentes** — a fonte de bug mais provável do projeto
+      inteiro, e que exige hardware real para testar
+- [ ] Captura com atraso
+
+Conferência sem interface: `SnapLocal.exe --selftest-area` abre só a seleção e
+fecha sozinha em 6 segundos, o que permite fotografá-la de outro processo.
 
 ### Fase 4 — App de verdade
 

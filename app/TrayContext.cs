@@ -14,7 +14,8 @@ sealed class TrayContext : ApplicationContext
         hotkey.Pressed += (_, _) => CaptureAndEdit();
 
         var menu = new ContextMenuStrip();
-        menu.Items.Add("Capture this screen", null, (_, _) => CaptureAndEdit());
+        menu.Items.Add("Capture an area", null, (_, _) => CaptureAndEdit());
+        menu.Items.Add("Capture this screen", null, (_, _) => CaptureAndEdit(wholeScreen: true));
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add("Exit", null, (_, _) => ExitThread());
 
@@ -49,16 +50,32 @@ sealed class TrayContext : ApplicationContext
     // abriria dois editores.
     private DateTime lastCapture = DateTime.MinValue;
 
-    private void CaptureAndEdit()
+    private void CaptureAndEdit(bool wholeScreen = false)
     {
         if (DateTime.Now - lastCapture < TimeSpan.FromMilliseconds(600)) return;
         lastCapture = DateTime.Now;
 
-        string dataUrl;
-        using (Bitmap shot = ScreenCapture.CaptureCurrentScreen())
-            dataUrl = ScreenCapture.ToDataUrl(shot);
+        Rectangle bounds = ScreenCapture.CurrentBounds();
+        using Bitmap shot = ScreenCapture.Capture(bounds);
+
+        Bitmap? chosen = wholeScreen ? shot : Choose(shot, bounds);
+        if (chosen is null) return;   // a pessoa desistiu
+
+        string dataUrl = ScreenCapture.ToDataUrl(chosen);
+        if (!ReferenceEquals(chosen, shot)) chosen.Dispose();
 
         new EditorWindow(dataUrl).Show();
+    }
+
+    /// <summary>
+    /// Mostra a seleção sobre a tela congelada e devolve o recorte, ou null se
+    /// a pessoa apertou Esc ou só clicou sem arrastar.
+    /// </summary>
+    private static Bitmap? Choose(Bitmap shot, Rectangle bounds)
+    {
+        using var overlay = new SelectionOverlay(shot, bounds);
+        if (overlay.ShowDialog() != DialogResult.OK) return null;
+        return shot.Clone(overlay.Selection, shot.PixelFormat);
     }
 
     protected override void Dispose(bool disposing)

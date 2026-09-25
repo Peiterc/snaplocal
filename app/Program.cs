@@ -38,6 +38,20 @@ static class Program
             return;
         }
 
+        // Abre só a seleção, sobre a tela de verdade, e fecha sozinha. Serve
+        // para conferir o desenho do overlay sem alguém no mouse.
+        if (args.Length >= 1 && args[0] == "--selftest-area")
+        {
+            Rectangle bounds = ScreenCapture.CurrentBounds();
+            using Bitmap shot = ScreenCapture.Capture(bounds);
+            using var overlay = new SelectionOverlay(shot, bounds);
+            var closer = new System.Windows.Forms.Timer { Interval = 6000 };
+            closer.Tick += (_, _) => { closer.Stop(); overlay.Close(); };
+            closer.Start();
+            overlay.ShowDialog();
+            return;
+        }
+
         Application.Run(new TrayContext());
     }
 }

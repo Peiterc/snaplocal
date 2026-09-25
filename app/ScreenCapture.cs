@@ -8,10 +8,13 @@ static class ScreenCapture
     /// A tela onde o ponteiro está. Com vários monitores, é a escolha que
     /// corresponde ao que a pessoa está olhando quando aperta o atalho.
     /// </summary>
-    public static Bitmap CaptureCurrentScreen()
+    public static Bitmap CaptureCurrentScreen() => Capture(CurrentBounds());
+
+    /// <summary>Os limites da tela onde o ponteiro está.</summary>
+    public static Rectangle CurrentBounds() => Screen.FromPoint(Cursor.Position).Bounds;
+
+    public static Bitmap Capture(Rectangle bounds)
     {
-        Screen screen = Screen.FromPoint(Cursor.Position);
-        Rectangle bounds = screen.Bounds;
 
         var shot = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
         using var canvas = Graphics.FromImage(shot);
