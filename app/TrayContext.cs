@@ -25,7 +25,13 @@ sealed class TrayContext : ApplicationContext
             Visible = true,
             ContextMenuStrip = menu
         };
-        tray.DoubleClick += (_, _) => CaptureAndEdit();
+        // Clique simples captura, como fazia o Lightshot: é o que a pessoa
+        // tenta primeiro. O botão direito abre o menu sozinho, pelo
+        // ContextMenuStrip.
+        tray.MouseUp += (_, e) =>
+        {
+            if (e.Button == MouseButtons.Left) CaptureAndEdit();
+        };
 
         if (!hotkey.Register())
         {
@@ -39,8 +45,15 @@ sealed class TrayContext : ApplicationContext
         }
     }
 
+    // Um clique duplo no ícone chega como dois cliques simples, e sem isto
+    // abriria dois editores.
+    private DateTime lastCapture = DateTime.MinValue;
+
     private void CaptureAndEdit()
     {
+        if (DateTime.Now - lastCapture < TimeSpan.FromMilliseconds(600)) return;
+        lastCapture = DateTime.Now;
+
         string dataUrl;
         using (Bitmap shot = ScreenCapture.CaptureCurrentScreen())
             dataUrl = ScreenCapture.ToDataUrl(shot);
