@@ -90,6 +90,32 @@ que é a maior, vai inteira.
 - **Captura de janela específica**: fica para depois da 1.0, porque dá para
   chegar perto recortando a tela inteira.
 
+### A tecla Print Screen
+
+O app **pode** assumir o `Print Screen`, e era isso que o Lightshot fazia. Só
+que desde a build 22621.1928 o Windows 11 dá essa tecla à Ferramenta de Captura
+por padrão, num ajuste por usuário guardado em
+`HKCU\Control Panel\Keyboard\PrintScreenKeyForSnippingEnabled`.
+
+**Não mexer nesse registro pelo app.** Num pacote MSIX as escritas de registro
+são virtualizadas dentro do pacote, então provavelmente nem teriam efeito, e
+mudar configuração do sistema sem o usuário pedir é o tipo de coisa que atrai
+olhar na certificação da Store.
+
+O caminho é detectar e pedir: `globalShortcut.register` devolve `false` quando
+não consegue a tecla, e aí o app explica que o Windows está usando o Print
+Screen para a Ferramenta de Captura e abre a tela de configurações certa. A
+mesma mensagem serve para o outro caso de disputa: outro app de captura
+instalado (ShareX, Greenshot) que tenha registrado a tecla antes.
+
+Decisões que vêm junto:
+
+- O padrão na instalação **não** é o Print Screen, e sim `Alt+Shift+S`. Hoje a
+  tecla copia a tela inteira para a área de transferência em silêncio, e tomar
+  isso de alguém sem avisar é hostil.
+- "Usar a tecla Print Screen" vira uma opção nas Configurações, desligada por
+  padrão, com a explicação acima ao lado.
+
 ---
 
 ## 5. Fases
