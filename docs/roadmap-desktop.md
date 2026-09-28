@@ -255,6 +255,13 @@ e não por leitura de código:
 - Janela nova que nasce atrás da que está em foco é indistinguível, para quem
   usa, de janela que não abriu. O editor é trazido para a frente ao abrir.
 
+**Dívida anotada, e ela é das duas pontas:** quando a pessoa cancela o diálogo
+de "salvar como", o editor mostra *não foi possível salvar*, como se algo
+tivesse dado errado. A extensão faz a mesma coisa hoje, porque
+`chrome.downloads.download` rejeita ao cancelar e o editor não distingue os
+dois casos. A camada da Fase 2 é o lugar de corrigir: um cancelamento é uma
+resposta, não uma falha.
+
 ### Fase 4 — App de verdade
 
 - Bandeja, atalhos configuráveis, iniciar com o Windows (desligado por padrão)

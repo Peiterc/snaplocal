@@ -174,6 +174,27 @@ sealed class EditorWindow : Form
         Directory.CreateDirectory(folder);
 
         string target = Path.Combine(folder, Path.GetFileName(name));
+
+        // askSaveLocation, a mesma configuração da extensão. O padrão continua
+        // sendo salvar direto; quem liga a opção quer escolher a pasta.
+        if (payload["saveAs"]?.GetValue<bool>() == true)
+        {
+            using var dialog = new SaveFileDialog
+            {
+                InitialDirectory = folder,
+                FileName = Path.GetFileName(name),
+                Filter = "PNG image|*.png",
+                DefaultExt = "png",
+                OverwritePrompt = true
+            };
+            if (dialog.ShowDialog(this) != DialogResult.OK)
+            {
+                Log.Write("save cancelado pelo usuario");
+                return new JsonObject { ["ok"] = false, ["canceled"] = true };
+            }
+            target = dialog.FileName;
+        }
+
         try
         {
             File.WriteAllBytes(target, png);
