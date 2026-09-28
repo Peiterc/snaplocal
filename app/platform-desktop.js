@@ -41,7 +41,9 @@ export async function getSettings(defaults) {
 }
 
 export async function setSettings(items) {
-  await ask('storage.set', { area: 'local', items });
+  // O C# pode recusar: usePrintScreen depende de o Windows devolver a tecla.
+  const result = await ask('storage.set', { area: 'local', items });
+  return { ok: result?.ok !== false };
 }
 
 /**
@@ -55,6 +57,26 @@ export async function getSession(defaults) {
 export async function setSession(items) {
   await ask('storage.set', { area: 'session', items });
 }
+
+export const features = {
+  desktop: true,
+  browserShortcuts: false,  // aqui o atalho é do sistema, não do navegador
+  hideFixed: false,         // não existe "página inteira" fora do navegador
+  areaConfirm: false        // a seleção já é direta
+};
+
+export async function appInfo() {
+  const info = await ask('app.info', {});
+  return { version: info?.version ?? '0.0.0' };
+}
+
+/**
+ * Não existe página de atalhos do navegador aqui, e `features` diz isso — mas
+ * a função precisa existir mesmo assim: `import` de módulo ES é resolvido na
+ * carga, então uma exportação faltando derruba a página inteira, e não só a
+ * linha que a usaria.
+ */
+export function openShortcutSettings() {}
 
 export function assetUrl(path) {
   // As páginas vêm de um host virtual servido pelo próprio app, então o

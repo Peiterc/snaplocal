@@ -10,6 +10,7 @@ isto que faz a adaptação — uma cópia, sem transformar nada.
 Copia para `app/Assets/web/`:
 
     editor/     a página do editor, como está
+    options/    a tela de Opções, como está
     lib/        i18n, imaging, naming e platform
     _locales/   os 11 dicionários
 
@@ -38,7 +39,7 @@ PLATFORM = ROOT / "app" / "platform-desktop.js"
 
 # O que o editor precisa para rodar. O service worker e o content script ficam
 # de fora: são a parte que só existe dentro de um navegador.
-COPY = ["editor", "lib", "_locales"]
+COPY = ["editor", "options", "lib", "_locales"]
 
 ICON_SIZES = [16, 32, 48, 128]
 

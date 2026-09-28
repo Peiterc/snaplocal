@@ -271,11 +271,38 @@ e não por leitura de código:
 - Janela nova que nasce atrás da que está em foco é indistinguível, para quem
   usa, de janela que não abriu. O editor é trazido para a frente ao abrir.
 
-### Fase 4 — App de verdade
+### Fase 4 — App de verdade — **feita em 28/09/2026**
 
-- Bandeja, atalhos configuráveis, iniciar com o Windows (desligado por padrão)
-- Tela de Opções reaproveitando os 11 idiomas
-- Onde ficam as configurações fora do navegador
+- [x] **Tela de Opções**: é a mesma página da extensão. Cada linha declara a
+      que mundo pertence (`data-only`), e o `features` de cada implementação de
+      plataforma esconde o que não existe ali. No app somem *perguntar antes de
+      capturar*, *esconder elementos fixos* e *atalhos do navegador*; entram
+      *usar a tecla Print Screen* e *iniciar com o Windows*.
+- [x] **Bandeja nos 11 idiomas**, lendo os mesmos `_locales`. Conferido em
+      inglês, português, alemão e russo.
+- [x] **Iniciar com o Windows**, pela chave Run do próprio usuário — sem
+      serviço e sem administrador. Quem manda é o registro, não o nosso
+      arquivo: a tela lê de lá, porque o usuário pode ter desligado pelo
+      Gerenciador de Tarefas.
+- [x] **Configurações fora do navegador**: `%APPDATA%\SnapLocal\settings.json`.
+- [ ] Atalho totalmente configurável (hoje: Alt+Shift+S ou Print Screen)
+
+**O caminho de recusa da tecla Print Screen não pôde ser testado aqui.** Nesta
+máquina o Windows entregou as duas combinações, porque o Windows Server não
+amarra a tecla à Ferramenta de Captura como o Windows 11 faz. O tratamento
+existe — aviso na bandeja, a opção volta sozinha, e o atalho cai para
+Alt+Shift+S em vez de ficar sem nenhum — mas só a máquina do usuário pode
+confirmá-lo.
+
+**A lição desta fase:** `import` de módulo ES é resolvido na carga. Faltava
+`openShortcutSettings` na implementação de desktop — uma função que o desktop
+nunca chama — e a tela de Opções inteira ficava em branco, sem título e sem
+rótulos. As duas implementações têm que exportar **todos** os nomes do
+contrato, e isso agora está escrito em `src/lib/platform.js`.
+
+Conferências sem interface: `--selftest-options` descreve o que a tela mostra e
+o que escondeu, `--selftest-tray` imprime o menu no idioma configurado e
+`--selftest-hotkey` diz quais atalhos o Windows entregou.
 
 ### Fase 5 — Empacotamento
 

@@ -39,15 +39,25 @@ sealed class HotkeyWindow : NativeWindow, IDisposable
     }
 
     /// <summary>
-    /// Alt+Shift+S, o mesmo atalho da extensão. Devolve false quando outro
-    /// programa já ficou com a combinação — o que vai acontecer de verdade
-    /// quando a opção de usar o Print Screen existir, porque o Windows 11 dá
-    /// essa tecla à Ferramenta de Captura.
+    /// Registra o atalho: Alt+Shift+S, o mesmo da extensão, ou a tecla Print
+    /// Screen quando o usuário pediu. Devolve false quando o Windows não
+    /// entrega a combinação — com o Print Screen isso é o caso comum, porque o
+    /// Windows 11 dá essa tecla à Ferramenta de Captura por padrão.
     /// </summary>
-    public bool Register()
+    public bool Register(bool usePrintScreen)
     {
-        registered = RegisterHotKey(Handle, HotkeyId, MOD_ALT | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.S);
+        Unregister();
+        registered = usePrintScreen
+            ? RegisterHotKey(Handle, HotkeyId, MOD_NOREPEAT, (uint)Keys.PrintScreen)
+            : RegisterHotKey(Handle, HotkeyId, MOD_ALT | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.S);
         return registered;
+    }
+
+    private void Unregister()
+    {
+        if (!registered) return;
+        UnregisterHotKey(Handle, HotkeyId);
+        registered = false;
     }
 
     protected override void WndProc(ref Message m)
@@ -62,11 +72,7 @@ sealed class HotkeyWindow : NativeWindow, IDisposable
 
     public void Dispose()
     {
-        if (registered)
-        {
-            UnregisterHotKey(Handle, HotkeyId);
-            registered = false;
-        }
+        Unregister();
         DestroyHandle();
     }
 }

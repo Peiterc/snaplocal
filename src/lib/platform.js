@@ -8,7 +8,10 @@
  * montar o app. Por isso o editor importa sempre o mesmo caminho e nenhum dos
  * dois pacotes carrega o código do outro.
  *
- * Quem mexer aqui tem que mexer nas duas: as funções abaixo são o contrato.
+ * Quem mexer aqui tem que mexer nas duas: as funções abaixo são o contrato, e
+ * as duas implementações precisam exportar **todos** os nomes, mesmo os que um
+ * dos lados nunca usa. `import` de módulo ES é resolvido na carga: uma
+ * exportação faltando derruba a página inteira, não só a linha que a chamaria.
  */
 
 /** Lê configurações persistentes. `defaults` define as chaves e os padrões. */
@@ -16,8 +19,14 @@ export async function getSettings(defaults) {
   return chrome.storage.local.get(defaults);
 }
 
+/**
+ * Grava configurações e devolve `{ ok }`. O resultado existe porque no desktop
+ * algumas dependem do sistema aceitar — tomar a tecla Print Screen, por
+ * exemplo, pode ser recusado pelo Windows. Aqui, gravar sempre dá certo.
+ */
 export async function setSettings(items) {
   await chrome.storage.local.set(items);
+  return { ok: true };
 }
 
 /** O mesmo, para o que vive só enquanto o navegador está aberto. */
@@ -27,6 +36,31 @@ export async function getSession(defaults) {
 
 export async function setSession(items) {
   await chrome.storage.session.set(items);
+}
+
+/**
+ * O que existe neste ambiente. A tela de Opções esconde as linhas que não se
+ * aplicam, em vez de manter duas páginas quase iguais — e declarar isso aqui
+ * evita que a página tenha que adivinhar onde está rodando.
+ */
+export const features = {
+  desktop: false,
+  browserShortcuts: true,   // a página de atalhos do próprio navegador
+  hideFixed: true,          // esconder elementos fixos na página inteira
+  areaConfirm: true         // perguntar antes de capturar a área escolhida
+};
+
+/** Versão do produto, para a seção Sobre. */
+export async function appInfo() {
+  return { version: chrome.runtime.getManifest().version };
+}
+
+/** Abre onde o usuário edita os atalhos. Só existe onde há navegador. */
+export function openShortcutSettings() {
+  // O editor de atalhos fica numa página interna cujo esquema muda por
+  // navegador: o Edge recusa chrome://, e o Chrome não tem edge://.
+  const scheme = navigator.userAgent.includes('Edg/') ? 'edge' : 'chrome';
+  chrome.tabs.create({ url: `${scheme}://extensions/shortcuts` });
 }
 
 /** Endereço de um arquivo que veio dentro do pacote. */

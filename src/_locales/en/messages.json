@@ -3,7 +3,6 @@
     "message": "English",
     "description": "Name of this language, written in this language. Used by the language picker in Options. NEVER translate into another language."
   },
-
   "appName": {
     "message": "SnapLocal",
     "description": "Extension name. WORKING TITLE - replace once the final name is chosen. NEVER translate: the brand name is identical in every locale."
@@ -16,7 +15,6 @@
     "message": "Capture, annotate and blur screenshots. 100% local: no account, no cloud, no tracking.",
     "description": "Store description shown in the browser and in the add-on stores. Hard limit of 132 characters - keep translations within it."
   },
-
   "mode_area": {
     "message": "Select area",
     "description": "Capture mode button: the user drags a rectangle over the page."
@@ -49,7 +47,6 @@
     "message": "Wait, then capture the visible part",
     "description": "Secondary line under the Delayed capture button in the popup."
   },
-
   "popup_settings": {
     "message": "Settings",
     "description": "Popup footer link that opens the Options page."
@@ -58,7 +55,6 @@
     "message": "Tip: use keyboard shortcuts for faster captures.",
     "description": "Hint shown at the bottom of the popup."
   },
-
   "ctx_parent": {
     "message": "SnapLocal",
     "description": "Top-level right-click menu entry. This is the brand name - do NOT translate."
@@ -79,7 +75,6 @@
     "message": "Delayed capture",
     "description": "Right-click menu item."
   },
-
   "cmd_capture_area": {
     "message": "Capture selected area",
     "description": "Keyboard shortcut description shown in the browser shortcut settings page."
@@ -92,7 +87,6 @@
     "message": "Capture full page",
     "description": "Keyboard shortcut description shown in the browser shortcut settings page."
   },
-
   "overlay_hint": {
     "message": "Drag to select an area",
     "description": "Instruction shown over the dimmed page before the user starts dragging."
@@ -109,8 +103,14 @@
     "message": "$WIDTH$ × $HEIGHT$",
     "description": "Live pixel size readout next to the selection rectangle. Symbols only - do not add words.",
     "placeholders": {
-      "width": { "content": "$1", "example": "1024" },
-      "height": { "content": "$2", "example": "768" }
+      "width": {
+        "content": "$1",
+        "example": "1024"
+      },
+      "height": {
+        "content": "$2",
+        "example": "768"
+      }
     }
   },
   "overlay_action_capture": {
@@ -129,19 +129,20 @@
     "message": "Cancel",
     "description": "Floating toolbar button. Keep it to one short word."
   },
-
   "delay_countdown": {
     "message": "Capturing in $SECONDS$s",
     "description": "Countdown shown before a delayed capture fires.",
     "placeholders": {
-      "seconds": { "content": "$1", "example": "3" }
+      "seconds": {
+        "content": "$1",
+        "example": "3"
+      }
     }
   },
   "delay_cancel": {
     "message": "Cancel countdown",
     "description": "Button that aborts a delayed capture."
   },
-
   "fullpage_preparing": {
     "message": "Preparing page…",
     "description": "Full page progress: hiding fixed elements and scrolling to the top."
@@ -150,8 +151,14 @@
     "message": "Capturing $CURRENT$ of $TOTAL$",
     "description": "Full page progress counter: screens captured so far out of the total.",
     "placeholders": {
-      "current": { "content": "$1", "example": "3" },
-      "total": { "content": "$2", "example": "8" }
+      "current": {
+        "content": "$1",
+        "example": "3"
+      },
+      "total": {
+        "content": "$2",
+        "example": "8"
+      }
     }
   },
   "fullpage_stitching": {
@@ -162,7 +169,6 @@
     "message": "Cancel capture",
     "description": "Button that aborts a full page capture in progress."
   },
-
   "editor_title": {
     "message": "Editor",
     "description": "Browser tab title of the editor page."
@@ -171,7 +177,6 @@
     "message": "Untitled capture",
     "description": "Fallback name used when the captured page has no title."
   },
-
   "tool_move": {
     "message": "Select and move",
     "description": "Editor tool: pick an existing shape and drag it."
@@ -216,7 +221,6 @@
     "message": "Crop",
     "description": "Editor tool: trim the image down to a smaller rectangle."
   },
-
   "action_undo": {
     "message": "Undo",
     "description": "Editor toolbar button."
@@ -269,7 +273,6 @@
     "message": "Cancel crop",
     "description": "Discards the crop rectangle."
   },
-
   "color_red": {
     "message": "Red",
     "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
@@ -302,7 +305,6 @@
     "message": "White",
     "description": "Colour swatch in the editor toolbar. Used only as the accessible name a screen reader reads, never shown on screen."
   },
-
   "prop_color": {
     "message": "Color",
     "description": "Editor properties panel label."
@@ -355,7 +357,6 @@
     "message": "Strength",
     "description": "Editor properties panel: how strong the blur is, or how large the pixel blocks are."
   },
-
   "blur_warning_title": {
     "message": "Blur is not always safe",
     "description": "Title of the one-time warning shown the first time the blur tool is used."
@@ -376,7 +377,6 @@
     "message": "Do not show this again",
     "description": "Checkbox in the blur warning dialog."
   },
-
   "export_format": {
     "message": "Format",
     "description": "Save dialog and Options label."
@@ -393,7 +393,6 @@
     "message": "JPEG quality",
     "description": "Slider label, only shown when JPEG is selected. Do not translate JPEG."
   },
-
   "toast_copied": {
     "message": "Copied to clipboard",
     "description": "Brief confirmation message."
@@ -402,14 +401,16 @@
     "message": "Saved as $FILENAME$",
     "description": "Brief confirmation message after a download completes.",
     "placeholders": {
-      "filename": { "content": "$1", "example": "snaplocal-2026-09-08-14-32.png" }
+      "filename": {
+        "content": "$1",
+        "example": "snaplocal-2026-09-08-14-32.png"
+      }
     }
   },
   "toast_settings_saved": {
     "message": "Settings saved",
     "description": "Brief confirmation on the Options page."
   },
-
   "options_title": {
     "message": "Settings",
     "description": "Browser tab title and main heading of the Options page."
@@ -434,7 +435,6 @@
     "message": "About",
     "description": "Options page section heading."
   },
-
   "opt_language": {
     "message": "Language",
     "description": "Options: interface language picker."
@@ -459,7 +459,6 @@
     "message": "Dark",
     "description": "Theme option."
   },
-
   "opt_after_capture": {
     "message": "After capturing",
     "description": "Options: what should happen once a screenshot is taken."
@@ -484,7 +483,10 @@
     "message": "$COUNT$ seconds",
     "description": "Value shown next to the delay slider. Languages with plural rules should use a form that works for 3, 5 and 10.",
     "placeholders": {
-      "count": { "content": "$1", "example": "5" }
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
     }
   },
   "opt_area_confirm": {
@@ -499,10 +501,33 @@
     "message": "Capture right away",
     "description": "Area selection option: releasing the mouse captures immediately, with no confirmation step."
   },
-
   "opt_ask_location": {
     "message": "Ask where to save each file",
     "description": "Options checkbox. When off, files go straight to the downloads folder."
+  },
+  "opt_start_with_windows": {
+    "message": "Start with Windows",
+    "description": "Desktop app only: checkbox label. Whether the app launches when Windows starts."
+  },
+  "opt_use_printscreen": {
+    "message": "Use the Print Screen key",
+    "description": "Desktop app only: checkbox label. Whether the Print Screen key triggers a capture."
+  },
+  "opt_printscreen_busy": {
+    "message": "Windows is using the Print Screen key for the Snipping Tool. Turn that setting off in Windows to use the key here.",
+    "description": "Shown when the app could not take over the Print Screen key. Keep 'Snipping Tool' as Microsoft names it in your language."
+  },
+  "tray_screen": {
+    "message": "This screen",
+    "description": "Desktop app only: tray menu item. Captures the whole screen the pointer is on."
+  },
+  "tray_exit": {
+    "message": "Exit",
+    "description": "Desktop app only: tray menu item that closes the app."
+  },
+  "tray_hotkey_busy": {
+    "message": "Another program is already using this shortcut. Use the tray icon, or free the shortcut.",
+    "description": "Desktop app only: balloon shown when the global shortcut could not be registered."
   },
   "opt_filename_pattern": {
     "message": "File name pattern",
@@ -540,7 +565,6 @@
     "message": "Reset every setting to its default value?",
     "description": "Confirmation question shown before resetting settings."
   },
-
   "privacy_headline": {
     "message": "Everything stays on your device",
     "description": "Headline of the Privacy section. This is the core promise of the product - translate it with confidence and warmth, not legalese."
@@ -561,12 +585,14 @@
     "message": "Read the privacy policy",
     "description": "Link to the hosted privacy policy page."
   },
-
   "about_version": {
     "message": "Version $VERSION$",
     "description": "Shown in the About section.",
     "placeholders": {
-      "version": { "content": "$1", "example": "1.0.0" }
+      "version": {
+        "content": "$1",
+        "example": "1.0.0"
+      }
     }
   },
   "about_donate": {
@@ -589,7 +615,6 @@
     "message": "Rate this extension",
     "description": "Link to the store listing review page."
   },
-
   "err_restricted_page": {
     "message": "This page cannot be captured",
     "description": "Error title shown on browser-internal pages."
@@ -626,7 +651,6 @@
     "message": "Something went wrong.",
     "description": "Last-resort error message."
   },
-
   "common_ok": {
     "message": "OK",
     "description": "Generic button."

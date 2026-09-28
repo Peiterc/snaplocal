@@ -64,6 +64,33 @@ static class Program
             return;
         }
 
+        // Abre só as Opções, para conferir o desenho e as linhas que somem
+        // fora do navegador.
+        if (args.Length >= 1 && args[0] == "--selftest-options")
+        {
+            Application.Run(new OptionsWindow(dumpAndExit: true));
+            return;
+        }
+
+        // Tenta registrar os dois atalhos e relata quem o Windows entregou.
+        // A tecla Print Screen costuma ser recusada, e saber disso sem abrir
+        // interface nenhuma vale mais que supor.
+        if (args.Length >= 1 && args[0] == "--selftest-hotkey")
+        {
+            using var probe = new HotkeyWindow();
+            Log.Write($"Alt+Shift+S: {probe.Register(false)}");
+            Log.Write($"Print Screen: {probe.Register(true)}");
+            return;
+        }
+
+        // Relata os textos do menu da bandeja no idioma configurado.
+        if (args.Length >= 1 && args[0] == "--selftest-tray")
+        {
+            foreach (string key in new[] { "ctx_area", "tray_screen", "options_title", "tray_exit" })
+                Log.Write($"{key}: {Strings.Get(key)}");
+            return;
+        }
+
         Application.Run(new TrayContext());
     }
 }

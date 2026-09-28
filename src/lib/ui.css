@@ -150,6 +150,10 @@ h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em;
   padding: 4px 16px;
 }
 
+/* .row abaixo define display:flex, que vence a regra padrao do navegador para
+   [hidden]. Sem isto, esconder uma linha nao esconde nada. */
+[hidden] { display: none !important; }
+
 .row {
   display: flex;
   align-items: center;

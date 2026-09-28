@@ -27,7 +27,7 @@
 
     <h2 data-i18n="opt_section_capture"></h2>
     <div class="card">
-      <div class="row">
+      <div class="row" data-only="areaConfirm">
         <label for="areaConfirm" data-i18n="opt_area_confirm"></label>
         <select id="areaConfirm">
           <option value="instant" data-i18n="opt_area_confirm_instant"></option>
@@ -46,13 +46,24 @@
         <label for="askSaveLocation" data-i18n="opt_ask_location"></label>
         <input type="checkbox" id="askSaveLocation">
       </div>
-      <div class="row">
+      <div class="row" data-only="hideFixed">
         <label for="hideFixed" data-i18n="opt_hide_fixed"></label>
         <input type="checkbox" id="hideFixed">
       </div>
-      <div class="row">
+      <div class="row" data-only="browserShortcuts">
         <label data-i18n="opt_manage_shortcuts"></label>
         <button class="btn" id="shortcuts" data-i18n="opt_manage_shortcuts"></button>
+      </div>
+
+      <!-- Só no app de desktop: fora do navegador o atalho é do sistema, e o
+           app pode nascer junto com o Windows. -->
+      <div class="row" data-only="desktop">
+        <label for="usePrintScreen" data-i18n="opt_use_printscreen"></label>
+        <input type="checkbox" id="usePrintScreen">
+      </div>
+      <div class="row" data-only="desktop">
+        <label for="startWithWindows" data-i18n="opt_start_with_windows"></label>
+        <input type="checkbox" id="startWithWindows">
       </div>
     </div>
 
