@@ -233,7 +233,8 @@ qualquer coisa do app.
 
 - [x] Overlay de seleção sobre a tela congelada, nos moldes do que a extensão
       faz. Congelar antes de mostrar é o ponto: nada se mexe embaixo do mouse
-      enquanto a pessoa escolhe.
+      enquanto a pessoa escolhe. **Testado com mouse de verdade em 28/09/2026**:
+      selecionar abre o editor com o recorte.
 - [ ] **Múltiplos monitores** — hoje o overlay cobre só a tela onde está o
       ponteiro, então não dá para selecionar uma área que cruze dois monitores
 - [ ] **Escalas de DPI diferentes** — a fonte de bug mais provável do projeto
@@ -241,7 +242,18 @@ qualquer coisa do app.
 - [ ] Captura com atraso
 
 Conferência sem interface: `SnapLocal.exe --selftest-area` abre só a seleção e
-fecha sozinha em 6 segundos, o que permite fotografá-la de outro processo.
+fecha sozinha em 6 segundos, o que permite fotografá-la de outro processo;
+`--selftest-crop` recorta uma área fixa e segue até salvar, cobrindo tudo o que
+vem depois da seleção.
+
+**Duas lições dos dois defeitos desta fase**, ambos encontrados por instrumento
+e não por leitura de código:
+
+- O registro de diagnóstico não pode ficar em `%TEMP%`: a pasta é por usuário,
+  e procurar o log na conta errada custou uma rodada inteira. Ele fica ao lado
+  do executável.
+- Janela nova que nasce atrás da que está em foco é indistinguível, para quem
+  usa, de janela que não abriu. O editor é trazido para a frente ao abrir.
 
 ### Fase 4 — App de verdade
 
