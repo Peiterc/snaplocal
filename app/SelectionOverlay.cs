@@ -12,6 +12,7 @@ sealed class SelectionOverlay : Form
 {
     private readonly Bitmap frozen;
     private Point origin;
+    private Point current;
     private bool dragging;
 
     /// <summary>A área escolhida, em coordenadas da imagem congelada.</summary>
@@ -91,38 +92,43 @@ sealed class SelectionOverlay : Form
         g.DrawString(label, font, Brushes.White, box.X + 5, box.Y + 2);
     }
 
-    private Rectangle Normalized()
-    {
-        // Fora do arraste vale o que já foi escolhido — e nada, antes do
-        // primeiro arraste. Calcular a partir da origem aqui desenhava um
-        // retângulo fantasma do canto da tela até o ponteiro, sem ninguém ter
-        // arrastado coisa nenhuma.
-        if (!dragging) return Selection;
+    /// <summary>
+    /// A área entre onde o arraste começou e onde o ponteiro está. Fora do
+    /// arraste vale o que já foi escolhido — e nada, antes do primeiro
+    /// arraste, senão apareceria um retângulo fantasma do canto da tela até o
+    /// ponteiro.
+    /// </summary>
+    private Rectangle Normalized() => dragging ? Between(origin, current) : Selection;
 
-        Point now = PointToClient(Cursor.Position);
-        return Rectangle.FromLTRB(
-            Math.Min(origin.X, now.X), Math.Min(origin.Y, now.Y),
-            Math.Max(origin.X, now.X), Math.Max(origin.Y, now.Y));
-    }
+    private static Rectangle Between(Point a, Point b) => Rectangle.FromLTRB(
+        Math.Min(a.X, b.X), Math.Min(a.Y, b.Y),
+        Math.Max(a.X, b.X), Math.Max(a.Y, b.Y));
 
     protected override void OnMouseDown(MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Left) return;
         dragging = true;
-        origin = e.Location;
+        origin = current = e.Location;
         Selection = Rectangle.Empty;
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        if (dragging) Invalidate();
+        if (!dragging) return;
+        current = e.Location;
+        Invalidate();
     }
 
     protected override void OnMouseUp(MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Left || !dragging) return;
-        dragging = false;
+
+        // A área tem que ser lida antes de encerrar o arraste: fora dele,
+        // Normalized() devolve a seleção guardada, que ainda está vazia. Era
+        // isto que fazia toda seleção terminar em cancelamento.
+        current = e.Location;
         Rectangle area = Normalized();
+        dragging = false;
 
         // Um clique sem arrastar não é uma seleção de 1 pixel, é desistência.
         if (area.Width < 8 || area.Height < 8)

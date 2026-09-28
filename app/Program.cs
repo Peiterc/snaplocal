@@ -52,6 +52,18 @@ static class Program
             return;
         }
 
+        // Recorta uma área fixa e abre o editor: confere tudo o que acontece
+        // depois da seleção, sem depender de alguém arrastando o mouse.
+        if (args.Length >= 1 && args[0] == "--selftest-crop")
+        {
+            Rectangle bounds = ScreenCapture.CurrentBounds();
+            using Bitmap shot = ScreenCapture.Capture(bounds);
+            var area = new Rectangle(80, 80, 640, 400);
+            using Bitmap crop = shot.Clone(area, shot.PixelFormat);
+            Application.Run(new EditorWindow(ScreenCapture.ToDataUrl(crop), saveAndExit: true));
+            return;
+        }
+
         Application.Run(new TrayContext());
     }
 }
