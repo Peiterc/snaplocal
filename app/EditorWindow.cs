@@ -57,10 +57,6 @@ sealed class EditorWindow : Form
         core.SetVirtualHostNameToFolderMapping(
             VirtualHost, AppAssets.WebFolder(), CoreWebView2HostResourceAccessKind.Allow);
 
-        // Tem que entrar antes da navegação: é o que garante que chrome.*
-        // exista quando o primeiro módulo da página rodar.
-        await core.AddScriptToExecuteOnDocumentCreatedAsync(AppAssets.BridgeScript());
-
         core.WebMessageReceived += OnWebMessage;
         core.PermissionRequested += OnPermissionRequested;
 
@@ -88,7 +84,7 @@ sealed class EditorWindow : Form
         }
         Log.Write("clicando em Salvar");
         Log.Write("estado: " + await core.ExecuteScriptAsync(
-            "JSON.stringify({ save: !!document.getElementById('save'), board: !!document.getElementById('board'), chrome: typeof chrome, downloads: typeof chrome?.downloads?.download })"));
+            "JSON.stringify({ save: !!document.getElementById('save'), board: !!document.getElementById('board'), canal: typeof chrome?.webview?.postMessage })"));
         await core.ExecuteScriptAsync("document.getElementById('save').click()");
         await Task.Delay(1500);
         Close();

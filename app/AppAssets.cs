@@ -11,9 +11,6 @@ static class AppAssets
 
     public static string WebFolder() => Path.Combine(Base, "web");
 
-    public static string BridgeScript() =>
-        File.ReadAllText(Path.Combine(Base, "bridge.js"));
-
     public static Icon Icon()
     {
         string path = Path.Combine(Base, "snaplocal.ico");

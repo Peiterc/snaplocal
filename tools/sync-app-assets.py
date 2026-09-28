@@ -10,21 +10,31 @@ isto que faz a adaptação — uma cópia, sem transformar nada.
 Copia para `app/Assets/web/`:
 
     editor/     a página do editor, como está
-    lib/        i18n, imaging e naming
+    lib/        i18n, imaging, naming e platform
     _locales/   os 11 dicionários
+
+E troca uma peça só: `lib/platform.js`, a implementação escrita sobre
+`chrome.*`, dá lugar a `app/platform-desktop.js`, escrita sobre a ponte com o
+processo em C#. O contrato entre as duas está documentado em
+`src/lib/platform.js`. É por isso que o editor importa sempre o mesmo caminho e
+nenhum dos dois pacotes carrega o código do outro.
 
 Gera também `app/Assets/snaplocal.ico` a partir dos PNGs de `src/icons/`, que
 é o formato que o Windows pede para o ícone da bandeja e do executável.
 """
+import os
 import shutil
+import stat
 import struct
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 WEB = ROOT / "app" / "Assets" / "web"
 ICO = ROOT / "app" / "Assets" / "snaplocal.ico"
+PLATFORM = ROOT / "app" / "platform-desktop.js"
 
 # O que o editor precisa para rodar. O service worker e o content script ficam
 # de fora: são a parte que só existe dentro de um navegador.
@@ -38,15 +48,42 @@ def fail(message):
     sys.exit(1)
 
 
+def _unlock(func, path, _exc):
+    """Atributo somente-leitura derruba o rmtree no Windows; limpa e tenta de novo."""
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def clean(path, attempts=6):
+    """Mesma espera do tools/build.py: o OneDrive segura pastas que está
+    sincronizando, e a falha é temporária."""
+    for attempt in range(attempts):
+        try:
+            shutil.rmtree(path, onexc=_unlock)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                fail(f"nao consegui limpar {path} - feche o Explorer ou pause o OneDrive")
+            time.sleep(0.4 * (attempt + 1))
+
+
 def copy_web():
     if WEB.exists():
-        shutil.rmtree(WEB)
+        clean(WEB)
     WEB.mkdir(parents=True)
     for name in COPY:
         source = SRC / name
         if not source.is_dir():
             fail(f"{source} não existe")
         shutil.copytree(source, WEB / name)
+    if not PLATFORM.is_file():
+        fail(f"{PLATFORM} não existe")
+    target = WEB / "lib" / "platform.js"
+    if not target.is_file():
+        fail("src/lib/platform.js sumiu; o editor importa esse caminho")
+    shutil.copyfile(PLATFORM, target)
+    print(f"troca: lib/platform.js <- {PLATFORM.relative_to(ROOT)}")
+
     files = sorted(p for p in WEB.rglob("*") if p.is_file())
     total = sum(p.stat().st_size for p in files)
     print(f"web:  {len(files)} arquivos, {total / 1024:.0f} KB  ->  {WEB.relative_to(ROOT)}")

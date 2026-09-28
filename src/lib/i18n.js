@@ -8,6 +8,8 @@
  *
  * Both mechanisms read the exact same _locales/<locale>/messages.json files.
  */
+import { assetUrl, getSettings, uiLanguage } from './platform.js';
+
 
 /** Locales shipped in v1. Add a folder under _locales/ and list it here. */
 export const SUPPORTED = [
@@ -30,7 +32,7 @@ export function normalize(tag) {
 }
 
 async function fetchDict(locale) {
-  const res = await fetch(chrome.runtime.getURL(`_locales/${locale}/messages.json`));
+  const res = await fetch(assetUrl(`_locales/${locale}/messages.json`));
   if (!res.ok) throw new Error(`locale not bundled: ${locale}`);
   return res.json();
 }
@@ -40,9 +42,9 @@ async function fetchDict(locale) {
  * Works in the popup, the options page and the service worker alike.
  */
 export async function initI18n() {
-  const { language = 'auto' } = await chrome.storage.local.get('language');
+  const { language } = await getSettings({ language: 'auto' });
   current = language === 'auto'
-    ? normalize(chrome.i18n.getUILanguage())
+    ? normalize(uiLanguage())
     : normalize(language);
 
   fallbackDict = await fetchDict(FALLBACK);

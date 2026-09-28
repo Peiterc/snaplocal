@@ -219,15 +219,31 @@ O segundo confirmou a ponte inteira: o arquivo saiu como
 transferência e o atalho global. São coisas que exigem mouse e teclado de
 verdade.
 
-### Fase 2 — Camada de plataforma
+### Fase 2 — Camada de plataforma — **feita em 28/09/2026**
 
-O editor deixa de falar `chrome.*` diretamente. Passa a chamar um módulo
-pequeno com quatro funções — ler configuração, gravar configuração, receber a
-captura, salvar arquivo — com duas implementações: extensão e desktop.
+O editor e o i18n não falam mais `chrome.*`. As onze chamadas viraram sete
+funções em `src/lib/platform.js`: `getSettings`, `setSettings`, `getSession`,
+`setSession`, `assetUrl`, `uiLanguage` e `saveImage`.
 
-**Regra:** a extensão publicada não pode mudar de comportamento. A refatoração
-entra em uma versão própria, testada no Edge, no Chrome e no Firefox antes de
-qualquer coisa do app.
+São duas implementações do mesmo contrato:
+
+| Arquivo | Escrito sobre |
+|---|---|
+| `src/lib/platform.js` | `chrome.*` — vai nos pacotes das três lojas |
+| `app/platform-desktop.js` | a ponte com o processo em C# |
+
+`tools/sync-app-assets.py` põe a segunda no lugar da primeira ao montar o app.
+O editor importa sempre o mesmo caminho, e **nenhum dos dois pacotes carrega o
+código do outro** — não há detecção de ambiente em tempo de execução, nem
+código morto viajando para as lojas.
+
+A ponte injetada pelo C# (`bridge.js`, que fingia um `chrome.*` inteiro) deixou
+de existir: o app agora fala o contrato diretamente.
+
+**A dívida do cancelamento foi paga junto.** `saveImage` devolve
+`{ ok, canceled }`, e o editor só anuncia erro quando houve erro. Verificado no
+harness com as duas situações: cancelar não mostra nada, falhar mostra a
+mensagem.
 
 ### Fase 3 — Captura de verdade — **em andamento**
 
@@ -254,13 +270,6 @@ e não por leitura de código:
   do executável.
 - Janela nova que nasce atrás da que está em foco é indistinguível, para quem
   usa, de janela que não abriu. O editor é trazido para a frente ao abrir.
-
-**Dívida anotada, e ela é das duas pontas:** quando a pessoa cancela o diálogo
-de "salvar como", o editor mostra *não foi possível salvar*, como se algo
-tivesse dado errado. A extensão faz a mesma coisa hoje, porque
-`chrome.downloads.download` rejeita ao cancelar e o editor não distingue os
-dois casos. A camada da Fase 2 é o lugar de corrigir: um cancelamento é uma
-resposta, não uma falha.
 
 ### Fase 4 — App de verdade
 

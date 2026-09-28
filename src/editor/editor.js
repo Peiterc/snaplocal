@@ -1,6 +1,7 @@
 import { initI18n, applyI18n, t } from '../lib/i18n.js';
 import { drawShape, boxOf, measureText, textFont, norm, REGION_TOOLS, VECTOR_TOOLS } from './shapes.js';
 import { captureFilename } from '../lib/naming.js';
+import { getSettings, setSettings, getSession, setSession, saveImage } from '../lib/platform.js';
 
 const board = document.getElementById('board');
 const bctx = board.getContext('2d', { willReadFrequently: true });
@@ -761,15 +762,15 @@ let pendingBlurShape = null;
  * concrete on screen, and "switch to redact" can convert that very region.
  */
 async function maybeWarnBlur(shape) {
-  const { blurWarningDismissed = false } = await chrome.storage.local.get('blurWarningDismissed');
+  const { blurWarningDismissed } = await getSettings({ blurWarningDismissed: false });
   if (blurWarningDismissed) return;
 
   // Once per browser session, not once per region: blurring six fields in one
   // screenshot is the normal case, and six modals would make the tool useless.
   // The checkbox in the dialog is the permanent opt-out.
-  const { blurWarningShown = false } = await chrome.storage.session.get('blurWarningShown');
+  const { blurWarningShown } = await getSession({ blurWarningShown: false });
   if (blurWarningShown) return;
-  await chrome.storage.session.set({ blurWarningShown: true });
+  await setSession({ blurWarningShown: true });
 
   pendingBlurShape = shape;
   dialog.showModal();
@@ -777,7 +778,7 @@ async function maybeWarnBlur(shape) {
 
 async function closeWarning(convert) {
   if (el('blurWarningDismiss').checked) {
-    await chrome.storage.local.set({ blurWarningDismissed: true });
+    await setSettings({ blurWarningDismissed: true });
   }
   dialog.close();
   if (convert && pendingBlurShape) {
@@ -851,19 +852,13 @@ function isCopyKey(event) {
 
 el('save').addEventListener('click', async () => {
   const name = captureFilename();
-  let url;
-  try {
-    const { askSaveLocation = false } = await chrome.storage.local.get('askSaveLocation');
-    url = URL.createObjectURL(await exportBlob());
-    await chrome.downloads.download({ url, filename: name, saveAs: askSaveLocation });
-    flash(t('toast_saved', name));
-  } catch {
-    flash(t('err_save_failed'), true);
-  } finally {
-    // The download reads the blob asynchronously, so the URL has to outlive
-    // this handler by a moment.
-    if (url) setTimeout(() => URL.revokeObjectURL(url), 60000);
-  }
+  const { askSaveLocation } = await getSettings({ askSaveLocation: false });
+  const result = await saveImage(await exportBlob(), name, { ask: askSaveLocation });
+
+  // Desistir do diálogo de salvar não é uma falha, e anunciar erro nesse caso
+  // faz a pessoa procurar um problema que não existe.
+  if (result.ok) flash(t('toast_saved', name));
+  else if (!result.canceled) flash(t('err_save_failed'), true);
 });
 
 /* ---------------- keyboard ---------------- */
@@ -910,7 +905,7 @@ document.addEventListener('keydown', (event) => {
 /* ---------------- boot ---------------- */
 
 async function applyTheme() {
-  const { theme = 'auto' } = await chrome.storage.local.get('theme');
+  const { theme } = await getSettings({ theme: 'auto' });
   if (theme !== 'auto') document.documentElement.dataset.theme = theme;
 }
 
@@ -921,7 +916,7 @@ document.title = t('appName');
 // The shortcut only helps if people know it exists.
 el('copy').title = `${t('action_copy')} (${/Mac/.test(navigator.platform) ? '⌘C' : 'Ctrl+C'})`;
 
-const { lastCapture } = await chrome.storage.session.get('lastCapture');
+const { lastCapture } = await getSession({ lastCapture: null });
 if (!lastCapture) {
   flash(t('err_generic'), true);
 } else {
