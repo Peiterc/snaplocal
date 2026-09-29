@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json.Nodes;
 using Microsoft.Web.WebView2.Core;
 
@@ -12,6 +13,13 @@ sealed class EditorWindow : WebHostWindow
 {
     protected override string Page => "editor/editor.html";
 
+    // A janela nasce sem imagem e **já carrega a página**: o processo de
+    // renderização do WebView2 leva cerca de dois segundos para existir, e
+    // esses dois segundos são os mesmos em que a pessoa está arrastando a
+    // seleção. Quando a captura chega, a página já está de pé esperando por
+    // ela.
+    private readonly TaskCompletionSource captureReady = new();
+
     private readonly JsonObject session = new();
     protected override JsonObject Session => session;
 
@@ -20,14 +28,38 @@ sealed class EditorWindow : WebHostWindow
     // mouse — é o caminho novo do projeto, e o que mais merece teste.
     private readonly bool saveAndExit;
 
-    public EditorWindow(string captureDataUrl, bool saveAndExit = false)
+    private EditorWindow(bool saveAndExit)
     {
         this.saveAndExit = saveAndExit;
 
         Text = "SnapLocal";
         Width = 1280;
         Height = 820;
+    }
 
+    /// <summary>
+    /// Começa a subir o WebView2 sem ter imagem ainda. Chamada quando a
+    /// captura começa: o navegador embutido leva segundos para existir, e
+    /// esses segundos são os mesmos em que a pessoa está arrastando a seleção.
+    ///
+    /// A janela nasce fora da tela em vez de escondida porque o WebView2 só
+    /// inicializa com a janela criada de verdade.
+    /// </summary>
+    public static EditorWindow StartWarm(bool saveAndExit = false)
+    {
+        var editor = new EditorWindow(saveAndExit)
+        {
+            StartPosition = FormStartPosition.Manual,
+            Location = new Point(-32000, -32000),
+            ShowInTaskbar = false
+        };
+        editor.Show();
+        return editor;
+    }
+
+    /// <summary>Entrega a captura e traz a janela para a frente.</summary>
+    public async Task OpenAsync(string captureDataUrl)
+    {
         // O editor lê a captura da sessão, como na extensão.
         session["lastCapture"] = new JsonObject
         {
@@ -36,6 +68,55 @@ sealed class EditorWindow : WebHostWindow
             ["url"] = "",
             ["at"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };
+        captureReady.TrySetResult();
+
+        await Warm;
+
+        ShowInTaskbar = true;
+        Rectangle area = Screen.FromPoint(Cursor.Position).WorkingArea;
+        Location = new Point(
+            area.X + (area.Width - Width) / 2,
+            area.Y + (area.Height - Height) / 2);
+        Show();
+        Activate();
+    }
+
+    /// <summary>
+    /// Entrega a captura e espera a imagem aparecer no canvas. Só existe para
+    /// os modos de conferência: é a medida que interessa ao usuário, o tempo
+    /// entre soltar o mouse e ver o editor pronto.
+    /// </summary>
+    public async Task<long> DeliverAndWaitAsync(string captureDataUrl)
+    {
+        var clock = Stopwatch.StartNew();
+        await OpenAsync(captureDataUrl);
+
+        while (clock.ElapsedMilliseconds < 15000)
+        {
+            // O canvas nasce com 300x150 por padrão, então "existe" não serve
+            // de sinal: o editor só o redimensiona quando a captura carrega.
+            string pronto = await View.CoreWebView2.ExecuteScriptAsync(
+                "(() => { const b = document.getElementById('board'); return !!b && b.width > 600; })()");
+            if (pronto == "true") break;
+            await Task.Delay(25);
+        }
+        return clock.ElapsedMilliseconds;
+    }
+
+    /// <summary>
+    /// A leitura da captura é a única resposta que pode ficar pendurada: o
+    /// editor pergunta por ela durante a carga, e a resposta só existe quando
+    /// a pessoa termina de escolher a área. Segurar a promessa é o que permite
+    /// a página inteira carregar antes disso.
+    /// </summary>
+    protected override async Task<JsonNode?> HandleAsync(string type, JsonObject payload)
+    {
+        bool querCaptura = type == "storage.get"
+            && payload["area"]?.GetValue<string>() == "session"
+            && (payload["keys"]?.AsArray().Any(k => k?.GetValue<string>() == "lastCapture") ?? false);
+
+        if (querCaptura) await captureReady.Task;
+        return HandleCommon(type, payload);
     }
 
     protected override Task ReadyAsync(CoreWebView2 core)
@@ -54,6 +135,14 @@ sealed class EditorWindow : WebHostWindow
             if (await core.ExecuteScriptAsync("!!document.getElementById('save')") == "true") break;
             await Task.Delay(100);
         }
+        Log.Write("perf navegacao: " + await core.ExecuteScriptAsync(
+            "(() => { const n = performance.getEntriesByType('navigation')[0]; return JSON.stringify({" +
+            "resposta: Math.round(n.responseEnd), domInterativo: Math.round(n.domInteractive)," +
+            "domPronto: Math.round(n.domContentLoadedEventEnd), carga: Math.round(n.loadEventEnd) }); })()"));
+        Log.Write("perf recursos: " + await core.ExecuteScriptAsync(
+            "JSON.stringify(performance.getEntriesByType('resource')" +
+            ".map(r => [r.name.split('/').pop().slice(0,18), Math.round(r.startTime), Math.round(r.duration)])" +
+            ".sort((a, b) => b[2] - a[2]).slice(0, 6))"));
         Log.Write("clicando em Salvar");
         await core.ExecuteScriptAsync("document.getElementById('save').click()");
         await Task.Delay(1500);

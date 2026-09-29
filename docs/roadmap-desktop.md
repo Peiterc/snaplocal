@@ -304,6 +304,37 @@ Conferências sem interface: `--selftest-options` descreve o que a tela mostra e
 o que escondeu, `--selftest-tray` imprime o menu no idioma configurado e
 `--selftest-hotkey` diz quais atalhos o Windows entregou.
 
+### Desempenho da abertura do editor — medido em 29/09/2026
+
+**Onde o tempo estava.** Uma página com uma única linha de script leva os
+mesmos ~2,9 s que o editor inteiro. O custo não é do editor, nem dos módulos,
+nem da imagem: é o WebView2 subindo — ~800 ms para o controle existir e ~2,1 s
+até o renderizador rodar a primeira linha de JavaScript. Medido nesta máquina,
+que é uma VM sem GPU; num desktop real tende a ser bem menor.
+
+**O que foi feito.** A janela do editor passa a ser criada e **carregada**
+quando a captura começa, não quando ela termina. A página sobe enquanto a
+pessoa arrasta a seleção e fica esperando a imagem na própria promessa do
+contrato — o `platform.js` já devolvia a captura de forma assíncrona, então
+segurar essa resposta não exigiu mudar o editor.
+
+Depois de usada, uma janela nova já entra em aquecimento, e a seguinte abre
+instantaneamente. Ela se desfaz sozinha após cinco minutos sem uso, porque um
+editor pronto custa ~190 MB e isso não se justifica num app parado na bandeja.
+`SNAPLOCAL_KEEP_WARM_SECONDS` encurta essa espera para conferir o descarte.
+
+| Tempo escolhendo a área | Espera até a imagem aparecer |
+|---|---|
+| 0 s (como era antes) | 2.917 ms |
+| 1,5 s | 1.227 ms |
+| 4 s, ou janela já quente | **181 ms** |
+
+**Duas medições que corrigiram hipóteses erradas pelo caminho:** não era o
+OneDrive (fora dele o tempo é igual) e não era o adiamento de janelas ocultas
+do Chromium (desligar as três chaves não mudou nada). E um erro meu de método:
+a primeira medição usava `canvas.width > 0` como sinal de pronto, mas canvas
+nasce com 300×150 — ela media o elemento existir, não a imagem aparecer.
+
 ### Fase 5 — Empacotamento
 
 - MSIX, ícones em todos os tamanhos que a Store pede, teste de instalação limpa

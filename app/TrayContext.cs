@@ -35,6 +35,8 @@ sealed class TrayContext : ApplicationContext
         // metade do app num idioma e metade no outro.
         AppSettings.ApplyHotkeyMode = mode => { BuildMenu(); return ApplyHotkey(mode); };
 
+        coolDown.Tick += (_, _) => Cool();
+
         bool usePrintScreen = Settings.All()["usePrintScreen"]?.GetValue<bool>() ?? false;
         ApplyHotkey(usePrintScreen);
     }
@@ -91,6 +93,25 @@ sealed class TrayContext : ApplicationContext
     // abriria dois editores.
     private DateTime lastCapture = DateTime.MinValue;
 
+    // A janela que já está subindo o WebView2. Sobrevive a uma desistência:
+    // quem apertou Esc costuma tentar de novo em seguida, e o trabalho já
+    // estaria feito.
+    private EditorWindow? warming;
+
+    // Um editor pronto custa por volta de 190 MB, medido. Vale a pena
+    // enquanto a pessoa está usando o app — a captura seguinte abre em
+    // milissegundos —, e não vale nada num programa parado na bandeja desde
+    // ontem. Por isso a janela quente se desfaz sozinha depois de um tempo sem
+    // uso, e é refeita na próxima captura.
+    // SNAPLOCAL_KEEP_WARM_SECONDS encurta a espera: sem isso, conferir o
+    // descarte custaria cinco minutos parado a cada tentativa.
+    private static int KeepWarmMs =>
+        int.TryParse(Environment.GetEnvironmentVariable("SNAPLOCAL_KEEP_WARM_SECONDS"), out int seconds)
+            ? seconds * 1000
+            : 5 * 60 * 1000;
+
+    private readonly System.Windows.Forms.Timer coolDown = new() { Interval = KeepWarmMs };
+
     private void CaptureAndEdit(bool wholeScreen = false)
     {
         if (DateTime.Now - lastCapture < TimeSpan.FromMilliseconds(600)) return;
@@ -99,6 +120,11 @@ sealed class TrayContext : ApplicationContext
         Rectangle bounds = ScreenCapture.CurrentBounds();
         using Bitmap shot = ScreenCapture.Capture(bounds);
         Log.Write($"captura {shot.Width}x{shot.Height} de {bounds}");
+
+        // O navegador embutido leva segundos para existir, e esses segundos
+        // são exatamente os que a pessoa gasta escolhendo a área. Subir os
+        // dois ao mesmo tempo é de graça.
+        Warm();
 
         Bitmap? chosen = wholeScreen ? shot : Choose(shot, bounds);
         if (chosen is null)
@@ -111,20 +137,28 @@ sealed class TrayContext : ApplicationContext
         Log.Write($"recorte {chosen.Width}x{chosen.Height}, dataUrl {dataUrl.Length} chars");
         if (!ReferenceEquals(chosen, shot)) chosen.Dispose();
 
-        Open(dataUrl);
+        EditorWindow editor = warming!;
+        warming = null;
+        coolDown.Stop();
+
+        // Quando esta janela fechar, deixa outra pronta: a captura seguinte
+        // costuma vir logo depois, e aí ela abre instantaneamente.
+        editor.FormClosed += (_, _) => { Warm(); coolDown.Start(); };
+        _ = editor.OpenAsync(dataUrl);
     }
 
-    /// <summary>
-    /// Abre o editor e traz para a frente. Sem o Activate, a janela nova pode
-    /// nascer atrás da que estava em foco — e para quem está usando, "não
-    /// abriu" e "abriu atrás de tudo" são a mesma coisa.
-    /// </summary>
-    private static void Open(string dataUrl)
+    private void Warm()
     {
-        var editor = new EditorWindow(dataUrl);
-        editor.Show();
-        editor.Activate();
-        Log.Write("editor aberto");
+        if (warming is null or { IsDisposed: true }) warming = EditorWindow.StartWarm();
+    }
+
+    private void Cool()
+    {
+        coolDown.Stop();
+        if (warming is null or { IsDisposed: true }) return;
+        Log.Write("janela quente descartada por falta de uso");
+        warming.Dispose();
+        warming = null;
     }
 
     /// <summary>
@@ -158,6 +192,8 @@ sealed class TrayContext : ApplicationContext
             tray.Visible = false;   // sem isto o ícone fica fantasma na bandeja
             tray.Dispose();
             hotkey.Dispose();
+            coolDown.Dispose();
+            warming?.Dispose();
         }
         base.Dispose(disposing);
     }

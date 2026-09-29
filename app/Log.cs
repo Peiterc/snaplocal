@@ -16,7 +16,7 @@ static class Log
 
     // Uma captura vira centenas de milhares de caracteres em base64, e o log
     // deixa de ser legível. O começo da linha basta para saber o que passou.
-    private const int Limit = 220;
+    private const int Limit = 420;
 
     public static void Write(string line)
     {
