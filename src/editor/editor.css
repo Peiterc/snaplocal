@@ -77,6 +77,11 @@ body.editor {
 .tool:hover:not(:disabled) { background: var(--bg-sunken); }
 .tool:disabled { opacity: .35; cursor: default; }
 
+/* A lixeira é a única ação destrutiva da barra. A cor avisa disso antes do
+   tooltip, e antes do clique. */
+#remove { color: var(--danger); }
+#remove:hover:not(:disabled) { background: var(--danger-soft); }
+
 .tool[aria-pressed="true"] {
   background: var(--accent-soft);
   border-color: var(--accent);
