@@ -340,6 +340,9 @@
   "opt_language_auto": {
     "message": "Tarayıcıyla aynı"
   },
+  "opt_language_auto_system": {
+    "message": "Sistemle aynı"
+  },
   "opt_theme": {
     "message": "Tema"
   },

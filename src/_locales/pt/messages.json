@@ -340,6 +340,9 @@
   "opt_language_auto": {
     "message": "Igual ao navegador"
   },
+  "opt_language_auto_system": {
+    "message": "Igual ao sistema"
+  },
   "opt_theme": {
     "message": "Tema"
   },

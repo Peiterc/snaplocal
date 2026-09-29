@@ -31,7 +31,9 @@ async function buildLanguagePicker(selected) {
   const locales = await availableLocales();
   languageSelect.replaceChildren();
 
-  const auto = new Option(t('opt_language_auto'), 'auto');
+  // No app não existe navegador: quem dá o idioma ali é o sistema.
+  const autoLabel = features.desktop ? 'opt_language_auto_system' : 'opt_language_auto';
+  const auto = new Option(t(autoLabel), 'auto');
   languageSelect.append(auto);
   // Each locale is labelled in its own language, read from its locale_name key,
   // so the list is legible to someone who cannot read the current UI language.

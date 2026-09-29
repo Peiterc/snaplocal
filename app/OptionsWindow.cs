@@ -54,6 +54,8 @@ sealed class OptionsWindow : WebHostWindow
             "JSON.stringify([...document.querySelectorAll('.row')].filter(r => !r.hidden).map(r => r.querySelector('label')?.textContent || r.textContent.trim().slice(0,30)))"));
         Log.Write("escondidas: " + await core.ExecuteScriptAsync(
             "JSON.stringify([...document.querySelectorAll('.row')].filter(r => r.hidden).map(r => r.dataset.only))"));
+        Log.Write("idioma automatico: " + await core.ExecuteScriptAsync(
+            "document.getElementById('language').options[0].textContent"));
         Log.Write("versao: " + await core.ExecuteScriptAsync("document.getElementById('version').textContent"));
         Close();
     }

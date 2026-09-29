@@ -340,6 +340,9 @@
   "opt_language_auto": {
     "message": "Sama seperti peramban"
   },
+  "opt_language_auto_system": {
+    "message": "Sama dengan sistem"
+  },
   "opt_theme": {
     "message": "Tema"
   },

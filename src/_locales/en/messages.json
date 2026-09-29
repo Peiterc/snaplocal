@@ -443,6 +443,10 @@
     "message": "Same as browser",
     "description": "Language picker option: follow the browser interface language."
   },
+  "opt_language_auto_system": {
+    "message": "Same as the system",
+    "description": "Language picker option in the desktop app, where there is no browser: follow the operating system language."
+  },
   "opt_theme": {
     "message": "Theme",
     "description": "Options: light or dark appearance."
