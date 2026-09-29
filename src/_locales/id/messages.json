@@ -341,7 +341,7 @@
     "message": "Sama seperti peramban"
   },
   "opt_language_auto_system": {
-    "message": "Sama dengan sistem"
+    "message": "Sama seperti sistem"
   },
   "opt_theme": {
     "message": "Tema"
@@ -442,11 +442,17 @@
   "privacy_no_network": {
     "message": "Tangkapan layar Anda tidak pernah diunggah. Ekstensi ini sama sekali tidak melakukan permintaan jaringan."
   },
+  "privacy_no_network_app": {
+    "message": "Tangkapan layar Anda tidak pernah diunggah. Aplikasi ini tidak melakukan permintaan jaringan sama sekali."
+  },
   "privacy_no_account": {
     "message": "Tanpa akun, tanpa masuk, tanpa pelacakan, tanpa iklan."
   },
   "privacy_local_storage": {
     "message": "Pengaturan hanya disimpan di peramban ini, di komputer ini."
+  },
+  "privacy_local_storage_system": {
+    "message": "Pengaturan hanya disimpan di komputer ini."
   },
   "privacy_policy_link": {
     "message": "Baca kebijakan privasi"

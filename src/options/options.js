@@ -14,6 +14,18 @@ function flashSaved() {
   setTimeout(() => toast.classList.remove('show'), 1800);
 }
 
+/**
+ * Trechos cuja redação muda fora do navegador. O texto padrão fica no HTML,
+ * como em toda a página; aqui só se troca o que o app precisa dizer de outro
+ * jeito — "neste navegador" não significa nada num aplicativo.
+ */
+function applyPlatformText() {
+  if (!features.desktop) return;
+  for (const node of document.querySelectorAll('[data-i18n-desktop]')) {
+    node.textContent = t(node.dataset.i18nDesktop);
+  }
+}
+
 function applyTheme(theme) {
   if (theme === 'auto') delete document.documentElement.dataset.theme;
   else document.documentElement.dataset.theme = theme;
@@ -69,6 +81,7 @@ const settings = await getSettings({
 
 await initI18n();
 applyI18n();
+applyPlatformText();
 renderDynamicText();
 applyTheme(settings.theme);
 await buildLanguagePicker(settings.language);
@@ -86,6 +99,7 @@ languageSelect.addEventListener('change', async () => {
   // switch language at once, which is the fastest way to spot a bad string.
   await initI18n();
   applyI18n();
+  applyPlatformText();
   renderDynamicText();
   await buildLanguagePicker(languageSelect.value);
   flashSaved();

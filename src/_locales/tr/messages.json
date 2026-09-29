@@ -442,11 +442,17 @@
   "privacy_no_network": {
     "message": "Ekran görüntüleriniz hiçbir zaman yüklenmez. Bu uzantı hiçbir ağ isteği yapmaz."
   },
+  "privacy_no_network_app": {
+    "message": "Ekran görüntüleriniz asla yüklenmez. Bu uygulama hiçbir ağ isteği yapmaz."
+  },
   "privacy_no_account": {
     "message": "Hesap yok, oturum açma yok, takip yok, reklam yok."
   },
   "privacy_local_storage": {
     "message": "Ayarlar yalnızca bu tarayıcıda, bu bilgisayarda saklanır."
+  },
+  "privacy_local_storage_system": {
+    "message": "Ayarlar yalnızca bu bilgisayarda saklanır."
   },
   "privacy_policy_link": {
     "message": "Gizlilik politikasını oku"

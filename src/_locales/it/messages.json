@@ -442,11 +442,17 @@
   "privacy_no_network": {
     "message": "I tuoi screenshot non vengono mai caricati. Questa estensione non effettua alcuna richiesta di rete."
   },
+  "privacy_no_network_app": {
+    "message": "Le tue catture non vengono mai caricate. Questa applicazione non effettua alcuna richiesta di rete."
+  },
   "privacy_no_account": {
     "message": "Nessun account, nessun accesso, nessun tracciamento, nessuna pubblicità."
   },
   "privacy_local_storage": {
     "message": "Le impostazioni restano solo in questo browser, su questo computer."
+  },
+  "privacy_local_storage_system": {
+    "message": "Le impostazioni restano solo su questo computer."
   },
   "privacy_policy_link": {
     "message": "Leggi l'informativa sulla privacy"

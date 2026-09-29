@@ -442,11 +442,17 @@
   "privacy_no_network": {
     "message": "Deine Screenshots werden nie hochgeladen. Diese Erweiterung stellt überhaupt keine Netzwerkanfragen."
   },
+  "privacy_no_network_app": {
+    "message": "Ihre Aufnahmen werden nie hochgeladen. Diese Anwendung stellt überhaupt keine Netzwerkanfragen."
+  },
   "privacy_no_account": {
     "message": "Kein Konto, keine Anmeldung, kein Tracking, keine Werbung."
   },
   "privacy_local_storage": {
     "message": "Die Einstellungen liegen nur in diesem Browser, auf diesem Computer."
+  },
+  "privacy_local_storage_system": {
+    "message": "Einstellungen werden nur auf diesem Computer gespeichert."
   },
   "privacy_policy_link": {
     "message": "Datenschutzerklärung lesen"

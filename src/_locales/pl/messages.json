@@ -341,7 +341,7 @@
     "message": "Tak jak przeglądarka"
   },
   "opt_language_auto_system": {
-    "message": "Zgodnie z systemem"
+    "message": "Tak jak system"
   },
   "opt_theme": {
     "message": "Motyw"
@@ -442,11 +442,17 @@
   "privacy_no_network": {
     "message": "Twoje zrzuty nigdy nie są wysyłane. To rozszerzenie w ogóle nie łączy się z siecią."
   },
+  "privacy_no_network_app": {
+    "message": "Twoje zrzuty nigdy nie są wysyłane. Ta aplikacja nie wykonuje żadnych żądań sieciowych."
+  },
   "privacy_no_account": {
     "message": "Bez konta, bez logowania, bez śledzenia, bez reklam."
   },
   "privacy_local_storage": {
     "message": "Ustawienia są przechowywane tylko w tej przeglądarce, na tym komputerze."
+  },
+  "privacy_local_storage_system": {
+    "message": "Ustawienia są przechowywane tylko na tym komputerze."
   },
   "privacy_policy_link": {
     "message": "Przeczytaj politykę prywatności"

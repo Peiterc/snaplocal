@@ -442,11 +442,17 @@
   "privacy_no_network": {
     "message": "As suas capturas nunca são enviadas. Esta extensão não faz qualquer pedido de rede."
   },
+  "privacy_no_network_app": {
+    "message": "As suas capturas nunca são enviadas. Esta aplicação não faz nenhum pedido de rede."
+  },
   "privacy_no_account": {
     "message": "Sem conta, sem sessão iniciada, sem rastreio, sem anúncios."
   },
   "privacy_local_storage": {
     "message": "As definições ficam apenas neste navegador, neste computador."
+  },
+  "privacy_local_storage_system": {
+    "message": "As definições ficam apenas neste computador."
   },
   "privacy_policy_link": {
     "message": "Ler a política de privacidade"

@@ -444,7 +444,7 @@
     "description": "Language picker option: follow the browser interface language."
   },
   "opt_language_auto_system": {
-    "message": "Same as the system",
+    "message": "Same as system",
     "description": "Language picker option in the desktop app, where there is no browser: follow the operating system language."
   },
   "opt_theme": {
@@ -577,6 +577,10 @@
     "message": "Your screenshots are never uploaded. This extension makes no network requests at all.",
     "description": "Privacy bullet point. This is a literal technical fact and must not be softened."
   },
+  "privacy_no_network_app": {
+    "message": "Your screenshots are never uploaded. This app makes no network requests at all.",
+    "description": "Desktop app version of privacy_no_network: same promise, worded for an app instead of an extension."
+  },
   "privacy_no_account": {
     "message": "No account, no sign-in, no tracking, no ads.",
     "description": "Privacy bullet point."
@@ -584,6 +588,10 @@
   "privacy_local_storage": {
     "message": "Settings are stored only in this browser, on this computer.",
     "description": "Privacy bullet point."
+  },
+  "privacy_local_storage_system": {
+    "message": "Settings are stored only on this computer.",
+    "description": "Desktop app version of privacy_local_storage, where there is no browser involved."
   },
   "privacy_policy_link": {
     "message": "Read the privacy policy",
