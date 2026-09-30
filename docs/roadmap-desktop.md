@@ -376,14 +376,23 @@ cenários existem e cada um tem um jeito certo.
 Quando o Windows recusa (a pessoa desativou o app na lista de inicialização,
 e só de lá dá para religar), a opção volta sozinha e a tela explica o porquê.
 
-**O que falta para submeter:** os três valores de identidade do Partner Center,
-em `app/msix-identity.json`. Os que estão lá são de teste e a Store recusa:
+**Identidade do pacote**, vinda do Partner Center e já em
+`app/msix-identity.json`:
 
-| Campo | De onde vem, no Partner Center |
+| Campo | Valor |
 |---|---|
-| `name` | Product identity → Package/Identity/Name |
-| `publisher` | Product identity → Package/Identity/Publisher |
-| `publisherDisplayName` | Product identity → Package/Properties/PublisherDisplayName |
+| Nome | `Peiterc.Snaplocal` |
+| Publisher | `CN=4AB02EBA-4C2A-4CC0-BDE6-1DB25547AE4F` |
+| Nome de exibição | `Peiterc` |
+| Família do pacote | `Peiterc.Snaplocal_4z5phabyzbwww` |
+
+O pacote que vai para a Store é o **sem assinatura**, gerado por
+`python tools/make-msix.py`. O `--sign` existe só para instalar e testar aqui:
+a Store assina com o certificado dela, e é por isso que o publisher acima tem
+cara de código e não de nome.
+
+A versão do app começa em **1.0.0** e só pode crescer a partir do primeiro
+envio — a Store recusa um pacote com versão igual ou menor que o publicado.
 
 Atualização automática: **nada a escrever**. Quem atualiza é a Store.
 

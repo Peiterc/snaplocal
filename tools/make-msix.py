@@ -205,6 +205,17 @@ def sign_package(package, publisher):
     certificado tem que ser idêntico ao Publisher do manifesto, senão o Windows
     recusa o pacote sem explicar direito o porquê."""
     password = "snaplocal"
+
+    # O assunto do certificado tem que ser idêntico ao Publisher do manifesto.
+    # Quando o publisher muda — e ele muda ao sair do valor de teste para o do
+    # Partner Center — o certificado antigo deixa de servir, e o erro que o
+    # Windows dá nesse caso não diz isso.
+    marker = DIST / "test-cert-subject.txt"
+    known = marker.read_text(encoding="utf-8").strip() if marker.exists() else ""
+    if CERT_SUBJECT_FILE.exists() and known != publisher:
+        print("publisher mudou; refazendo o certificado de teste")
+        CERT_SUBJECT_FILE.unlink()
+
     if not CERT_SUBJECT_FILE.exists():
         print("criando certificado de teste...")
         run(["powershell", "-NoProfile", "-Command",
@@ -215,6 +226,7 @@ def sign_package(package, publisher):
              f"$p = ConvertTo-SecureString -String '{password}' -Force -AsPlainText; "
              f"Export-PfxCertificate -Cert $c -FilePath '{CERT_SUBJECT_FILE}' -Password $p | Out-Null"])
 
+    marker.write_text(publisher, encoding="utf-8")
     run([str(sdk_tool("signtool.exe")), "sign", "/fd", "SHA256",
          "/a", "/f", str(CERT_SUBJECT_FILE), "/p", password, str(package)])
     print("assinado com o certificado de teste (a Store assina o dela)")
