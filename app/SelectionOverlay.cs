@@ -18,9 +18,15 @@ sealed class SelectionOverlay : Form
     /// <summary>A área escolhida, em coordenadas da imagem congelada.</summary>
     public Rectangle Selection { get; private set; } = Rectangle.Empty;
 
-    public SelectionOverlay(Bitmap screenshot, Rectangle screenBounds)
+    /// <summary>
+    /// Seleção já pronta, usada só para gerar as imagens da loja: sem ela, a
+    /// foto do overlay teria que ser tirada com alguém arrastando o mouse no
+    /// instante exato.
+    /// </summary>
+    public SelectionOverlay(Bitmap screenshot, Rectangle screenBounds, Rectangle? preset = null)
     {
         frozen = screenshot;
+        if (preset is { } area) Selection = area;
 
         FormBorderStyle = FormBorderStyle.None;
         StartPosition = FormStartPosition.Manual;

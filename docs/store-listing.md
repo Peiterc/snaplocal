@@ -434,3 +434,97 @@ código-fonte é **Sim**: o build gera o polyfill, injeta uma tag nos HTMLs e
 reescreve o manifesto, e isso basta para a Mozilla pedir o fonte. Envie
 `dist/snaplocal-source-<versão>.zip`, gerado por `tools/make-source-zip.py`; as
 instruções para o revisor estão no `BUILD.md`. O `GECKO_ID` é permanente.
+
+---
+
+## 8. Microsoft Store — o app de desktop
+
+Produto diferente das extensões, mesma promessa. O que muda na ficha é o que a
+palavra "extensão" não cobre: aqui ele captura qualquer coisa na tela.
+
+### Identidade do pacote
+
+| Campo | Valor |
+|---|---|
+| Nome | `Peiterc.Snaplocal` |
+| Publisher | `CN=4AB02EBA-4C2A-4CC0-BDE6-1DB25547AE4F` |
+| Nome de exibição | `Peiterc` |
+
+Gerado por `python tools/make-msix.py`, **sem assinar** — a Store assina.
+
+### Descrição — inglês
+
+```
+SnapLocal is a screenshot tool that never phones home.
+
+Capture, annotate, blur — and nothing leaves your computer. No account, no
+cloud, no tracking, and not a single network request.
+
+── CAPTURE ANYTHING ON SCREEN ──
+
+• Select area — drag over any part of the screen, not just a browser tab
+• This screen — the whole display, in one keystroke
+• Global shortcut — Alt+Shift+S, or the Print Screen key if you prefer
+
+── A REAL EDITOR ──
+
+Rectangle, ellipse, arrow, line, pencil, highlighter and text, with colour,
+thickness and font controls. Undo and redo everything, including the crop:
+cropping is non-destructive, so undo brings the discarded pixels back.
+
+Copy straight to the clipboard, or save as PNG.
+
+── BLUR THAT TELLS YOU THE TRUTH ──
+
+Blur and pixelate are here. But blurred text can sometimes be reconstructed,
+so SnapLocal also gives you Redact: a solid block that cannot be reversed.
+The first time you blur something, it says so, and offers to convert that
+region to a redaction.
+
+A privacy tool that quietly lets you leak a password is not a privacy tool.
+
+── PRIVATE BY CONSTRUCTION, NOT BY PROMISE ──
+
+• No network requests at all. No analytics, no crash reporting, no remote code
+• No account and no sign-in
+• Your settings stay on this computer
+• Open source under GPL-3.0 — read the code yourself
+
+── AVAILABLE IN 11 LANGUAGES ──
+
+English, Português (Brasil), Português, Español, Français, Italiano, Deutsch,
+Русский, Polski, Türkçe, Bahasa Indonesia.
+
+── FREE, AND STAYING THAT WAY ──
+
+No paid tier, no upsell, no watermark. Source code and issue tracker:
+https://github.com/Peiterc/snaplocal
+```
+
+### Capturas
+
+Geradas por `python tools/make-app-shots.py`, em
+`docs/store-assets/app-shots/`. O mínimo da Store é 1366×768.
+
+| Arquivo | O que mostra |
+|---|---|
+| `01-selecao.png` | a seleção de área sobre um documento, com as dimensões |
+| `02-editor.png` | o editor com um CPF borrado e um token com tarja |
+| `03-opcoes.png` | as Opções: privacidade, idiomas e as opções do Windows |
+
+**Nada de tela real.** O documento que aparece é desenhado pela própria
+ferramenta, com nome, CPF e token inventados — a mesma regra das capturas da
+extensão. As janelas são fotografadas pelo próprio retângulo, com
+`PrintWindow`: `CopyFromScreen` devolve preto em janela desenhada por
+composição de hardware, e o WebView2 é uma delas.
+
+### O resto da ficha
+
+| Campo | Valor |
+|---|---|
+| Política de privacidade | `https://peiterc.github.io/snaplocal/privacy.html` |
+| Site | `https://peiterc.github.io/snaplocal/` |
+| Suporte | `https://github.com/Peiterc/snaplocal/issues` |
+| Classificação etária | questionário IARC, automático |
+| Preço | grátis |
+

@@ -28,9 +28,16 @@ sealed class EditorWindow : WebHostWindow
     // mouse — é o caminho novo do projeto, e o que mais merece teste.
     private readonly bool saveAndExit;
 
-    private EditorWindow(bool saveAndExit)
+    // Desenha um borrão e uma tarja sozinho, para a imagem da loja mostrar o
+    // editor fazendo o que o produto promete — em vez de um editor vazio.
+    // Pelo construtor, e não como propriedade: o WinForms exige metadado de
+    // designer em propriedade pública de Form.
+    private readonly bool demoAnnotations;
+
+    private EditorWindow(bool saveAndExit, bool demoAnnotations = false)
     {
         this.saveAndExit = saveAndExit;
+        this.demoAnnotations = demoAnnotations;
 
         Text = "SnapLocal";
         Width = 1280;
@@ -45,9 +52,9 @@ sealed class EditorWindow : WebHostWindow
     /// A janela nasce fora da tela em vez de escondida porque o WebView2 só
     /// inicializa com a janela criada de verdade.
     /// </summary>
-    public static EditorWindow StartWarm(bool saveAndExit = false)
+    public static EditorWindow StartWarm(bool saveAndExit = false, bool demoAnnotations = false)
     {
-        var editor = new EditorWindow(saveAndExit)
+        var editor = new EditorWindow(saveAndExit, demoAnnotations)
         {
             StartPosition = FormStartPosition.Manual,
             Location = new Point(-32000, -32000),
@@ -123,7 +130,59 @@ sealed class EditorWindow : WebHostWindow
     {
         if (saveAndExit)
             core.NavigationCompleted += async (_, _) => await ClickSaveAndExitAsync(core);
+        if (demoAnnotations)
+            core.NavigationCompleted += async (_, _) => await AnnotateAsync(core);
         return Task.CompletedTask;
+    }
+
+    private const string DemoScript = @"
+      (() => {
+        const board = document.getElementById('board');
+        const r = board.getBoundingClientRect();
+        const at = (fx, fy) => ({ x: r.left + r.width * fx, y: r.top + r.height * fy });
+
+        // Eventos sintéticos não têm ponteiro ativo, e setPointerCapture
+        // lançaria NotFoundError no meio do traço.
+        HTMLElement.prototype.setPointerCapture = function () {};
+
+        const drag = (a, b) => {
+          const base = p => ({ bubbles: true, cancelable: true, pointerId: 1,
+                               pointerType: 'mouse', isPrimary: true,
+                               clientX: p.x, clientY: p.y, buttons: 1 });
+          board.dispatchEvent(new PointerEvent('pointerdown', base(a)));
+          board.dispatchEvent(new PointerEvent('pointermove', base(b)));
+          board.dispatchEvent(new PointerEvent('pointerup', { ...base(b), buttons: 0 }));
+        };
+
+        const diag = { board: [board.width, board.height],
+                       rect: [Math.round(r.left), Math.round(r.top),
+                              Math.round(r.width), Math.round(r.height)] };
+
+        document.querySelector('[data-tool=""blur""]').click();
+        drag(at(0.15, 0.07), at(0.44, 0.21));    // o CPF
+
+        document.querySelector('[data-tool=""redact""]').click();
+        drag(at(0.15, 0.54), at(0.62, 0.68));    // o token de acesso
+
+        // Sem isto a última forma fica selecionada, com alças à mostra.
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        document.querySelector('[data-tool=""move""]').click();
+        return JSON.stringify(diag);
+      })()";
+
+    private async Task AnnotateAsync(CoreWebView2 core)
+    {
+        for (int attempt = 0; attempt < 60; attempt++)
+        {
+            if (await core.ExecuteScriptAsync(
+                    // 300x150 é o tamanho padrão de um canvas vazio: esperar
+                    // "maior que zero" aceitaria a tela antes da captura chegar.
+                    "(() => { const b = document.getElementById('board'); " +
+                    "return !!b && (b.width !== 300 || b.height !== 150); })()") == "true")
+                break;
+            await Task.Delay(100);
+        }
+        Log.Write("demo de anotacoes: " + await core.ExecuteScriptAsync(DemoScript));
     }
 
     private async Task ClickSaveAndExitAsync(CoreWebView2 core)

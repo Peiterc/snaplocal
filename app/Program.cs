@@ -1,4 +1,5 @@
 using System.Drawing.Imaging;
+using System.Linq;
 
 namespace SnapLocal;
 
@@ -126,6 +127,35 @@ static class Program
                 relato += System.Environment.NewLine + $"Set(false)={desligou} Enabled={Startup.Enabled}";
             }
             File.WriteAllText(args[1], relato);
+            return;
+        }
+
+        // Modos usados por tools/make-app-shots.py para fotografar as telas
+        // do app para a loja. Ficam abertos até serem encerrados de fora.
+        if (args.Length >= 3 && args[0] == "--shot-area")
+        {
+            using var fundo = new Bitmap(args[1]);
+            int[] r = args[2].Split(',').Select(int.Parse).ToArray();
+            var overlay = new SelectionOverlay(
+                fundo, new Rectangle(0, 0, fundo.Width, fundo.Height),
+                new Rectangle(r[0], r[1], r[2], r[3]));
+            overlay.StartPosition = FormStartPosition.CenterScreen;
+            Application.Run(overlay);
+            return;
+        }
+
+        if (args.Length >= 2 && args[0] == "--shot-editor")
+        {
+            using var image = new Bitmap(args[1]);
+            EditorWindow editor = EditorWindow.StartWarm(demoAnnotations: true);
+            _ = editor.OpenAsync(ScreenCapture.ToDataUrl(image));
+            Application.Run(editor);
+            return;
+        }
+
+        if (args.Length >= 1 && args[0] == "--shot-options")
+        {
+            Application.Run(new OptionsWindow());
             return;
         }
 
