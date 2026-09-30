@@ -518,6 +518,18 @@ extensão. As janelas são fotografadas pelo próprio retângulo, com
 `PrintWindow`: `CopyFromScreen` devolve preto em janela desenhada por
 composição de hardware, e o WebView2 é uma delas.
 
+### Idiomas
+
+São duas coisas com o mesmo nome, e elas não andam juntas:
+
+- **Idiomas do pacote** — o que a Store mostra em "Idiomas com suporte". Saem
+  das pastas de `src/_locales`, lidas por `tools/make-msix.py`, então os 11
+  idiomas da interface aparecem sem ninguém digitar nada.
+- **Idiomas da ficha** — o texto da loja. Cada um exige uma descrição escrita
+  naquele idioma. Há texto pronto em inglês e português; os outros nove ficam
+  de fora até existir tradução de verdade, porque descrição malfeita afasta
+  mais do que a falta dela.
+
 ### O resto da ficha
 
 | Campo | Valor |
