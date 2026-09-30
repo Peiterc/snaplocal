@@ -518,6 +518,60 @@ extensão. As janelas são fotografadas pelo próprio retângulo, com
 `PrintWindow`: `CopyFromScreen` devolve preto em janela desenhada por
 composição de hardware, e o WebView2 é uma delas.
 
+### Descrição — português
+
+```
+SnapLocal é uma ferramenta de captura de tela que nunca liga para casa.
+
+Capture, anote, borre — e nada sai do seu computador. Sem conta, sem nuvem, sem
+rastreamento e sem uma única requisição de rede.
+
+── CAPTURE QUALQUER COISA NA TELA ──
+
+• Selecionar área — arraste sobre qualquer parte da tela, e não só sobre uma
+  aba de navegador
+• Esta tela — o monitor inteiro, com um toque
+• Atalho global — Alt+Shift+S, ou a tecla Print Screen, se você preferir
+
+── UM EDITOR DE VERDADE ──
+
+Retângulo, elipse, seta, linha, lápis, marca-texto e texto, com controle de cor,
+espessura e fonte. Desfaz e refaz tudo, inclusive o recorte: ele é
+não-destrutivo, então desfazer devolve os pixels descartados.
+
+Copie direto para a área de transferência ou salve em PNG.
+
+── UM BORRÃO QUE FALA A VERDADE ──
+
+Borrar e pixelizar estão aqui. Mas texto borrado às vezes pode ser
+reconstruído, então o SnapLocal também oferece a Tarja: um bloco sólido que não
+pode ser revertido. Na primeira vez que você borra algo, ele avisa — e oferece
+converter aquela região em tarja.
+
+Uma ferramenta de privacidade que deixa você vazar uma senha em silêncio não é
+uma ferramenta de privacidade.
+
+── PRIVADO POR CONSTRUÇÃO, NÃO POR PROMESSA ──
+
+• Nenhuma requisição de rede. Sem analytics, sem relatório de erros, sem código
+  remoto
+• Sem conta e sem login
+• Suas configurações ficam neste computador
+• Código aberto sob GPL-3.0 — leia o código, e qualquer fork publicado também
+  precisa ficar aberto
+
+── DISPONÍVEL EM 11 IDIOMAS ──
+
+Português (Brasil), Português, English, Español, Français, Italiano, Deutsch,
+Русский, Polski, Türkçe, Bahasa Indonesia. Você escolhe o idioma da interface
+independentemente do idioma do Windows.
+
+── GRATUITO, E VAI CONTINUAR ──
+
+Sem versão paga, sem upsell, sem marca d'água. Código-fonte e relato de
+problemas: https://github.com/Peiterc/snaplocal
+```
+
 ### Idiomas
 
 São duas coisas com o mesmo nome, e elas não andam juntas:
