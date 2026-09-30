@@ -85,7 +85,20 @@ async function openEditor(dataUrl, tab) {
   await chrome.storage.session.set({
     lastCapture: { dataUrl, title: tab?.title || '', url: tab?.url || '', at: Date.now() }
   });
-  await chrome.tabs.create({ url: chrome.runtime.getURL('editor/editor.html') });
+
+  // Ao lado da aba capturada, e não "onde o navegador quiser". Sem o windowId
+  // a aba nova vai para a última janela ativa, que pode não ser a janela de
+  // onde veio a captura — numa janela InPrivate isso significa o editor
+  // abrindo do lado de fora, com a captura junto.
+  const url = chrome.runtime.getURL('editor/editor.html');
+  try {
+    await chrome.tabs.create({ url, windowId: tab?.windowId, index: (tab?.index ?? -1) + 1 });
+  } catch (error) {
+    // Janela fechada no meio do caminho, ou id que esta cópia da extensão não
+    // enxerga: abrir sem destino é melhor do que não abrir.
+    console.warn('abrindo o editor sem janela de destino:', error);
+    await chrome.tabs.create({ url });
+  }
 }
 
 /* ---------------- full page ---------------- */
