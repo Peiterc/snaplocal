@@ -367,6 +367,7 @@ próprio idioma.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.0.0 (app) | Microsoft Store | 30/09/2026 | **em certificação** — primeiro envio do app de desktop |
 | 1.0.4 | Edge Add-ons | 25/09/2026 | **em análise** — InPrivate corrigido |
 | 1.0.4 | Chrome Web Store | 25/09/2026 | **em análise** — janela anônima corrigida |
 | 1.0.4 | Firefox AMO | 25/09/2026 | **publicada** em 25/09/2026, com código-fonte |
@@ -583,6 +584,38 @@ São duas coisas com o mesmo nome, e elas não andam juntas:
   naquele idioma. Há texto pronto em inglês e português; os outros nove ficam
   de fora até existir tradução de verdade, porque descrição malfeita afasta
   mais do que a falta dela.
+
+### Como a ficha foi preenchida
+
+O envio de 30/09/2026 saiu assim:
+
+| Campo | Valor |
+|---|---|
+| Preço | 0 (gratuito), todos os mercados, público e detectável |
+| Categoria | Produtividade · secundária Utilitários e ferramentas |
+| Privacidade | "acessa informações pessoais": **sim**, com a política informada |
+| Declarações | instalar em mídia removível e gravar clipes; backup no OneDrive **desmarcado** |
+| Requisitos | teclado e mouse como *recomendados*, nada como mínimo |
+| Classificação | IARC, livre / 3+ em todos os sistemas |
+| Publicação | assim que passar na certificação |
+
+Três coisas que só apareceram preenchendo:
+
+- **O aviso "atualize suas informações de impostos e pagamentos" vinha do preço
+  em branco**, não de cadastro fiscal faltando. Ao marcar 0, sumiu. App
+  gratuito continua sem precisar de perfil fiscal.
+- **A pergunta sobre informações pessoais foi respondida "sim"**, e não "não".
+  Responder "não" esconde o campo da política de privacidade — que um app de
+  desktop empacotado é obrigado a fornecer de qualquer forma. E é verdade que o
+  app *acessa* o que está na tela; o que ele não faz é coletar ou transmitir,
+  que é exatamente o que a política diz.
+- **A justificativa da capacidade `runFullTrust` tem limite de caracteres.** O
+  primeiro texto entrou cortado no meio de uma frase sem aviso nenhum; foi
+  preciso reescrever mais curto e conferir depois de salvar.
+
+**As capturas não são herdadas entre idiomas.** Cada uma das 11 fichas precisou
+das três imagens; uma ficha sem imagem fica "Incompleta" mesmo com a descrição
+preenchida.
 
 ### O resto da ficha
 
