@@ -329,6 +329,15 @@ editor pronto custa ~190 MB e isso não se justifica num app parado na bandeja.
 | 1,5 s | 1.227 ms |
 | 4 s, ou janela já quente | **181 ms** |
 
+**Aquecer na inicialização foi descartado, com número.** Criar só o *ambiente*
+do WebView2 custa 89 ms e nenhum processo extra — e por isso mesmo não resolve:
+é 3% do problema. O que custa são o controle e o renderizador, ou seja, a
+janela inteira, com os ~190 MB. Aquecer na inicialização economizaria uma vez
+por sessão, gastaria memória no pior momento se o app iniciar com o Windows, e
+na maioria das vezes a janela seria descartada sem uso pelos cinco minutos de
+espera. O caminho aberto, se um dia incomodar, é aquecer ao abrir o menu da
+bandeja — intenção demonstrada, custo zero em repouso.
+
 **Duas medições que corrigiram hipóteses erradas pelo caminho:** não era o
 OneDrive (fora dele o tempo é igual) e não era o adiamento de janelas ocultas
 do Chromium (desligar as três chaves não mudou nada). E um erro meu de método:
