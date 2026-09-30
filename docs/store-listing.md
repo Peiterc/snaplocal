@@ -368,14 +368,14 @@ próprio idioma.
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
 | 1.0.0 (app) | Microsoft Store | 30/09/2026 | **em certificação** — primeiro envio do app de desktop |
-| 1.0.4 | Edge Add-ons | 25/09/2026 | **em análise** — InPrivate corrigido |
+| 1.0.4 | Edge Add-ons | 25/09/2026 | **publicada** — InPrivate corrigido |
 | 1.0.4 | Chrome Web Store | 25/09/2026 | **em análise** — janela anônima corrigida |
 | 1.0.4 | Firefox AMO | 25/09/2026 | **publicada** em 25/09/2026, com código-fonte |
-| 1.0.3 | Edge Add-ons | 21/09/2026 | **em análise** — Ctrl+C no editor |
+| 1.0.3 | Edge Add-ons | 21/09/2026 | substituída pela 1.0.4 na fila |
 | 1.0.3 | Firefox AMO | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Firefox |
 | 1.0.3 | Chrome Web Store | 21/09/2026 | **publicada** em 21/09/2026 — primeira versão no Chrome |
 | 1.0.2 | Firefox AMO | 11/09/2026 | enviada com código-fonte; substituída pela 1.0.3 na fila |
-| 1.0.1 | Edge Add-ons | 11/09/2026 | **em análise** |
+| 1.0.1 | Edge Add-ons | 11/09/2026 | substituída na fila por versão posterior |
 | 1.0.0 | Edge Add-ons | 09/09/2026 | publicada em 11/09/2026 |
 | 1.0.2 | Chrome Web Store | — | só carregada no rascunho; nunca publicada |
 

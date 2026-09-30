@@ -5,8 +5,11 @@ nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
 **[Instalar no Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn)** · **[Instalar no Chrome](https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh)** · **[Instalar no Firefox](https://addons.mozilla.org/firefox/addon/snaplocal/)** · [Site do projeto](https://peiterc.github.io/snaplocal/) · [Política de privacidade](https://peiterc.github.io/snaplocal/privacy.html)
 
-Estado atual: publicada nas três lojas — **Microsoft Edge Add-ons** (desde
-11/09/2026), **Chrome Web Store** e **Firefox AMO** (ambas desde 21/09/2026).
+Estado atual: **1.0.4 publicada nas três lojas** — Microsoft Edge Add-ons,
+Chrome Web Store e Firefox AMO. Há também um **aplicativo de desktop para
+Windows**, que reaproveita o mesmo editor e captura qualquer coisa na tela; ele
+está em certificação na Microsoft Store. O plano dele é o
+[docs/roadmap-desktop.md](docs/roadmap-desktop.md).
 
 As quatro capturas — área selecionada, parte visível, página inteira e com
 atraso — e o editor completo estão prontos: borrar, tarja, retângulo, elipse,
