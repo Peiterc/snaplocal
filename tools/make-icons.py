@@ -20,9 +20,22 @@ import zlib
 
 OUT_DIR = os.path.join("src", "icons")
 STORE_DIR = os.path.join("docs", "store-assets")
+MSIX_DIR = os.path.join("app", "Assets", "msix")
 
 SIZES = (16, 32, 48, 128)
 STORE_LOGO = 300
+
+# Os tamanhos que o pacote MSIX exige, com os nomes que o AppxManifest usa.
+# São os mesmos desenhos, no mesmo código: um ícone de app que não bate com o
+# da extensão faria as duas metades do produto parecerem coisas diferentes.
+MSIX_LOGOS = (
+    ("Square44x44Logo.png", 44),     # barra de tarefas e lista de apps
+    ("Square71x71Logo.png", 71),     # bloco pequeno
+    ("Square150x150Logo.png", 150),  # bloco médio, o principal
+    # Sem bloco grande: o Windows exige um logo largo de 310x150 junto dele, e
+    # esticar uma marca quadrada em faixa é pior do que não ter o bloco.
+    ("StoreLogo.png", 50),           # o que a Store mostra na listagem
+)
 
 # A saturated blue holds up on both light and dark browser toolbars. A near
 # black icon vanishes into a dark theme, a pale one into a light theme.
@@ -172,6 +185,13 @@ def main():
     path = os.path.join(STORE_DIR, "logo-300.png")
     write_png(path, render(STORE_LOGO, 3))
     print("%-32s %3d px, logo da loja Edge, %5d bytes" % (path, STORE_LOGO, os.path.getsize(path)))
+
+    os.makedirs(MSIX_DIR, exist_ok=True)
+    for name, size in MSIX_LOGOS:
+        samples = 3 if size >= 150 else 8
+        path = os.path.join(MSIX_DIR, name)
+        write_png(path, render(size, samples))
+        print("%-32s %3d px, pacote MSIX, %5d bytes" % (path, size, os.path.getsize(path)))
 
 
 if __name__ == "__main__":

@@ -513,6 +513,10 @@
     "message": "Start with Windows",
     "description": "Desktop app only: checkbox label. Whether the app launches when Windows starts."
   },
+  "opt_startup_blocked": {
+    "message": "Windows is blocking SnapLocal from starting automatically. Turn it back on under Startup apps in Task Manager.",
+    "description": "Desktop app only: shown when the system refused to enable start-with-Windows because the user disabled it in Task Manager."
+  },
   "opt_use_printscreen": {
     "message": "Use the Print Screen key",
     "description": "Desktop app only: checkbox label. Whether the Print Screen key triggers a capture."

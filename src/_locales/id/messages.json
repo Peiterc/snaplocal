@@ -394,6 +394,9 @@
   "opt_start_with_windows": {
     "message": "Jalankan saat Windows dinyalakan"
   },
+  "opt_startup_blocked": {
+    "message": "Windows memblokir SnapLocal agar tidak berjalan otomatis. Nyalakan lagi di Aplikasi startup pada Task Manager."
+  },
   "opt_use_printscreen": {
     "message": "Gunakan tombol Print Screen"
   },

@@ -344,11 +344,48 @@ do Chromium (desligar as três chaves não mudou nada). E um erro meu de método
 a primeira medição usava `canvas.width > 0` como sinal de pronto, mas canvas
 nasce com 300×150 — ela media o elemento existir, não a imagem aparecer.
 
-### Fase 5 — Empacotamento
+### Fase 5 — Empacotamento — **feita em 29/09/2026**
 
-- MSIX, ícones em todos os tamanhos que a Store pede, teste de instalação limpa
-  numa máquina sem nada instalado
-- Atualização automática: **não escrever nada**. Quem atualiza é a Store.
+```
+python tools/make-msix.py             # gera o pacote
+python tools/make-msix.py --install   # assina e instala aqui, para testar
+```
+
+**Sem instalar o Windows SDK.** As duas ferramentas necessárias, MakeAppx e
+SignTool, vêm de um pacote NuGet baixado na primeira execução. Quem clonar o
+repositório reproduz o pacote com o que já precisa para compilar, e nada mais —
+a mesma regra do `BUILD.md` da extensão.
+
+O pacote sai **autocontido**, com o runtime do .NET junto: 49 MB, e a máquina
+de quem instala não precisa ter nada. Os ícones nos tamanhos que o MSIX pede
+saem do mesmo `tools/make-icons.py` que desenha os da extensão — um app com
+marca diferente da extensão pareceria outro produto.
+
+**A descoberta da fase, e ela era um defeito silencioso.** Empacotado em MSIX,
+o registro do usuário é virtualizado para dentro do pacote. Medido com o app
+instalado: `Set(true)=True, Enabled=True`, e a chave Run do usuário **continuou
+vazia**. Ou seja, "Iniciar com o Windows" ficaria ligado na tela sem nunca
+iniciar nada.
+
+A correção é o mecanismo próprio do formato: uma `StartupTask` declarada no
+manifesto e ligada pela API do Windows. Conferido por fora, no registro real:
+`State = 2` ao ligar, `0` ao desligar. O código escolhe o caminho conforme onde
+está rodando — StartupTask empacotado, chave Run solto —, porque os dois
+cenários existem e cada um tem um jeito certo.
+
+Quando o Windows recusa (a pessoa desativou o app na lista de inicialização,
+e só de lá dá para religar), a opção volta sozinha e a tela explica o porquê.
+
+**O que falta para submeter:** os três valores de identidade do Partner Center,
+em `app/msix-identity.json`. Os que estão lá são de teste e a Store recusa:
+
+| Campo | De onde vem, no Partner Center |
+|---|---|
+| `name` | Product identity → Package/Identity/Name |
+| `publisher` | Product identity → Package/Identity/Publisher |
+| `publisherDisplayName` | Product identity → Package/Properties/PublisherDisplayName |
+
+Atualização automática: **nada a escrever**. Quem atualiza é a Store.
 
 ### Fase 6 — Submissão
 

@@ -1,0 +1,17 @@
+{
+  "_comentario": [
+    "Identidade do pacote MSIX. Os valores abaixo sao de TESTE: servem para",
+    "assinar e instalar na propria maquina, e a Store recusa um envio com eles.",
+    "",
+    "Os definitivos saem do Partner Center, em Product identity, e sao tres:",
+    "  name                  -> Package/Identity/Name      (ex.: 12345Peiterc.SnapLocal)",
+    "  publisher             -> Package/Identity/Publisher (ex.: CN=A1B2C3D4-...)",
+    "  publisherDisplayName  -> Package/Properties/PublisherDisplayName (ex.: Peiterc)",
+    "",
+    "Trocar os tres de uma vez: o publisher precisa bater com o certificado, e",
+    "na Store quem assina e ela."
+  ],
+  "name": "Peiterc.SnapLocal",
+  "publisher": "CN=SnapLocal Teste",
+  "publisherDisplayName": "Peiterc"
+}

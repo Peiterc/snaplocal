@@ -394,6 +394,9 @@
   "opt_start_with_windows": {
     "message": "Windows ile birlikte başlat"
   },
+  "opt_startup_blocked": {
+    "message": "Windows, SnapLocal'ın otomatik başlamasını engelliyor. Görev Yöneticisi'ndeki Başlangıç uygulamaları bölümünden yeniden açın."
+  },
   "opt_use_printscreen": {
     "message": "Print Screen tuşunu kullan"
   },

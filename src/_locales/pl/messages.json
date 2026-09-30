@@ -394,6 +394,9 @@
   "opt_start_with_windows": {
     "message": "Uruchamiaj razem z systemem Windows"
   },
+  "opt_startup_blocked": {
+    "message": "Windows blokuje automatyczne uruchamianie SnapLocal. Włącz je ponownie w Aplikacjach autostartu w Menedżerze zadań."
+  },
   "opt_use_printscreen": {
     "message": "Używaj klawisza Print Screen"
   },

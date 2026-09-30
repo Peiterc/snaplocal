@@ -394,6 +394,9 @@
   "opt_start_with_windows": {
     "message": "Запускать вместе с Windows"
   },
+  "opt_startup_blocked": {
+    "message": "Windows не разрешает SnapLocal запускаться автоматически. Включите его снова в разделе «Автозагрузка приложений» диспетчера задач."
+  },
   "opt_use_printscreen": {
     "message": "Использовать клавишу Print Screen"
   },

@@ -394,6 +394,9 @@
   "opt_start_with_windows": {
     "message": "Avvia con Windows"
   },
+  "opt_startup_blocked": {
+    "message": "Windows sta impedendo l'avvio automatico di SnapLocal. Riattivalo in App di avvio, nella Gestione attività."
+  },
   "opt_use_printscreen": {
     "message": "Usa il tasto Stamp"
   },

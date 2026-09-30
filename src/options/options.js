@@ -26,6 +26,13 @@ function applyPlatformText() {
   }
 }
 
+/** Aviso que fica mais tempo na tela: explica por que algo não aconteceu. */
+function warn(key) {
+  toast.textContent = t(key);
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 7000);
+}
+
 function applyTheme(theme) {
   if (theme === 'auto') delete document.documentElement.dataset.theme;
   else document.documentElement.dataset.theme = theme;
@@ -139,16 +146,22 @@ printScreenInput.addEventListener('change', async () => {
   // não devolve a tecla, a opção volta sozinha e a pessoa é avisada do porquê.
   if (ok === false) {
     printScreenInput.checked = false;
-    toast.textContent = t('opt_printscreen_busy');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 6000);
+    warn('opt_printscreen_busy');
     return;
   }
   flashSaved();
 });
 
 startupInput.addEventListener('change', async () => {
-  await setSettings({ startWithWindows: startupInput.checked });
+  const { ok } = await setSettings({ startWithWindows: startupInput.checked });
+  // Quem desativou o app na lista de inicialização do Windows mandou, e só de
+  // lá dá para religar. Fingir que deu certo deixaria a opção ligada sem
+  // efeito nenhum.
+  if (ok === false) {
+    startupInput.checked = false;
+    warn('opt_startup_blocked');
+    return;
+  }
   flashSaved();
 });
 

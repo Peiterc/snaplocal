@@ -394,6 +394,9 @@
   "opt_start_with_windows": {
     "message": "Mit Windows starten"
   },
+  "opt_startup_blocked": {
+    "message": "Windows verhindert den automatischen Start von SnapLocal. Aktivieren Sie ihn im Task-Manager unter Autostart-Apps wieder."
+  },
   "opt_use_printscreen": {
     "message": "Die Druck-Taste verwenden"
   },

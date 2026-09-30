@@ -109,6 +109,26 @@ static class Program
             return;
         }
 
+        // Liga e desliga o "iniciar com o Windows" e conta o que aconteceu num
+        // arquivo. Existe porque, empacotado em MSIX, o registro do usuário
+        // pode ser virtualizado dentro do pacote — e aí a opção não teria
+        // efeito nenhum, sem avisar ninguém.
+        if (args.Length >= 2 && args[0] == "--selftest-startup")
+        {
+            bool ligou = Startup.Set(true);
+            string relato = $"Set(true)={ligou} Enabled={Startup.Enabled}";
+
+            // Com "manter", a opção fica ligada para poder ser conferida de
+            // fora: o app dizer que deu certo não prova que o Windows viu.
+            if (args.Length < 3 || args[2] != "manter")
+            {
+                bool desligou = Startup.Set(false);
+                relato += System.Environment.NewLine + $"Set(false)={desligou} Enabled={Startup.Enabled}";
+            }
+            File.WriteAllText(args[1], relato);
+            return;
+        }
+
         Application.Run(new TrayContext());
     }
 
