@@ -36,6 +36,18 @@ def keep(path):
     return not path.endswith(SKIP_SUFFIXES)
 
 
+# Pela mesma razão que em tools/build.py: a data que o zip guarda de cada
+# arquivo faria dois pacotes de conteúdo igual terem hashes diferentes.
+ZIP_EPOCH = (1980, 1, 1, 0, 0, 0)
+
+
+def zip_entry(nome):
+    info = zipfile.ZipInfo(nome, ZIP_EPOCH)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o100644 << 16   # arquivo comum, 0644
+    return info
+
+
 def main():
     version = __import__("json").load(
         open(os.path.join(ROOT, "src", "manifest.json"), encoding="utf-8"))["version"]
@@ -58,7 +70,9 @@ def main():
 
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
         for full in sorted(entries):
-            zf.write(full, os.path.relpath(full, ROOT).replace(os.path.sep, "/"))
+            nome = os.path.relpath(full, ROOT).replace(os.path.sep, "/")
+            with open(full, "rb") as arquivo:
+                zf.writestr(zip_entry(nome), arquivo.read())
 
     print("%s  (%d arquivos, %d KB)"
           % (out, len(entries), os.path.getsize(out) // 1024))

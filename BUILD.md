@@ -90,6 +90,21 @@ writes its generated files as bytes and keeps each HTML file's own newline
 convention, so the same source produces the same package on Windows, Linux and
 macOS.
 
+The package is reproducible down to its bytes, and you can check that without
+trusting any of the above. Unpack `snaplocal-source-<version>.zip` into an empty
+directory, build it there, and compare the hashes with the published ones:
+
+```
+python tools/build.py
+sha256sum dist/*.zip
+```
+
+Every entry in the zip is stored with a fixed date (1980-01-01) and fixed
+permissions, because the date a file happens to carry on the machine that built
+it would otherwise change the hash while changing nothing in the package. The
+same applies to `tools/make-source-zip.py`, so the source package reproduces
+itself too.
+
 ## Project home
 
 <https://github.com/Peiterc/snaplocal> — GPL-3.0.

@@ -181,10 +181,29 @@ def build(target, make_zip):
         zip_path = DIST / f"snaplocal-{target}-{manifest['version']}.zip"
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
             for path in files:
-                zf.write(path, path.relative_to(out))
+                zf.writestr(zip_entry(path.relative_to(out)), path.read_bytes())
         archive = f"  ->  {zip_path.name} ({zip_path.stat().st_size / 1024:.0f} KB)"
 
     print(f"{target:8} {len(files):3} arquivos, {total / 1024:.0f} KB{archive}")
+
+
+# O zip guarda a data de cada arquivo, e só isso já basta para dois pacotes de
+# conteúdo idêntico terem bytes diferentes — foi o que aconteceu ao reconstruir
+# o projeto a partir do pacote de código-fonte, onde os arquivos nascem com a
+# data da extração. Quem confere reprodutibilidade compara o hash do pacote, e
+# não tem como saber que a diferença era só o envelope. Por isso a data vai
+# fixa, em 1980-01-01, o começo do calendário que o formato zip sabe
+# representar. A permissão também é fixa: ela sai diferente no Windows e no
+# Linux, e mudaria o pacote junto.
+ZIP_EPOCH = (1980, 1, 1, 0, 0, 0)
+
+
+def zip_entry(nome):
+    """Uma entrada de zip sem nada que venha da máquina que construiu."""
+    info = zipfile.ZipInfo(str(nome).replace(os.sep, "/"), ZIP_EPOCH)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o100644 << 16   # arquivo comum, 0644
+    return info
 
 
 def main():
