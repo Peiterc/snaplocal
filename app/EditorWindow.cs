@@ -32,9 +32,13 @@ sealed class EditorWindow : WebHostWindow
     // editor fazendo o que o produto promete — em vez de um editor vazio.
     // Pelo construtor, e não como propriedade: o WinForms exige metadado de
     // designer em propriedade pública de Form.
-    private readonly bool demoAnnotations;
+    // As duas formas vêm de fora, em frações da imagem: quem monta a captura
+    // da loja é que sabe onde está o CPF e onde está o token no documento
+    // falso. Com os números aqui dentro, mudar o recorte do documento movia as
+    // anotações para cima de linha errada — e nada reclamava.
+    private readonly string? demoAnnotations;
 
-    private EditorWindow(bool saveAndExit, bool demoAnnotations = false)
+    private EditorWindow(bool saveAndExit, string? demoAnnotations = null)
     {
         this.saveAndExit = saveAndExit;
         this.demoAnnotations = demoAnnotations;
@@ -52,7 +56,7 @@ sealed class EditorWindow : WebHostWindow
     /// A janela nasce fora da tela em vez de escondida porque o WebView2 só
     /// inicializa com a janela criada de verdade.
     /// </summary>
-    public static EditorWindow StartWarm(bool saveAndExit = false, bool demoAnnotations = false)
+    public static EditorWindow StartWarm(bool saveAndExit = false, string? demoAnnotations = null)
     {
         var editor = new EditorWindow(saveAndExit, demoAnnotations)
         {
@@ -130,7 +134,7 @@ sealed class EditorWindow : WebHostWindow
     {
         if (saveAndExit)
             core.NavigationCompleted += async (_, _) => await ClickSaveAndExitAsync(core);
-        if (demoAnnotations)
+        if (demoAnnotations is not null)
             core.NavigationCompleted += async (_, _) => await AnnotateAsync(core);
         return Task.CompletedTask;
     }
@@ -158,11 +162,14 @@ sealed class EditorWindow : WebHostWindow
                        rect: [Math.round(r.left), Math.round(r.top),
                               Math.round(r.width), Math.round(r.height)] };
 
+        // [[x1,y1,x2,y2] do borrão, [x1,y1,x2,y2] da tarja], em frações.
+        const spec = JSON.parse('%DEMO%');
+
         document.querySelector('[data-tool=""blur""]').click();
-        drag(at(0.15, 0.07), at(0.44, 0.21));    // o CPF
+        drag(at(spec[0][0], spec[0][1]), at(spec[0][2], spec[0][3]));
 
         document.querySelector('[data-tool=""redact""]').click();
-        drag(at(0.15, 0.54), at(0.62, 0.68));    // o token de acesso
+        drag(at(spec[1][0], spec[1][1]), at(spec[1][2], spec[1][3]));
 
         // Sem isto a última forma fica selecionada, com alças à mostra.
         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -182,7 +189,8 @@ sealed class EditorWindow : WebHostWindow
                 break;
             await Task.Delay(100);
         }
-        Log.Write("demo de anotacoes: " + await core.ExecuteScriptAsync(DemoScript));
+        Log.Write("demo de anotacoes: " + await core.ExecuteScriptAsync(
+            DemoScript.Replace("%DEMO%", demoAnnotations)));
     }
 
     private async Task ClickSaveAndExitAsync(CoreWebView2 core)

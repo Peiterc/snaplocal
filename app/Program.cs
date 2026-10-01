@@ -144,10 +144,12 @@ static class Program
             return;
         }
 
-        if (args.Length >= 2 && args[0] == "--shot-editor")
+        if (args.Length >= 3 && args[0] == "--shot-editor")
         {
             using var image = new Bitmap(args[1]);
-            EditorWindow editor = EditorWindow.StartWarm(demoAnnotations: true);
+            // args[2]: as duas formas da demo, em frações da imagem, montadas
+            // por tools/make-app-shots.py a partir do documento que ele desenha.
+            EditorWindow editor = EditorWindow.StartWarm(demoAnnotations: args[2]);
             _ = editor.OpenAsync(ScreenCapture.ToDataUrl(image));
             Application.Run(editor);
             return;

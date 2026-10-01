@@ -89,6 +89,7 @@ def compose(window, target, canvas):
 
     fundo.paste(janela, (x, y))
     fundo.save(target)
+    conferir(target)
 
 
 def fake_desktop(size):
@@ -114,8 +115,12 @@ def fake_desktop(size):
     draw.text((card[0] + 24, card[1] + 15), "Cadastro do cliente — SIGEC",
               font=font(15), fill=DIM)
 
-    x, y = card[0] + 48, card[1] + 100
+    # O título sobe um pouco: a seleção desenha o rótulo de dimensões logo
+    # acima da borda de cima, e com o título na altura antiga o rótulo caía
+    # em cima dele.
+    x, y = card[0] + 48, card[1] + 70
     draw.text((x, y), "Painel da conta", font=font(34, bold=True), fill=TEXT)
+    y = card[1] + 100
 
     linhas = [
         ("Titular", "Maria Aparecida de Souza Lima"),
@@ -149,7 +154,32 @@ def fake_desktop(size):
     WORK.mkdir(parents=True, exist_ok=True)
     path = WORK / "desktop.png"
     image.save(path)
-    return path
+
+    # A área que a seleção escolhe e que o editor recebe. Sai da posição real
+    # das linhas, e não de uma fração da tela: com fração o recorte caía no
+    # meio do texto — a captura anterior cortava o nome do titular ao meio e
+    # deixava a última letra de um rótulo solta na borda.
+    # Vai de "Titular" a "Telefone": o CPF e o token, que são o motivo da
+    # imagem existir, ficam no meio dela.
+    topo = card[1] + 170
+    regiao = (x - 28, topo - 26, (card[2] - 40) - (x - 28), 46 * 6 + 62)
+
+    # As duas anotações que o editor desenha sozinho na captura 2, em frações
+    # do recorte. Saem da mesma grade que desenhou as linhas: assim mudar o
+    # documento ou o recorte não deixa a tarja em cima da linha errada, que foi
+    # o que aconteceu quando as frações moravam dentro do app.
+    def faixa(indice, texto):
+        linha = (topo + 46 * indice) - regiao[1]
+        esquerda = (x + 240) - regiao[0]
+        largura = draw.textlength(texto, font=font(18))
+        return [round((esquerda - 10) / regiao[2], 4),
+                round((linha - 7) / regiao[3], 4),
+                round((esquerda + largura + 10) / regiao[2], 4),
+                round((linha + 31) / regiao[3], 4)]
+
+    demo = json.dumps([faixa(1, linhas[1][1]),     # o CPF, borrado
+                       faixa(4, linhas[4][1])])    # o token, com tarja
+    return path, regiao, demo
 
 
 def crop(source, box, target):
@@ -162,6 +192,10 @@ Add-Type @"
 using System;
 using System.Runtime.InteropServices;
 public class Win {
+  public delegate bool EnumProc(IntPtr h, IntPtr p);
+  [DllImport("user32.dll")] static extern bool EnumWindows(EnumProc cb, IntPtr p);
+  [DllImport("user32.dll")] static extern uint GetWindowThreadProcessId(IntPtr h, out uint pid);
+  [DllImport("user32.dll")] public static extern bool IsWindowVisible(IntPtr h);
   [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h, out RECT r);
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
   // PrintWindow com PW_RENDERFULLCONTENT (2) é o que captura janela desenhada
@@ -170,47 +204,86 @@ public class Win {
   [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr dc, uint flags);
   [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
   public struct RECT { public int Left, Top, Right, Bottom; }
+
+  // A janela da seleção não aparece na barra de tarefas, e por isso o .NET
+  // devolve MainWindowHandle = 0 para ela: a captura ficava sem alvo e a
+  // imagem saía vazia. Varrer as janelas do processo e pegar a maior serve
+  // para todas as telas do app, sem um caminho especial para cada uma.
+  // A varredura mora aqui dentro de propósito: com EnumWindows chamado do
+  // PowerShell o retorno de chamada não chega, e a varredura devolve zero
+  // janelas sem erro nenhum — medido.
+  public static IntPtr Maior(uint pid) {
+    IntPtr melhor = IntPtr.Zero; long maior = 0;
+    EnumWindows(delegate(IntPtr h, IntPtr p) {
+      uint dono; GetWindowThreadProcessId(h, out dono);
+      if (dono == pid && IsWindowVisible(h)) {
+        RECT r; GetWindowRect(h, out r);
+        long a = (long)(r.Right - r.Left) * (r.Bottom - r.Top);
+        if (a > maior) { maior = a; melhor = h; }
+      }
+      return true;
+    }, IntPtr.Zero);
+    return melhor;
+  }
 }
 "@
 [Win]::SetProcessDPIAware() | Out-Null
-$proc = Get-Process -Id %PID% -ErrorAction Stop
-for ($i = 0; $i -lt 60 -and $proc.MainWindowHandle -eq 0; $i++) { Start-Sleep -Milliseconds 200; $proc.Refresh() }
-[Win]::SetForegroundWindow($proc.MainWindowHandle) | Out-Null
+
+$alvo = [IntPtr]::Zero
+for ($i = 0; $i -lt 60 -and $alvo -eq [IntPtr]::Zero; $i++) {
+  Start-Sleep -Milliseconds 200
+  $alvo = [Win]::Maior(%PID%)
+}
+if ($alvo -eq [IntPtr]::Zero) { Write-Error "nenhuma janela visivel do processo %PID%"; exit 1 }
+
+[Win]::SetForegroundWindow($alvo) | Out-Null
 Start-Sleep -Milliseconds %SETTLE%
-$r = New-Object Win+RECT
-[Win]::GetWindowRect($proc.MainWindowHandle, [ref]$r) | Out-Null
-$w = $r.Right - $r.Left; $h = $r.Bottom - $r.Top
-$bmp = New-Object System.Drawing.Bitmap($w, $h)
+
+# O alvo e procurado de novo depois da espera: o editor sobe uma janela para
+# aquecer o WebView2 e mostra outra para a captura, e o handle achado la atras
+# ja nao e o que esta na tela. Com o handle velho o GetWindowRect devolve
+# zeros, e a foto saia 0x0 sem reclamar.
+$w = 0; $altura = 0
+for ($i = 0; $i -lt 20 -and $w -lt 300; $i++) {
+  $atual = [Win]::Maior(%PID%)
+  if ($atual -ne [IntPtr]::Zero) { $alvo = $atual }
+  $r = New-Object Win+RECT
+  [Win]::GetWindowRect($alvo, [ref]$r) | Out-Null
+  $w = $r.Right - $r.Left; $altura = $r.Bottom - $r.Top
+  if ($w -lt 300) { Start-Sleep -Milliseconds 400 }
+}
+if ($w -lt 300 -or $altura -lt 200) { Write-Error "janela de ${w} x ${altura} - pequena demais para ser a tela do app"; exit 1 }
+[Win]::SetForegroundWindow($alvo) | Out-Null
+Start-Sleep -Milliseconds 600
+$bmp = New-Object System.Drawing.Bitmap($w, $altura)
 $g = [System.Drawing.Graphics]::FromImage($bmp)
 $dc = $g.GetHdc()
-$ok = [Win]::PrintWindow($proc.MainWindowHandle, $dc, 2)
+$ok = [Win]::PrintWindow($alvo, $dc, 2)
 $g.ReleaseHdc($dc)
 $bmp.Save('%OUT%', [System.Drawing.Imaging.ImageFormat]::Png)
 $g.Dispose(); $bmp.Dispose()
 if (-not $ok) { Write-Error "PrintWindow falhou" }
-Write-Output "$w x $h"
+Write-Output "$w x $altura"
 """
 
 
-FULL = r"""
-Add-Type -AssemblyName System.Drawing
-Add-Type @"
-using System.Runtime.InteropServices;
-public class Dpi { [DllImport("user32.dll")] public static extern bool SetProcessDPIAware(); }
-"@
-[Dpi]::SetProcessDPIAware() | Out-Null
-Start-Sleep -Milliseconds %SETTLE%
-$b = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
-$bmp = New-Object System.Drawing.Bitmap($b.Width, $b.Height)
-$g = [System.Drawing.Graphics]::FromImage($bmp)
-$g.CopyFromScreen($b.X, $b.Y, 0, 0, $b.Size)
-$bmp.Save('%OUT%', [System.Drawing.Imaging.ImageFormat]::Png)
-$g.Dispose(); $bmp.Dispose()
-Write-Output "$($b.Width) x $($b.Height)"
-"""
+def conferir(path):
+    """Recusa uma imagem de uma cor só.
+
+    É assim que a captura falha neste projeto: PrintWindow e CopyFromScreen
+    devolvem um quadro vazio e relatam sucesso. A 01-selecao.png chegou em
+    branco à Microsoft Store exatamente por isso — o script disse que tinha
+    gravado, e tinha mesmo, só que nada dentro.
+    """
+    with Image.open(path) as imagem:
+        cores = imagem.convert("RGB").getcolors(maxcolors=64)
+    if cores is not None:
+        quais = ", ".join(str(cor) for _, cor in cores[:4])
+        sys.exit(f"ERRO: {path.name} tem só {len(cores)} cor(es) ({quais}) — "
+                 "a janela não foi desenhada; não vou gravar isso")
 
 
-def shoot(args, target, settle=2500, full=False):
+def shoot(args, target, settle=2500):
     """Abre o app no modo pedido, fotografa a janela dele e encerra.
 
     Só o retângulo da janela é capturado: o que estiver atrás na área de
@@ -218,10 +291,7 @@ def shoot(args, target, settle=2500, full=False):
     """
     process = subprocess.Popen([str(EXE), *args])
     try:
-        # A seleção não tem título nem barra, e o Windows não a considera
-        # "janela principal" — mas ela cobre a tela inteira, então fotografar
-        # a tela toda é fotografar só ela.
-        script = ((FULL if full else CAPTURE)
+        script = (CAPTURE
                   .replace("%PID%", str(process.pid))
                   .replace("%OUT%", str(target))
                   .replace("%SETTLE%", str(settle)))
@@ -232,6 +302,7 @@ def shoot(args, target, settle=2500, full=False):
         if result.returncode != 0:
             print(result.stdout, result.stderr)
             sys.exit(f"ERRO: não consegui fotografar {target.name}")
+        conferir(target)
         print(f"{target.name:34} {result.stdout.strip()}")
     finally:
         process.terminate()
@@ -244,22 +315,18 @@ def main():
 
     OUT.mkdir(parents=True, exist_ok=True)
     canvas = screen_size()
-    desktop = fake_desktop(canvas)
+    desktop, area, demo = fake_desktop(canvas)
 
-    # 1. A seleção, com uma área já escolhida sobre o documento falso. A área
-    #    é proporcional à tela, para cair sobre os dados sensíveis do
-    #    documento em qualquer resolução.
-    area = (int(canvas[0] * 0.20), int(canvas[1] * 0.32),
-            int(canvas[0] * 0.52), int(canvas[1] * 0.30))
+    # 1. A seleção, com uma área já escolhida sobre o documento falso.
     shoot(["--shot-area", str(desktop), ",".join(str(n) for n in area)],
-          OUT / "01-selecao.png", settle=3000, full=True)
+          OUT / "01-selecao.png", settle=3000)
 
     # 2. O editor com o recorte dessa mesma área: as duas imagens contam uma
     #    história só, como quem usou o app de verdade.
     recorte = WORK / "recorte.png"
     crop(desktop, (area[0], area[1], area[0] + area[2], area[1] + area[3]), recorte)
     bruto = WORK / "editor.png"
-    shoot(["--shot-editor", str(recorte)], bruto, settle=7000)
+    shoot(["--shot-editor", str(recorte), demo], bruto, settle=7000)
     compose(bruto, OUT / "02-editor.png", canvas)
 
     # 3. As Opções, com a promessa de privacidade e os 11 idiomas.
