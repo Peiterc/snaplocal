@@ -117,7 +117,11 @@ sealed class TrayContext : ApplicationContext
         if (DateTime.Now - lastCapture < TimeSpan.FromMilliseconds(600)) return;
         lastCapture = DateTime.Now;
 
-        Rectangle bounds = ScreenCapture.CurrentBounds();
+        // A seleção cobre todos os monitores, para a área escolhida poder estar
+        // em qualquer um deles ou atravessar os dois. "Tela inteira" continua
+        // sendo a tela onde está o ponteiro: uma imagem de 3840x1080 com dois
+        // monitores colados raramente é o que alguém quer ao pedir "a tela".
+        Rectangle bounds = wholeScreen ? ScreenCapture.CurrentBounds() : ScreenCapture.AllScreens();
         using Bitmap shot = ScreenCapture.Capture(bounds);
         Log.Write($"captura {shot.Width}x{shot.Height} de {bounds}");
 

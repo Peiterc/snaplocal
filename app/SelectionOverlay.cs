@@ -11,6 +11,7 @@ namespace SnapLocal;
 sealed class SelectionOverlay : Form
 {
     private readonly Bitmap frozen;
+    private readonly Rectangle desktop;
     private Point origin;
     private Point current;
     private bool dragging;
@@ -26,17 +27,37 @@ sealed class SelectionOverlay : Form
     public SelectionOverlay(Bitmap screenshot, Rectangle screenBounds, Rectangle? preset = null)
     {
         frozen = screenshot;
+        desktop = screenBounds;
         if (preset is { } area) Selection = area;
 
         FormBorderStyle = FormBorderStyle.None;
         StartPosition = FormStartPosition.Manual;
         Bounds = screenBounds;
+
+        // O app é PerMonitorV2, e com monitores de escalas diferentes o
+        // WinForms redimensiona a janela sozinho ao atravessar a fronteira
+        // entre eles. Numa janela que cobre a área de trabalho inteira isso
+        // esticaria a imagem congelada e a seleção deixaria de cair onde o
+        // ponteiro está. Esta janela não é escalada: ela é um espelho da tela,
+        // em pixels de verdade.
+        AutoScaleMode = AutoScaleMode.None;
         TopMost = true;
         ShowInTaskbar = false;
         Cursor = Cursors.Cross;
         DoubleBuffered = true;
         KeyPreview = true;
         BackColor = Color.Black;
+    }
+
+    /// <summary>
+    /// Reafirma os limites depois de a janela aparecer: ao ser mostrada sobre
+    /// monitores de escalas diferentes, o Windows pede um redimensionamento, e
+    /// sem isto a janela encolheria para a escala de um dos dois.
+    /// </summary>
+    protected override void OnShown(EventArgs e)
+    {
+        base.OnShown(e);
+        if (Bounds != desktop) Bounds = desktop;
     }
 
     protected override void OnPaint(PaintEventArgs e)

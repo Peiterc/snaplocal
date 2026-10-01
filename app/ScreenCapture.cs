@@ -13,6 +13,17 @@ static class ScreenCapture
     /// <summary>Os limites da tela onde o ponteiro está.</summary>
     public static Rectangle CurrentBounds() => Screen.FromPoint(Cursor.Position).Bounds;
 
+    /// <summary>
+    /// A área de trabalho inteira, somando todos os monitores — e com origem
+    /// negativa quando um deles fica à esquerda ou acima do principal.
+    ///
+    /// É o que a seleção cobre. Antes ela cobria só a tela onde estava o
+    /// ponteiro, e com dois monitores metade da área de trabalho ficava fora
+    /// do alcance: não dava para escolher nada no outro monitor, nem arrastar
+    /// de um para o outro.
+    /// </summary>
+    public static Rectangle AllScreens() => SystemInformation.VirtualScreen;
+
     public static Bitmap Capture(Rectangle bounds)
     {
 

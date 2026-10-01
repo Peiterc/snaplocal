@@ -41,9 +41,22 @@ static class Program
 
         // Abre só a seleção, sobre a tela de verdade, e fecha sozinha. Serve
         // para conferir o desenho do overlay sem alguém no mouse.
+        // Relata a geometria dos monitores. Existe porque "abriu so no monitor
+        // principal" nao da para diagnosticar de longe: aqui quem tem dois
+        // monitores roda uma linha e manda o resultado.
+        if (args.Length >= 1 && args[0] == "--selftest-screens")
+        {
+            foreach (Screen tela in Screen.AllScreens)
+                Log.Write($"monitor {tela.DeviceName} bounds={tela.Bounds} "
+                          + $"trabalho={tela.WorkingArea} principal={tela.Primary}");
+            Log.Write($"area de trabalho inteira: {ScreenCapture.AllScreens()}");
+            Log.Write($"tela sob o ponteiro: {ScreenCapture.CurrentBounds()}");
+            return;
+        }
+
         if (args.Length >= 1 && args[0] == "--selftest-area")
         {
-            Rectangle bounds = ScreenCapture.CurrentBounds();
+            Rectangle bounds = ScreenCapture.AllScreens();
             using Bitmap shot = ScreenCapture.Capture(bounds);
             using var overlay = new SelectionOverlay(shot, bounds);
             var closer = new System.Windows.Forms.Timer { Interval = 6000 };
