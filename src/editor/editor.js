@@ -1,7 +1,7 @@
 import { initI18n, applyI18n, t } from '../lib/i18n.js';
 import { drawShape, boxOf, measureText, textFont, norm, REGION_TOOLS, VECTOR_TOOLS } from './shapes.js';
 import { captureFilename } from '../lib/naming.js';
-import { getSettings, setSettings, getSession, setSession, saveImage } from '../lib/platform.js';
+import { getSettings, setSettings, getSession, setSession, saveImage, closeWindow } from '../lib/platform.js';
 
 const board = document.getElementById('board');
 const bctx = board.getContext('2d', { willReadFrequently: true });
@@ -894,9 +894,17 @@ document.addEventListener('keydown', (event) => {
     event.preventDefault();
     el('remove').click();
   } else if (event.key === 'Escape') {
-    state.selected = null;
-    syncToolbar();
-    render();
+    // Esc desfaz o que houver para desfazer; quando não sobrou nada, fecha a
+    // janela. Fora do navegador era a única tecla que a pessoa tentava e que
+    // não fazia nada. Na extensão closeWindow não faz nada, e o Esc continua
+    // servindo só para desselecionar.
+    if (state.selected) {
+      state.selected = null;
+      syncToolbar();
+      render();
+    } else {
+      closeWindow();
+    }
   } else if (!ctrl && !event.altKey && !inField && TOOL_KEYS[event.key.toLowerCase()]) {
     selectTool(TOOL_KEYS[event.key.toLowerCase()]);
   }

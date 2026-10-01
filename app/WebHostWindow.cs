@@ -127,14 +127,25 @@ abstract class WebHostWindow : Form
         View.CoreWebView2.PostWebMessageAsJson(answer.ToJsonString());
     }
 
+    /// <summary>
+    /// Leva o teclado para dentro da página toda vez que a janela recebe foco.
+    ///
+    /// O WebView2 ocupa a janela inteira, mas não toma o foco sozinho: sem
+    /// isto o teclado fica no formulário e a página não vê tecla nenhuma até
+    /// alguém clicar dentro dela. Medido: com Esc enviado a uma janela recém
+    /// aberta, nenhuma mensagem chegava; com um clique antes, chegava.
+    /// Era por isso que o Esc "não fazia nada" no app.
+    /// </summary>
+    protected override void OnActivated(EventArgs e)
+    {
+        base.OnActivated(e);
+        View.Focus();
+    }
+
+    // Delegado a HandleCommon de propósito: eram dois switches iguais, e um
+    // tipo novo acrescentado só num deles passaria despercebido.
     protected virtual Task<JsonNode?> HandleAsync(string type, JsonObject payload) =>
-        Task.FromResult<JsonNode?>(type switch
-        {
-            "storage.get" => StorageGet(payload),
-            "storage.set" => StorageSet(payload),
-            "app.info" => new JsonObject { ["version"] = AppSettings.Version },
-            _ => HandleOwn(type, payload)
-        });
+        Task.FromResult(HandleCommon(type, payload));
 
     /// <summary>O que cada janela sabe responder além do comum a todas.</summary>
     protected virtual JsonNode? HandleOwn(string type, JsonObject payload) => null;
@@ -144,8 +155,23 @@ abstract class WebHostWindow : Form
         "storage.get" => StorageGet(payload),
         "storage.set" => StorageSet(payload),
         "app.info" => new JsonObject { ["version"] = AppSettings.Version },
+        "window.close" => FecharPelaPagina(),
         _ => HandleOwn(type, payload)
     };
+
+    /// <summary>
+    /// O Esc chega na página, não aqui: com o WebView2 ocupando a janela
+    /// inteira, o teclado nunca passa pelo formulário. Então quem decide é a
+    /// página — ela só pede o fechamento quando o Esc não tinha mais nada para
+    /// cancelar — e o fechamento em si acontece aqui.
+    /// </summary>
+    private JsonNode? FecharPelaPagina()
+    {
+        // Enfileirado em vez de imediato: fechar no meio do tratamento da
+        // mensagem derrubaria o WebView2 antes de a resposta ser postada.
+        BeginInvoke(Close);
+        return null;
+    }
 
     private bool IsSession(JsonObject payload) =>
         payload["area"]?.GetValue<string>() == "session";

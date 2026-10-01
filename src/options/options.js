@@ -1,6 +1,6 @@
 import { initI18n, applyI18n, availableLocales, t } from '../lib/i18n.js';
 import {
-  features, appInfo, getSettings, setSettings, openShortcutSettings
+  features, appInfo, getSettings, setSettings, openShortcutSettings, closeWindow
 } from '../lib/platform.js';
 
 const toast = document.getElementById('toast');
@@ -163,6 +163,13 @@ startupInput.addEventListener('change', async () => {
     return;
   }
   flashSaved();
+});
+
+// Esc fecha a janela das Opções, como em qualquer caixa de diálogo do
+// Windows. Dentro de um campo aberto — um select mostrando a lista — o Esc é
+// de quem está escolhendo, e o navegador trata antes de chegar aqui.
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeWindow();
 });
 
 document.title = t('appName');

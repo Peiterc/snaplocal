@@ -100,3 +100,10 @@ export async function saveImage(blob, filename, { ask: askWhere = false } = {}) 
   const result = await ask('save', { filename, base64, saveAs: askWhere });
   return { ok: Boolean(result?.ok), canceled: Boolean(result?.canceled) };
 }
+
+/**
+ * Fecha a janela. Não espera resposta: quem fecha não tem a quem responder.
+ */
+export function closeWindow() {
+  ask('window.close');
+}

@@ -94,3 +94,12 @@ export async function saveImage(blob, filename, { ask = false } = {}) {
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 }
+
+/**
+ * Fecha a janela do produto. Só existe fora do navegador: aqui o editor é uma
+ * aba, e fechar a aba de quem apertou Esc seria uma surpresa desagradável —
+ * além de o navegador não deixar uma página fechar uma aba que ela não abriu.
+ * Fica como função vazia porque as duas implementações precisam exportar todos
+ * os nomes do contrato: o import é resolvido na carga, não na chamada.
+ */
+export function closeWindow() {}
