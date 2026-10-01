@@ -369,7 +369,7 @@ próprio idioma.
 |---|---|---|---|
 | 1.0.5 | Chrome Web Store | 30/09/2026 | **publicada** em 30/09/2026 — conferido: o endpoint de atualização serve `..._1_0_5_0.crx` |
 | 1.0.5 | Firefox AMO | 30/09/2026 | **publicada** em 30/09/2026, com código-fonte — conferido na ficha pública |
-| 1.0.0 (app) | Microsoft Store | 30/09/2026 | **em certificação** — primeiro envio do app de desktop |
+| 1.0.0 (app) | Microsoft Store | 30/09/2026 | **publicada** em 01/10/2026 — ID `9P5KCCGM2BK7`; a busca da loja ainda não indexou |
 | 1.0.4 | Edge Add-ons | 30/09/2026 | **em análise** — InPrivate corrigido |
 | 1.0.4 | Chrome Web Store | 25/09/2026 | substituída pela 1.0.5 |
 | 1.0.4 | Firefox AMO | 25/09/2026 | publicada em 25/09/2026; substituída pela 1.0.5 |
@@ -452,6 +452,8 @@ palavra "extensão" não cobre: aqui ele captura qualquer coisa na tela.
 | Nome | `Peiterc.Snaplocal` |
 | Publisher | `CN=4AB02EBA-4C2A-4CC0-BDE6-1DB25547AE4F` |
 | Nome de exibição | `Peiterc` |
+| ID na Store | `9P5KCCGM2BK7` |
+| Ficha pública | <https://apps.microsoft.com/detail/9p5kccgm2bk7> |
 
 Gerado por `python tools/make-msix.py`, **sem assinar** — a Store assina.
 
