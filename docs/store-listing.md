@@ -523,6 +523,12 @@ extensão. As janelas são fotografadas pelo próprio retângulo, com
 `PrintWindow`: `CopyFromScreen` devolve preto em janela desenhada por
 composição de hardware, e o WebView2 é uma delas.
 
+**As capturas são por idioma.** Não há "copiar para todos os idiomas" como no
+Edge: são 11 listagens × 3 imagens, cada uma enviada na sua página. O campo de
+arquivo de cada cartão substitui a imagem **no lugar**, mantendo a ordem — não
+é preciso apagar e subir de novo. Trocar qualquer imagem exige um envio novo e
+nova certificação; não dá para mexer na ficha que já está no ar.
+
 ### Descrição — português
 
 ```
