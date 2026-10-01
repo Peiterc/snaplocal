@@ -363,6 +363,17 @@ próprio idioma.
 > alguns meses". A conta foi criada em 18/09/2026. Não há pedido a fazer; uma
 > violação de política nesse período é o que atrasaria.
 
+**Próximo envio do app (pronto, aguardando a fila)**
+
+`dist/app/snaplocal-1.0.1.0.msix` já está construído, com duas correções: Esc
+fecha o editor e as Opções, e a seleção de área cobre todos os monitores. Não
+foi enviado porque o Partner Center aceita **um envio por vez** e a Submission
+2 está em certificação. Quando ela publicar, o caminho é *Iniciar atualização*
+→ Pacotes → substituir pelo 1.0.1.0 → enviar.
+
+Antes disso falta **testar em dois monitores**: a máquina onde o app é
+construído só tem um, e é exatamente o caso que a correção trata.
+
 **Histórico de envios**
 
 | Versão | Loja | Enviada | Situação |
