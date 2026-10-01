@@ -367,6 +367,7 @@ próprio idioma.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.0.0 (app) | Microsoft Store | 01/10/2026 | **em certificação** — Submission 2: só as capturas, a 1 tinha ido em branco; pacote inalterado |
 | 1.0.5 | Chrome Web Store | 30/09/2026 | **publicada** em 30/09/2026 — conferido: o endpoint de atualização serve `..._1_0_5_0.crx` |
 | 1.0.5 | Firefox AMO | 30/09/2026 | **publicada** em 30/09/2026, com código-fonte — conferido na ficha pública |
 | 1.0.0 (app) | Microsoft Store | 30/09/2026 | **publicada** em 01/10/2026 — ID `9P5KCCGM2BK7`; a busca da loja ainda não indexou |
