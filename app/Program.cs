@@ -94,6 +94,14 @@ static class Program
             using var probe = new HotkeyWindow();
             Log.Write($"Alt+Shift+S: {probe.Register(false)}");
             Log.Write($"Print Screen: {probe.Register(true)}");
+
+            // O valor cru vai junto: quando o Print Screen sai como False, é
+            // isto que diz se a culpa é da Ferramenta de Captura ou de outro
+            // programa qualquer segurando a tecla.
+            object? bruto = Microsoft.Win32.Registry.CurrentUser
+                .OpenSubKey(@"Control Panel\Keyboard")?.GetValue("PrintScreenKeyForSnippingEnabled");
+            Log.Write($"PrintScreenKeyForSnippingEnabled: {bruto ?? "(ausente)"}"
+                      + $"  -> ferramenta de captura dona da tecla: {HotkeyWindow.SnippingToolOwnsPrintScreen()}");
             return;
         }
 

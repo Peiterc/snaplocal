@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 namespace SnapLocal;
@@ -47,10 +48,42 @@ sealed class HotkeyWindow : NativeWindow, IDisposable
     public bool Register(bool usePrintScreen)
     {
         Unregister();
+
+        // Perguntar ao Windows antes de registrar, porque o registro mente: com
+        // a Ferramenta de Captura ligada no Print Screen, o RegisterHotKey
+        // devolve true e a tecla nunca chega aqui — o shell a consome primeiro.
+        // Sem esta verificação a opção ficava marcada, sem aviso nenhum, e a
+        // tecla não fazia nada. Foi o que o usuário relatou.
+        if (usePrintScreen && SnippingToolOwnsPrintScreen()) return registered = false;
+
         registered = usePrintScreen
             ? RegisterHotKey(Handle, HotkeyId, MOD_NOREPEAT, (uint)Keys.PrintScreen)
             : RegisterHotKey(Handle, HotkeyId, MOD_ALT | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.S);
         return registered;
+    }
+
+    /// <summary>
+    /// Se a opção "Usar o botão Print Screen para abrir a captura de tela" está
+    /// ligada no Windows 11.
+    ///
+    /// Só leitura: empacotado em MSIX, escrever aqui seria virtualizado para
+    /// dentro do pacote e o Windows nunca veria — foi o que aconteceu com a
+    /// chave Run do "iniciar com o Windows". Desligar a opção é do usuário, nas
+    /// configurações do Windows; nosso trabalho é dizer que é preciso.
+    /// </summary>
+    public static bool SnippingToolOwnsPrintScreen()
+    {
+        using RegistryKey? teclado = Registry.CurrentUser.OpenSubKey(@"Control Panel\Keyboard");
+        object? valor = teclado?.GetValue("PrintScreenKeyForSnippingEnabled");
+
+        // O Windows grava como DWORD, mas já apareceu como texto no campo:
+        // ler os dois evita concluir "desligado" por causa do tipo.
+        return valor switch
+        {
+            int numero => numero != 0,
+            string texto => texto is not ("0" or ""),
+            _ => false
+        };
     }
 
     private void Unregister()
