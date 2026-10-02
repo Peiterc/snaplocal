@@ -251,8 +251,11 @@ mensagem.
       faz. Congelar antes de mostrar é o ponto: nada se mexe embaixo do mouse
       enquanto a pessoa escolhe. **Testado com mouse de verdade em 28/09/2026**:
       selecionar abre o editor com o recorte.
-- [ ] **Múltiplos monitores** — hoje o overlay cobre só a tela onde está o
-      ponteiro, então não dá para selecionar uma área que cruze dois monitores
+- [x] **Múltiplos monitores** — a seleção cobre `SystemInformation.VirtualScreen`,
+      a área de trabalho inteira, e a janela não é escalada pelo WinForms.
+      **Testado pelo autor em dois monitores em 02/10/2026**: funcionou. A
+      máquina onde o app é construído tem um monitor só, então este é o tipo de
+      item que só fecha com hardware de verdade.
 - [ ] **Escalas de DPI diferentes** — a fonte de bug mais provável do projeto
       inteiro, e que exige hardware real para testar
 - [ ] Captura com atraso
