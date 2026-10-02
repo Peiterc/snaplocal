@@ -74,17 +74,24 @@ sealed class HotkeyWindow : NativeWindow, IDisposable
     public static bool SnippingToolOwnsPrintScreen()
     {
         using RegistryKey? teclado = Registry.CurrentUser.OpenSubKey(@"Control Panel\Keyboard");
-        object? valor = teclado?.GetValue("PrintScreenKeyForSnippingEnabled");
-
-        // O Windows grava como DWORD, mas já apareceu como texto no campo:
-        // ler os dois evita concluir "desligado" por causa do tipo.
-        return valor switch
-        {
-            int numero => numero != 0,
-            string texto => texto is not ("0" or ""),
-            _ => false
-        };
+        return Ligado(teclado?.GetValue("PrintScreenKeyForSnippingEnabled"));
     }
+
+    /// <summary>
+    /// Lê o valor da chave. Separado da leitura de propósito: a máquina onde o
+    /// app é construído não tem a opção ligada, então o único jeito de provar
+    /// o ramo "ligado" sem mexer em configuração do sistema de ninguém é poder
+    /// chamar a decisão com o valor na mão. Ver --selftest-printscreen.
+    ///
+    /// O Windows grava como DWORD, mas já apareceu como texto no campo: ler os
+    /// dois evita concluir "desligado" por causa do tipo.
+    /// </summary>
+    public static bool Ligado(object? valor) => valor switch
+    {
+        int numero => numero != 0,
+        string texto => texto is not ("0" or ""),
+        _ => false
+    };
 
     private void Unregister()
     {

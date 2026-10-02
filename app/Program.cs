@@ -41,6 +41,29 @@ static class Program
 
         // Abre só a seleção, sobre a tela de verdade, e fecha sozinha. Serve
         // para conferir o desenho do overlay sem alguém no mouse.
+        // Prova a decisao sobre a tecla Print Screen com valores na mao. A
+        // maquina de build nao tem a opcao ligada, e ligar configuracao de
+        // sistema so para testar nao e opcao: assim o ramo que importa sai do
+        // "confie em mim".
+        if (args.Length >= 1 && args[0] == "--selftest-printscreen")
+        {
+            (object? valor, bool esperado)[] casos =
+            {
+                (null, false), (0, false), (1, true), (2, true),
+                ("0", false), ("1", true), ("", false)
+            };
+            bool tudoCerto = true;
+            foreach ((object? valor, bool esperado) in casos)
+            {
+                bool obtido = HotkeyWindow.Ligado(valor);
+                tudoCerto &= obtido == esperado;
+                Log.Write($"Ligado({valor?.ToString() ?? "null"}) = {obtido}"
+                          + (obtido == esperado ? "" : $"  ERRADO, esperava {esperado}"));
+            }
+            Log.Write(tudoCerto ? "decisao do Print Screen: OK" : "decisao do Print Screen: FALHOU");
+            return;
+        }
+
         // Relata a geometria dos monitores. Existe porque "abriu so no monitor
         // principal" nao da para diagnosticar de longe: aqui quem tem dois
         // monitores roda uma linha e manda o resultado.
