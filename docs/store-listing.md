@@ -363,21 +363,16 @@ próprio idioma.
 > alguns meses". A conta foi criada em 18/09/2026. Não há pedido a fazer; uma
 > violação de política nesse período é o que atrasaria.
 
-**Próximo envio do app (pronto, aguardando a fila)**
-
-`dist/app/snaplocal-1.0.1.0.msix` já está construído, com duas correções: Esc
-fecha o editor e as Opções, e a seleção de área cobre todos os monitores. Não
-foi enviado porque o Partner Center aceita **um envio por vez** e a Submission
-2 está em certificação. Quando ela publicar, o caminho é *Iniciar atualização*
-→ Pacotes → substituir pelo 1.0.1.0 → enviar.
-
-Antes disso falta **testar em dois monitores**: a máquina onde o app é
-construído só tem um, e é exatamente o caso que a correção trata.
+> **O pacote do app não sobe por automação de navegador.** São 55 MB, e a
+> ponte do Chrome aceita 10 MB por envio; pelo controle de desktop o navegador
+> é somente-leitura. O arraste do `.msix` é sempre manual — o resto do envio
+> não é.
 
 **Histórico de envios**
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.0.1 (app) | Microsoft Store | 02/10/2026 | **em certificação** — Submission 3: Esc fecha as janelas e seleção cobre todos os monitores; **enviada sem teste em dois monitores**, por decisão do autor |
 | 1.0.0 (app) | Microsoft Store | 01/10/2026 | **em certificação** — Submission 2: só as capturas, a 1 tinha ido em branco; pacote inalterado |
 | 1.0.5 | Chrome Web Store | 30/09/2026 | **publicada** em 30/09/2026 — conferido: o endpoint de atualização serve `..._1_0_5_0.crx` |
 | 1.0.5 | Firefox AMO | 30/09/2026 | **publicada** em 30/09/2026, com código-fonte — conferido na ficha pública |
