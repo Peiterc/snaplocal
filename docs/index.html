@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SnapLocal — screenshots that stay on your computer</title>
-<meta name="description" content="Capture, annotate and blur screenshots in your browser. 100% local: no account, no cloud, no tracking, no network requests.">
+<meta name="description" content="Capture, annotate and blur screenshots in your browser, or anywhere on your Windows desktop. 100% local: no account, no cloud, no tracking, no network requests.">
 <link rel="icon" href="store-assets/logo-300.png">
 <style>
   :root {
@@ -47,6 +47,23 @@
   .button:hover { filter: brightness(1.08); }
   .note { margin: 0; color: var(--dim); font-size: 15px; }
 
+  /* O app não é um quarto navegador: os três botões acima significam "adicione
+     ao navegador que você está usando", e este significa outra coisa. Numa
+     faixa própria, com botão de contorno, ninguém clica nele achando que
+     instala a extensão. */
+  .desktop {
+    margin: 26px 0 0; padding: 18px 22px; display: flex; align-items: center;
+    gap: 16px 22px; flex-wrap: wrap;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  }
+  .desktop > div { flex: 1 1 340px; }
+  .desktop strong { display: block; margin-bottom: 2px; }
+  .button.ghost {
+    background: transparent; color: var(--accent);
+    border: 1px solid var(--accent); padding: 12px 22px; font-size: 16px;
+  }
+  .button.ghost:hover { background: var(--accent-soft); filter: none; }
+
   h2 { font-size: 24px; margin: 56px 0 14px; letter-spacing: -.01em; }
   h3 { font-size: 17px; margin: 0 0 6px; }
   p { margin: 0 0 14px; }
@@ -87,7 +104,7 @@
   </div>
 
   <div class="badges">
-    <span class="badge">Manifest V3</span>
+    <span class="badge">No account</span>
     <span class="badge">11 languages</span>
     <span class="badge">GPL-3.0</span>
     <span class="badge">No network requests</span>
@@ -99,6 +116,16 @@
     <a class="button" href="https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh">Add to Chrome</a>
     <a class="button" href="https://addons.mozilla.org/firefox/addon/snaplocal/">Add to Firefox</a>
     <p class="note">Free and open source.</p>
+  </div>
+
+  <div class="desktop">
+    <div>
+      <strong>Not just the browser.</strong>
+      <p class="note">The Windows app captures anything on screen — any window, any
+      application — with the same editor and the same promise. Free, from the
+      Microsoft Store.</p>
+    </div>
+    <a class="button ghost" href="https://apps.microsoft.com/detail/9p5kccgm2bk7">Install on Windows</a>
   </div>
 
   <h2>Four ways to capture</h2>
