@@ -626,9 +626,16 @@ Três coisas que só apareceram preenchendo:
   desktop empacotado é obrigado a fornecer de qualquer forma. E é verdade que o
   app *acessa* o que está na tela; o que ele não faz é coletar ou transmitir,
   que é exatamente o que a política diz.
-- **A justificativa da capacidade `runFullTrust` tem limite de caracteres.** O
-  primeiro texto entrou cortado no meio de uma frase sem aviso nenhum; foi
-  preciso reescrever mais curto e conferir depois de salvar.
+- **A justificativa da capacidade `runFullTrust` fica em *Opções de envio*, e
+  tem limite de 500 caracteres.** O primeiro texto entrou cortado no meio de
+  uma frase sem aviso nenhum. O texto abaixo tem 453 e é o que está em uso —
+  copiar daqui em vez de reescrever, e conferir o tamanho depois de salvar:
+
+  ```
+  SnapLocal is a Win32 desktop app packaged as MSIX, not a UWP app. runFullTrust declares exactly that, and is required for it to run.
+  Used for Win32 APIs with no UWP equivalent: RegisterHotKey for the global capture shortcut, GDI screen capture (BitBlt/PrintWindow), a tray icon, and WebView2 in a WinForms window for the editor.
+  No other restricted capability is declared. The app makes no network requests and writes only PNGs the user chooses to save.
+  ```
 
 **As capturas não são herdadas entre idiomas.** Cada uma das 11 fichas precisou
 das três imagens; uma ficha sem imagem fica "Incompleta" mesmo com a descrição
