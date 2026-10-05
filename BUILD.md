@@ -105,6 +105,14 @@ it would otherwise change the hash while changing nothing in the package. The
 same applies to `tools/make-source-zip.py`, so the source package reproduces
 itself too.
 
+The same holds for a git clone: building from `git archive HEAD` gives the same
+bytes as building from the source package. That was **not** true for 1.0.4 and
+1.0.5. The working tree they were built from had Windows line endings (CRLF) in
+four files that the repository stores with LF, and git does not report that
+difference, so those two releases can be reproduced only from their source
+packages, not from a clone. `tools/build.py` now refuses to build while any file
+in `src/` has CRLF, so it cannot happen again silently.
+
 ## Project home
 
 <https://github.com/Peiterc/snaplocal> — GPL-3.0.

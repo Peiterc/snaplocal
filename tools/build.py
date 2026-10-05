@@ -94,6 +94,26 @@ def fail(message):
     sys.exit(1)
 
 
+def check_line_endings():
+    """Recusa arquivo de src/ com CRLF.
+
+    O repositório guarda tudo em LF, e o git não acusa quando a pasta de
+    trabalho tem CRLF: compara o conteúdo já normalizado e mostra tudo limpo.
+    Mas o build copia os bytes da pasta, não do repositório. Foi assim que a
+    1.0.4 e a 1.0.5 saíram com CRLF em quatro arquivos — escritos por
+    ferramentas no Windows — e passaram a não ser reproduzíveis a partir de um
+    clone, só do pacote de código-fonte. Descoberto ao tentar reconstruir a
+    1.0.5 pelo git e não bater.
+    """
+    culpados = [p.relative_to(ROOT) for p in sorted(SRC.rglob("*"))
+                if p.is_file() and p.suffix in {".js", ".json", ".html", ".css"}
+                and b"\r\n" in p.read_bytes()]
+    if culpados:
+        lista = "\n  ".join(str(c) for c in culpados)
+        fail("arquivos com CRLF em src/ - o pacote nao bateria com um clone do "
+             f"repositorio:\n  {lista}\nconverta para LF antes de construir")
+
+
 def check_locales():
     result = subprocess.run(
         [sys.executable, str(ROOT / "tools" / "check-locales.py")],
@@ -216,6 +236,7 @@ def main():
 
     if not SRC.is_dir():
         fail("pasta src/ não encontrada")
+    check_line_endings()
     check_locales()
     DIST.mkdir(exist_ok=True)
 

@@ -378,7 +378,7 @@ próprio idioma.
 | 1.0.5 | Chrome Web Store | 30/09/2026 | **publicada** em 30/09/2026 — conferido: o endpoint de atualização serve `..._1_0_5_0.crx` |
 | 1.0.5 | Firefox AMO | 30/09/2026 | **publicada** em 30/09/2026, com código-fonte — conferido na ficha pública |
 | 1.0.0 (app) | Microsoft Store | 30/09/2026 | **publicada** em 01/10/2026 — ID `9P5KCCGM2BK7`; a busca da loja ainda não indexou |
-| 1.0.4 | Edge Add-ons | 30/09/2026 | **em análise** — InPrivate corrigido |
+| 1.0.4 | Edge Add-ons | 30/09/2026 | **publicada** — confirmada em 05/10/2026 pela API pública do Edge Add-ons, que reporta a versão 1.0.4 (com `lastUpdateDate` de 25/09/2026). InPrivate corrigido |
 | 1.0.4 | Chrome Web Store | 25/09/2026 | substituída pela 1.0.5 |
 | 1.0.4 | Firefox AMO | 25/09/2026 | publicada em 25/09/2026; substituída pela 1.0.5 |
 | 1.0.3 | Edge Add-ons | 21/09/2026 | **publicada** — é a que está no ar hoje |
