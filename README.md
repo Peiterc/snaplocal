@@ -8,7 +8,7 @@ nuvem, sem rastreamento, sem nenhuma requisição de rede.
 Estado atual: **1.0.5 publicada no Chrome e no Firefox, 1.0.4 no Edge**. Há
 também um **aplicativo de desktop para
 Windows**, que reaproveita o mesmo editor e captura qualquer coisa na tela; a
-1.0.1 dele está publicada na Microsoft Store. O plano dele é o
+1.0.2 dele está publicada na Microsoft Store. O plano dele é o
 [docs/roadmap-desktop.md](docs/roadmap-desktop.md).
 
 As quatro capturas — área selecionada, parte visível, página inteira e com
