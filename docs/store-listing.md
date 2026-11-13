@@ -389,6 +389,16 @@ Optional, never requested at install. It is asked for only when the user clicks 
 **Edge** — só o pacote. No formulário de envio, "o testador precisa de
 credenciais?" = **Não**; com isso o campo de notas fica desabilitado.
 
+> **O fluxo de envio da AMO pode pular a etapa do código-fonte e depois
+> encerrar o envio por ela.** Em 13/11/2026 o "Continuar" após a validação
+> foi direto para a descrição da versão; aberta pelo endereço
+> `.../versions/submit/<id>/source`, a etapa do código-fonte tinha um
+> "Continuar" que **finalizou o envio** sem passar de novo pela descrição.
+> As notas foram acrescentadas depois, em "Gerenciar versão", que aceita
+> editá-las enquanto a versão aguarda análise. Da próxima vez: preencher a
+> descrição antes de tocar no código-fonte, ou ir direto à página da versão
+> depois. Ali, os cliques por referência não pegavam — só por posição.
+
 **Firefox — notas da versão** (526 caracteres):
 
 ```
@@ -447,6 +457,7 @@ GPL-3.0 - https://github.com/Peiterc/snaplocal
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.1.0 | Firefox AMO | 13/11/2026 | **aguardando análise** — com código-fonte. O envio foi finalizado sem as notas (ver a nota sobre o fluxo da AMO); elas foram acrescentadas em seguida pela página da versão e conferidas depois de recarregar |
 | 1.1.0 | Edge Add-ons | 13/11/2026 | **em análise** — "Colar imagem", com a permissão opcional `clipboardRead`; as obrigatórias são as mesmas da 1.0.6, conferido na verificação do pacote |
 | 1.0.6 | Edge Add-ons | 05/10/2026 | **publicada** — confirmada em 13/11/2026 pela API pública do Edge Add-ons. A ficha aparece em 10 idiomas (`availableLanguages`): en-US, pt-BR, de-DE, id-ID, it-IT, es-ES, fr-CA, ru-RU, pl-PL, tr-TR. **Português (Portugal) não consta**, embora tenha sido enviado — a conferir no painel. Mesmas permissões da 1.0.4; primeira versão reproduzível a partir de um clone |
 | 1.0.2 (app) | Microsoft Store | 02/10/2026 | **publicada** — conferido no catálogo da loja: o pacote servido é o `1.0.2.0`. Avisa quando a Ferramenta de Captura é dona do Print Screen, e o log volta a ser gravado no app instalado, em `%LOCALAPPDATA%\SnapLocal` |
