@@ -16,7 +16,7 @@
  * chrome.runtime e a área de transferência — para exercitar o botão "Colar
  * imagem" com cliques reais. Não entra no build.
  *
- *   ?perm=sim|nao        resposta do pedido de permissão
+ *   ?perm=sim|nao|erro   resposta do pedido de permissão (erro: ele lança, como o Firefox faz)
  *   ?clip=imagem|texto|vazio|erro   o que há na área de transferência
  *   ?lang=pt-BR          idioma da interface
  *   ?page=options        abre as Opções no lugar do popup
@@ -42,7 +42,11 @@ window.chrome = {
     openOptionsPage() { log('opcoes'); }
   },
   permissions: {
-    async request(what) { log({ pediu: what.permissions }); return params.get('perm') !== 'nao'; },
+    async request(what) {
+      log({ pediu: what.permissions });
+      if (params.get('perm') === 'erro') throw new Error('Cannot request permission clipboardRead since it was not declared in optional_permissions');
+      return params.get('perm') !== 'nao';
+    },
     async contains() { return params.get('concedida') === 'sim'; },
     async remove(what) { log({ revogou: what.permissions }); params.set('concedida', 'nao'); return true; }
   },

@@ -47,7 +47,16 @@ document.getElementById('paste').addEventListener('click', async () => {
   // já não considera o pedido como vindo da pessoa. No Firefox o popup pode
   // fechar quando o pedido aparece; tudo bem, no próximo clique a permissão
   // já está dada e o resto segue.
-  const granted = await chrome.permissions.request({ permissions: ['clipboardRead'] });
+  let granted;
+  try {
+    granted = await chrome.permissions.request({ permissions: ['clipboardRead'] });
+  } catch (error) {
+    // O Firefox lança em vez de responder "não" em alguns casos — por
+    // exemplo, se a permissão não estiver declarada como opcional. Sem isto o
+    // clique simplesmente não fazia nada, sem aviso nenhum.
+    console.warn('pedido de permissão falhou:', error);
+    return showError('err_generic');
+  }
   if (!granted) return showError('err_clipboard_denied');
 
   // "Não" só quando se sabe que não há imagem. Na dúvida o editor abre e
