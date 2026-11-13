@@ -528,5 +528,41 @@
   },
   "common_learn_more": {
     "message": "Saber mais"
+  },
+  "mode_paste": {
+    "message": "Colar imagem",
+    "description": "Popup button, below the four capture modes, that opens the clipboard image in the editor."
+  },
+  "mode_paste_desc": {
+    "message": "Abra a imagem da área de transferência",
+    "description": "Secondary line under the Paste image button in the popup."
+  },
+  "err_no_clipboard_image": {
+    "message": "Não há imagem na área de transferência. Copie ou recorte uma primeiro.",
+    "description": "Shown when Paste image finds no image on the clipboard."
+  },
+  "err_clipboard_denied": {
+    "message": "O SnapLocal precisa da sua autorização para ler imagens da área de transferência.",
+    "description": "Shown when the user declines the browser prompt for clipboard access."
+  },
+  "editor_paste_hint": {
+    "message": "Cole uma imagem para começar a editar",
+    "description": "Shown in the empty editor. The code appends the shortcut, e.g. ' (Ctrl+V)'."
+  },
+  "editor_clipboard_title": {
+    "message": "Imagem da área de transferência",
+    "description": "Window title of the editor when the image came from the clipboard."
+  },
+  "opt_clipboard_on": {
+    "message": "«Colar imagem» pode ler imagens da área de transferência.",
+    "description": "Options, privacy section: clipboard access was granted. Name the button exactly as mode_paste."
+  },
+  "opt_clipboard_off": {
+    "message": "«Colar imagem» pede acesso à área de transferência da primeira vez que o utilizar.",
+    "description": "Options, privacy section: clipboard access not granted yet. Name the button exactly as mode_paste."
+  },
+  "opt_clipboard_revoke": {
+    "message": "Revogar",
+    "description": "Options button that takes back the clipboard permission."
   }
 }

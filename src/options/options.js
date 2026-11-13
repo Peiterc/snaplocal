@@ -1,6 +1,7 @@
 import { initI18n, applyI18n, availableLocales, t } from '../lib/i18n.js';
 import {
-  features, appInfo, getSettings, setSettings, openShortcutSettings, closeWindow
+  features, appInfo, getSettings, setSettings, openShortcutSettings, closeWindow,
+  clipboardAccess, revokeClipboardAccess
 } from '../lib/platform.js';
 
 const toast = document.getElementById('toast');
@@ -164,6 +165,24 @@ startupInput.addEventListener('change', async () => {
   }
   flashSaved();
 });
+
+const clipboardState = document.getElementById('clipboardState');
+const clipboardRevoke = document.getElementById('clipboardRevoke');
+
+async function showClipboardAccess() {
+  const allowed = await clipboardAccess();
+  clipboardState.textContent = t(allowed ? 'opt_clipboard_on' : 'opt_clipboard_off');
+  clipboardRevoke.hidden = !allowed;
+}
+
+if (features.clipboardAccess) {
+  await showClipboardAccess();
+  clipboardRevoke.addEventListener('click', async () => {
+    await revokeClipboardAccess();
+    await showClipboardAccess();
+    flashSaved();
+  });
+}
 
 // Esc fecha a janela das Opções, como em qualquer caixa de diálogo do
 // Windows. Dentro de um campo aberto — um select mostrando a lista — o Esc é

@@ -77,6 +77,12 @@
         <li data-i18n="privacy_local_storage"
             data-i18n-desktop="privacy_local_storage_system"></li>
       </ul>
+      <!-- A permissão opcional de "Colar imagem": dá para ver se está dada e
+           devolvê-la daqui, sem procurar a página de permissões do navegador. -->
+      <div class="row" data-only="clipboardAccess">
+        <label id="clipboardState"></label>
+        <button class="btn" id="clipboardRevoke" data-i18n="opt_clipboard_revoke" hidden></button>
+      </div>
       <div class="links">
         <a href="https://peiterc.github.io/snaplocal/privacy.html" target="_blank"
            rel="noopener noreferrer" data-i18n="privacy_policy_link"></a>

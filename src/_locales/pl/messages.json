@@ -528,5 +528,41 @@
   },
   "common_learn_more": {
     "message": "Dowiedz się więcej"
+  },
+  "mode_paste": {
+    "message": "Wklej obraz",
+    "description": "Popup button, below the four capture modes, that opens the clipboard image in the editor."
+  },
+  "mode_paste_desc": {
+    "message": "Otwórz obraz ze schowka",
+    "description": "Secondary line under the Paste image button in the popup."
+  },
+  "err_no_clipboard_image": {
+    "message": "W schowku nie ma obrazu. Najpierw skopiuj lub wytnij obraz.",
+    "description": "Shown when Paste image finds no image on the clipboard."
+  },
+  "err_clipboard_denied": {
+    "message": "SnapLocal potrzebuje twojej zgody, aby odczytywać obrazy ze schowka.",
+    "description": "Shown when the user declines the browser prompt for clipboard access."
+  },
+  "editor_paste_hint": {
+    "message": "Wklej obraz, aby zacząć edycję",
+    "description": "Shown in the empty editor. The code appends the shortcut, e.g. ' (Ctrl+V)'."
+  },
+  "editor_clipboard_title": {
+    "message": "Obraz ze schowka",
+    "description": "Window title of the editor when the image came from the clipboard."
+  },
+  "opt_clipboard_on": {
+    "message": "„Wklej obraz” może odczytywać obrazy ze schowka.",
+    "description": "Options, privacy section: clipboard access was granted. Name the button exactly as mode_paste."
+  },
+  "opt_clipboard_off": {
+    "message": "„Wklej obraz” poprosi o dostęp do schowka przy pierwszym użyciu.",
+    "description": "Options, privacy section: clipboard access not granted yet. Name the button exactly as mode_paste."
+  },
+  "opt_clipboard_revoke": {
+    "message": "Cofnij dostęp",
+    "description": "Options button that takes back the clipboard permission."
   }
 }

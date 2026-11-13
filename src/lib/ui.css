@@ -95,6 +95,8 @@ body.popup {
 .mode b { font-weight: 600; }
 .mode small { color: var(--text-dim); font-size: 12px; }
 
+.modes .sep { height: 1px; margin: 2px 6px; background: var(--border); }
+
 .badge {
   margin-inline-start: auto;
   flex: none;

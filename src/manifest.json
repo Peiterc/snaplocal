@@ -3,7 +3,7 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDesc__",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "default_locale": "en",
   "homepage_url": "https://peiterc.github.io/snaplocal/",
 
@@ -43,6 +43,10 @@
     "storage",
     "downloads",
     "contextMenus"
+  ],
+
+  "optional_permissions": [
+    "clipboardRead"
   ],
 
   "commands": {

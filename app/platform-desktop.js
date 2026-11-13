@@ -62,7 +62,8 @@ export const features = {
   desktop: true,
   browserShortcuts: false,  // aqui o atalho é do sistema, não do navegador
   hideFixed: false,         // não existe "página inteira" fora do navegador
-  areaConfirm: false        // a seleção já é direta
+  areaConfirm: false,       // a seleção já é direta
+  clipboardAccess: false    // não há permissão a dar: o app lê pelo C#
 };
 
 export async function appInfo() {
@@ -106,4 +107,22 @@ export async function saveImage(blob, filename, { ask: askWhere = false } = {}) 
  */
 export function closeWindow() {
   ask('window.close');
+}
+
+/**
+ * O app ainda não abre o editor a partir da área de transferência — isso
+ * vem com o item da bandeja, que lê a imagem pelo C#. Até lá, o editor vazio
+ * aceita o Ctrl+V, que funciona no WebView2 sem nada daqui.
+ */
+export async function readClipboardImage() {
+  return null;
+}
+
+/** Fora do navegador não há permissão: a resposta é sempre "não se aplica". */
+export async function clipboardAccess() {
+  return false;
+}
+
+export async function revokeClipboardAccess() {
+  return false;
 }

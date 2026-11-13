@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SnapLocal popup harness</title>
+  <!-- Resolve contra a pasta real do popup: o harness carrega o HTML, o CSS e o
+       JS que vão no pacote, e não uma cópia que poderia divergir. -->
+  <base href="../src/popup/">
+</head>
+<body>
+<script type="module">
+/**
+ * Harness do popup: roda o popup de verdade fora da extensão.
+ *
+ * Simula só o que ele toca — chrome.storage, chrome.permissions,
+ * chrome.runtime e a área de transferência — para exercitar o botão "Colar
+ * imagem" com cliques reais. Não entra no build.
+ *
+ *   ?perm=sim|nao        resposta do pedido de permissão
+ *   ?clip=imagem|texto|vazio|erro   o que há na área de transferência
+ *   ?lang=pt-BR          idioma da interface
+ *   ?page=options        abre as Opções no lugar do popup
+ *   ?concedida=sim       a permissão já foi dada antes (para as Opções)
+ *
+ * O que aconteceu fica em window.__log.
+ */
+const params = new URLSearchParams(location.search);
+window.__log = [];
+const log = (entry) => window.__log.push(entry);
+
+window.chrome = {
+  storage: {
+    // Devolve os padrões que a página pedir: é o estado de quem nunca mudou nada.
+    local: { async get(query) { return query && typeof query === 'object' && !Array.isArray(query) ? { ...query } : {}; },
+             async set() {} },
+    onChanged: { addListener() {} }
+  },
+  runtime: {
+    getURL: (path) => `../${path}`,
+    getManifest: () => ({ version: '0.0.0-harness' }),
+    async sendMessage(msg) { log({ mensagem: msg }); return { ok: true }; },
+    openOptionsPage() { log('opcoes'); }
+  },
+  permissions: {
+    async request(what) { log({ pediu: what.permissions }); return params.get('perm') !== 'nao'; },
+    async contains() { return params.get('concedida') === 'sim'; },
+    async remove(what) { log({ revogou: what.permissions }); params.set('concedida', 'nao'); return true; }
+  },
+  i18n: { getUILanguage: () => params.get('lang') || 'en' }
+};
+
+const png = new Blob([new Uint8Array([137, 80, 78, 71])], { type: 'image/png' });
+const item = (types) => ({
+  types,
+  async getType(type) { log({ leu: type }); return type.startsWith('image/') ? png : new Blob(['senha']); }
+});
+const conteudo = { imagem: [item(['text/plain', 'image/png'])], texto: [item(['text/plain'])], vazio: [] };
+Object.defineProperty(navigator, 'clipboard', {
+  configurable: true,
+  value: {
+    async read() {
+      if (params.get('clip') === 'erro') throw new DOMException('Document is not focused.', 'NotAllowedError');
+      return conteudo[params.get('clip')] ?? [];
+    }
+  }
+});
+
+// Fechar o popup, no harness, é só registrar que ele teria fechado.
+window.close = () => log('popup fechou');
+
+const pagina = params.get('page') === 'options' ? '../options/options' : 'popup';
+const page = await (await fetch(`${pagina}.html`)).text();
+const parsed = new DOMParser().parseFromString(page, 'text/html');
+for (const link of parsed.head.querySelectorAll('link[rel="stylesheet"]')) {
+  document.head.append(link.cloneNode(true));
+}
+document.body.className = parsed.body.className;
+document.body.innerHTML = parsed.body.innerHTML;
+
+await import(`./${pagina}.js`);
+window.__pronto = true;
+</script>
+</body>
+</html>

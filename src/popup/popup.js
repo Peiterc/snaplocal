@@ -17,13 +17,46 @@ await initI18n();
 applyI18n();
 await applyTheme();
 
-document.querySelectorAll('.mode').forEach((button) => {
+document.querySelectorAll('.mode[data-action]').forEach((button) => {
   button.addEventListener('click', async () => {
     const res = await chrome.runtime.sendMessage({ type: 'capture', action: button.dataset.action });
     // A successful capture opens its own tab; the popup just gets out of the way.
     if (res?.ok) window.close();
     else showError(res?.error || 'err_generic');
   });
+});
+
+/**
+ * Se há imagem na área de transferência: true, false, ou null quando não deu
+ * para saber. Só a lista de tipos é lida — o conteúdo, não.
+ */
+async function clipboardHasImage() {
+  try {
+    const items = await navigator.clipboard.read();
+    return items.some((item) => item.types.some((type) => type.startsWith('image/')));
+  } catch {
+    return null;
+  }
+}
+
+// A permissão é pedida aqui, no clique, e não na instalação: só quem usa o
+// recurso vê o aviso do navegador. Já concedida, o pedido responde sim na
+// hora, sem perguntar de novo.
+document.getElementById('paste').addEventListener('click', async () => {
+  // Tem que ser a primeira coisa do clique: depois de outro await o navegador
+  // já não considera o pedido como vindo da pessoa. No Firefox o popup pode
+  // fechar quando o pedido aparece; tudo bem, no próximo clique a permissão
+  // já está dada e o resto segue.
+  const granted = await chrome.permissions.request({ permissions: ['clipboardRead'] });
+  if (!granted) return showError('err_clipboard_denied');
+
+  // "Não" só quando se sabe que não há imagem. Na dúvida o editor abre e
+  // tenta de novo — e, se falhar, oferece o Ctrl+V.
+  if ((await clipboardHasImage()) === false) return showError('err_no_clipboard_image');
+
+  const res = await chrome.runtime.sendMessage({ type: 'capture', action: 'paste-clipboard' });
+  if (res?.ok) window.close();
+  else showError(res?.error || 'err_generic');
 });
 
 document.getElementById('settings').addEventListener('click', () => {

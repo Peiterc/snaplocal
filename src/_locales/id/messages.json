@@ -528,5 +528,41 @@
   },
   "common_learn_more": {
     "message": "Pelajari lebih lanjut"
+  },
+  "mode_paste": {
+    "message": "Tempel gambar",
+    "description": "Popup button, below the four capture modes, that opens the clipboard image in the editor."
+  },
+  "mode_paste_desc": {
+    "message": "Buka gambar dari papan klip",
+    "description": "Secondary line under the Paste image button in the popup."
+  },
+  "err_no_clipboard_image": {
+    "message": "Tidak ada gambar di papan klip. Salin atau potong gambar terlebih dahulu.",
+    "description": "Shown when Paste image finds no image on the clipboard."
+  },
+  "err_clipboard_denied": {
+    "message": "SnapLocal memerlukan izin Anda untuk membaca gambar dari papan klip.",
+    "description": "Shown when the user declines the browser prompt for clipboard access."
+  },
+  "editor_paste_hint": {
+    "message": "Tempel gambar untuk mulai mengedit",
+    "description": "Shown in the empty editor. The code appends the shortcut, e.g. ' (Ctrl+V)'."
+  },
+  "editor_clipboard_title": {
+    "message": "Gambar papan klip",
+    "description": "Window title of the editor when the image came from the clipboard."
+  },
+  "opt_clipboard_on": {
+    "message": "“Tempel gambar” dapat membaca gambar dari papan klip.",
+    "description": "Options, privacy section: clipboard access was granted. Name the button exactly as mode_paste."
+  },
+  "opt_clipboard_off": {
+    "message": "“Tempel gambar” meminta akses papan klip saat pertama kali digunakan.",
+    "description": "Options, privacy section: clipboard access not granted yet. Name the button exactly as mode_paste."
+  },
+  "opt_clipboard_revoke": {
+    "message": "Cabut",
+    "description": "Options button that takes back the clipboard permission."
   }
 }

@@ -103,6 +103,32 @@ if (shot && shot !== 'warn') store.local.blurWarningDismissed = true;
 // lanca NotFoundError nesse caso. So o harness precisa disto.
 HTMLElement.prototype.setPointerCapture = function () {};
 
+// ?clip=imagem|texto|vazio simula a área de transferência para o "Colar
+// imagem" (?source=clipboard). O painel de testes nega a área de
+// transferência real a qualquer página, então a leitura é trocada aqui. Cada
+// getType fica em window.__clipboardReads: é assim que se confere que texto
+// copiado — que o item "imagem" também traz — nunca é lido.
+const params = new URLSearchParams(location.search);
+const clip = params.get('clip');
+if (clip) {
+  window.__clipboardReads = [];
+  const png = await (await fetch(fakeCapture())).blob();
+  const item = (types) => ({
+    types,
+    async getType(type) {
+      window.__clipboardReads.push(type);
+      return type.startsWith('image/') ? png : new Blob(['senha-copiada'], { type: 'text/plain' });
+    }
+  });
+  const conteudo = { imagem: [item(['text/plain', 'image/png'])], texto: [item(['text/plain'])], vazio: [] }[clip] ?? [];
+  Object.defineProperty(navigator, 'clipboard', {
+    configurable: true,
+    value: { read: async () => conteudo, write: async () => {} }
+  });
+}
+// ?capture=none: editor aberto sem captura, que agora espera um Ctrl+V.
+if (params.get('capture') === 'none') delete store.session.lastCapture;
+
 // Pull in the shipping markup, then hand control to the real editor script.
 const page = await (await fetch('editor.html')).text();
 const parsed = new DOMParser().parseFromString(page, 'text/html');

@@ -51,7 +51,7 @@
 
 <h1>Privacy Policy</h1>
 <p class="sub">SnapLocal — screenshot capture and annotation extension</p>
-<p class="date">Last updated: 8 September 2026</p>
+<p class="date">Last updated: 13 November 2026</p>
 
 <div class="lede">
   <p><strong>SnapLocal collects nothing.</strong> It has no servers, sends no
@@ -120,6 +120,17 @@ read.</p>
     <td><code>contextMenus</code></td>
     <td>To add the right-click entries.</td>
   </tr>
+  <tr>
+    <td><code>clipboardRead</code> <em>(optional)</em></td>
+    <td>Only for <strong>Paste image</strong>, which opens an image you copied
+    — from the Snipping Tool, for example — in the editor. It is not asked for
+    at installation: the browser asks you the first time you click Paste image,
+    and nothing changes if you say no. SnapLocal looks at the clipboard only
+    when you click that button, checks whether it holds an image, and reads only
+    the image. <strong>Copied text is never read.</strong> The image is opened
+    in the editor and is not stored or sent anywhere. You can take the
+    permission back at any time in SnapLocal's Options, under Privacy.</td>
+  </tr>
 </table>
 <p>There are no host permissions. SnapLocal cannot read a page unless you
 actively start a capture on it.</p>
@@ -146,7 +157,7 @@ repository.</p>
 
 <h1 id="pt">Política de Privacidade</h1>
 <p class="sub">SnapLocal — extensão de captura e anotação de tela</p>
-<p class="date">Última atualização: 8 de setembro de 2026</p>
+<p class="date">Última atualização: 13 de novembro de 2026</p>
 
 <div class="lede">
   <p><strong>A SnapLocal não coleta nada.</strong> Ela não tem servidores, não
@@ -214,6 +225,18 @@ que você consegue ler.</p>
   <tr>
     <td><code>contextMenus</code></td>
     <td>Adicionar os itens do menu de botão direito.</td>
+  </tr>
+  <tr>
+    <td><code>clipboardRead</code> <em>(opcional)</em></td>
+    <td>Só para o <strong>Colar imagem</strong>, que abre no editor uma imagem
+    que você copiou — da Ferramenta de Captura, por exemplo. Ela não é pedida na
+    instalação: o navegador pergunta na primeira vez que você clica em Colar
+    imagem, e nada muda se você recusar. A SnapLocal só olha a área de
+    transferência quando você clica nesse botão, verifica se há uma imagem e lê
+    apenas a imagem. <strong>Texto copiado nunca é lido.</strong> A imagem é
+    aberta no editor e não é guardada nem enviada a lugar nenhum. Você pode
+    revogar a permissão quando quiser, nas Opções da SnapLocal, em
+    Privacidade.</td>
   </tr>
 </table>
 <p>Não há permissões de host. A SnapLocal não consegue ler uma página a menos

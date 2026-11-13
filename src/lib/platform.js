@@ -47,7 +47,8 @@ export const features = {
   desktop: false,
   browserShortcuts: true,   // a página de atalhos do próprio navegador
   hideFixed: true,          // esconder elementos fixos na página inteira
-  areaConfirm: true         // perguntar antes de capturar a área escolhida
+  areaConfirm: true,        // perguntar antes de capturar a área escolhida
+  clipboardAccess: true     // permissão opcional de ler imagem da área de transferência
 };
 
 /** Versão do produto, para a seção Sobre. */
@@ -103,3 +104,34 @@ export async function saveImage(blob, filename, { ask = false } = {}) {
  * os nomes do contrato: o import é resolvido na carga, não na chamada.
  */
 export function closeWindow() {}
+
+/**
+ * A imagem que está na área de transferência, como Blob, ou null.
+ *
+ * Só olha os tipos e só baixa o conteúdo quando um deles é imagem: texto
+ * copiado — que pode ser uma senha — nunca é lido. Precisa da permissão
+ * opcional clipboardRead, que o botão "Colar imagem" pede no primeiro uso; sem
+ * ela, ou sem foco, a leitura falha e a resposta é null, para quem chamou
+ * oferecer o Ctrl+V no lugar.
+ */
+export async function readClipboardImage() {
+  try {
+    for (const item of await navigator.clipboard.read()) {
+      const type = item.types.find((t) => t.startsWith('image/'));
+      if (type) return await item.getType(type);
+    }
+  } catch (error) {
+    console.warn('área de transferência indisponível:', error);
+  }
+  return null;
+}
+
+/** Se a pessoa já autorizou a leitura da área de transferência. */
+export async function clipboardAccess() {
+  return chrome.permissions.contains({ permissions: ['clipboardRead'] });
+}
+
+/** Devolve a autorização. É o "desligar" da tela de Opções. */
+export async function revokeClipboardAccess() {
+  return chrome.permissions.remove({ permissions: ['clipboardRead'] });
+}

@@ -1,7 +1,9 @@
 import { initI18n, applyI18n, t } from '../lib/i18n.js';
 import { drawShape, boxOf, measureText, textFont, norm, REGION_TOOLS, VECTOR_TOOLS } from './shapes.js';
 import { captureFilename } from '../lib/naming.js';
-import { getSettings, setSettings, getSession, setSession, saveImage, closeWindow } from '../lib/platform.js';
+import {
+  getSettings, setSettings, getSession, setSession, saveImage, closeWindow, readClipboardImage
+} from '../lib/platform.js';
 
 const board = document.getElementById('board');
 const bctx = board.getContext('2d', { willReadFrequently: true });
@@ -832,7 +834,7 @@ el('copy').addEventListener('click', copyImage);
 // rather than the keystroke). When keydown handles Ctrl+C it cancels the
 // default, so the browser never fires this too and the image is copied once.
 document.addEventListener('copy', (event) => {
-  if (!wantsImageCopy()) return;
+  if (!originalBase || !wantsImageCopy()) return;
   event.preventDefault();
   copyImage();
 });
@@ -868,6 +870,12 @@ const TOOL_KEYS = { v: 'move', b: 'blur', r: 'redact', u: 'rect', o: 'ellipse',
 
 document.addEventListener('keydown', (event) => {
   if (dialog.open || editing) return;
+  // Sem imagem não há o que atalho nenhum fazer — só o Esc, que no app fecha
+  // a janela de quem desistiu de colar.
+  if (!originalBase) {
+    if (event.key === 'Escape') closeWindow();
+    return;
+  }
 
   if (cropDraft) {
     if (event.key === 'Enter') { event.preventDefault(); applyCrop(); return; }
@@ -924,22 +932,86 @@ document.title = t('appName');
 // The shortcut only helps if people know it exists.
 el('copy').title = `${t('action_copy')} (${/Mac/.test(navigator.platform) ? '⌘C' : 'Ctrl+C'})`;
 
-const { lastCapture } = await getSession({ lastCapture: null });
-if (!lastCapture) {
-  flash(t('err_generic'), true);
-} else {
-  originalBase = new Image();
+/** Põe uma imagem no editor: a de uma captura ou a que veio colada. */
+async function loadImage(src, title) {
+  const image = new Image();
   await new Promise((resolve, reject) => {
-    originalBase.onload = resolve;
-    originalBase.onerror = reject;
-    originalBase.src = lastCapture.dataUrl;
+    image.onload = resolve;
+    image.onerror = reject;
+    image.src = src;
   });
+  originalBase = image;
 
   setCrop({ x: 0, y: 0, w: originalBase.naturalWidth, h: originalBase.naturalHeight });
-  document.title = lastCapture.title || t('editor_untitled');
+  document.title = title || t('editor_untitled');
 
   pushHistory();
   setZoom(fitZoom(), true);
+}
+
+async function loadBlob(blob) {
+  const url = URL.createObjectURL(blob);
+  try {
+    await loadImage(url, t('editor_clipboard_title'));
+  } finally {
+    // A imagem já foi decodificada; o endereço temporário não serve mais.
+    URL.revokeObjectURL(url);
+  }
+}
+
+const header = document.querySelector('.etoolbar');
+const pasteHint = el('pasteHint');
+
+/**
+ * Editor sem imagem: a barra fica travada — sem imagem, salvar, copiar e
+ * recortar não têm sobre o que agir — e o palco pede um Ctrl+V. É o que
+ * acontece quando a leitura direta da área de transferência falha, e também
+ * quando o editor é aberto sem captura nenhuma, que antes só mostrava um erro.
+ */
+function waitForPaste() {
+  header.inert = true;
+  el('wrap').hidden = true;
+  pasteHint.textContent = `${t('editor_paste_hint')} (${/Mac/.test(navigator.platform) ? '⌘V' : 'Ctrl+V'})`;
+  pasteHint.hidden = false;
+}
+
+document.addEventListener('paste', async (event) => {
+  if (originalBase) return;   // com imagem aberta, colar não troca nada
+  const file = [...(event.clipboardData?.items || [])]
+    .find((item) => item.type.startsWith('image/'))?.getAsFile();
+  if (!file) {
+    flash(t('err_no_clipboard_image'), true);
+    return;
+  }
+  event.preventDefault();
+  await loadBlob(file);
+  pasteHint.hidden = true;
+  el('wrap').hidden = false;
+  header.inert = false;
+});
+
+const fromClipboard = new URLSearchParams(location.search).get('source') === 'clipboard';
+const { lastCapture } = fromClipboard ? { lastCapture: null } : await getSession({ lastCapture: null });
+
+if (fromClipboard) {
+  // O navegador só entrega a área de transferência a uma página em foco, e a
+  // aba recém-aberta pode ainda não tê-lo no primeiro instante. Uma segunda
+  // tentativa quando o foco chegar — com prazo, para nunca ficar esperando
+  // para sempre — e, se ainda assim falhar, o Ctrl+V.
+  let blob = await readClipboardImage();
+  if (!blob && !document.hasFocus()) {
+    await Promise.race([
+      new Promise((resolve) => window.addEventListener('focus', resolve, { once: true })),
+      new Promise((resolve) => setTimeout(resolve, 1500))
+    ]);
+    blob = await readClipboardImage();
+  }
+  if (blob) await loadBlob(blob);
+  else waitForPaste();
+} else if (lastCapture) {
+  await loadImage(lastCapture.dataUrl, lastCapture.title);
+} else {
+  waitForPaste();
 }
 
 window.addEventListener('resize', () => {

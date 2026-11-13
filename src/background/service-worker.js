@@ -81,16 +81,21 @@ async function activeTab() {
   return tab;
 }
 
-async function openEditor(dataUrl, tab) {
-  await chrome.storage.session.set({
-    lastCapture: { dataUrl, title: tab?.title || '', url: tab?.url || '', at: Date.now() }
-  });
+async function openEditor(dataUrl, tab, { fromClipboard = false } = {}) {
+  // A imagem colada não passa pela sessão: o editor a lê direto da área de
+  // transferência. A sessão tem limite de 10 MB, e um recorte de tela grande,
+  // em base64, passa disso.
+  if (dataUrl) {
+    await chrome.storage.session.set({
+      lastCapture: { dataUrl, title: tab?.title || '', url: tab?.url || '', at: Date.now() }
+    });
+  }
 
   // Ao lado da aba capturada, e não "onde o navegador quiser". Sem o windowId
   // a aba nova vai para a última janela ativa, que pode não ser a janela de
   // onde veio a captura — numa janela InPrivate isso significa o editor
   // abrindo do lado de fora, com a captura junto.
-  const url = chrome.runtime.getURL('editor/editor.html');
+  const url = chrome.runtime.getURL('editor/editor.html') + (fromClipboard ? '?source=clipboard' : '');
   try {
     await chrome.tabs.create({ url, windowId: tab?.windowId, index: (tab?.index ?? -1) + 1 });
   } catch (error) {
@@ -318,6 +323,14 @@ async function run(action) {
   try {
     if (action === 'capture-visible') return { ok: true, ...(await captureVisible()) };
     if (action === 'capture-area') return { ok: true, ...(await captureArea()) };
+
+    // Sem activeTab(): colar funciona até numa página interna do navegador,
+    // onde capturar não funciona. A aba só serve para o editor abrir ao lado
+    // dela, na mesma janela — inclusive numa anônima.
+    if (action === 'paste-clipboard') {
+      await openEditor(null, await currentTab().catch(() => undefined), { fromClipboard: true });
+      return { ok: true };
+    }
 
     // These two take seconds. Both check the page first, so a restricted tab
     // still reports through the popup, and only then detach: holding the popup

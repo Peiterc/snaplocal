@@ -163,6 +163,18 @@ body.editor {
 
 .canvas-wrap { position: relative; line-height: 0; }
 
+/* Editor aberto sem imagem, esperando o Ctrl+V. A barra fica travada
+   (inert) e precisa parecer travada: sem isto o "Salvar" continuava azul e
+   um clique nele simplesmente não fazia nada. */
+.etoolbar[inert] { opacity: .45; }
+/* Editor aberto sem imagem, esperando o Ctrl+V. */
+.paste-hint {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 15px;
+  text-align: center;
+}
+
 #board {
   display: block;
   background: #fff;
