@@ -372,7 +372,7 @@ próprio idioma.
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
-| 1.0.6 | Edge Add-ons | 05/10/2026 | **em análise** — leva as fichas em 11 idiomas junto; mesmas permissões da 1.0.4; primeira versão reproduzível a partir de um clone. No formulário de envio, "o testador precisa de credenciais?" = **Não**: com essa resposta o campo de notas fica desabilitado, e marcar "Sim" só para escrever notas seria declarar uma credencial que não existe |
+| 1.0.6 | Edge Add-ons | 05/10/2026 | **publicada** — confirmada em 13/11/2026 pela API pública do Edge Add-ons. A ficha aparece em 10 idiomas (`availableLanguages`): en-US, pt-BR, de-DE, id-ID, it-IT, es-ES, fr-CA, ru-RU, pl-PL, tr-TR. **Português (Portugal) não consta**, embora tenha sido enviado — a conferir no painel. Mesmas permissões da 1.0.4; primeira versão reproduzível a partir de um clone |
 | 1.0.2 (app) | Microsoft Store | 02/10/2026 | **publicada** — conferido no catálogo da loja: o pacote servido é o `1.0.2.0`. Avisa quando a Ferramenta de Captura é dona do Print Screen, e o log volta a ser gravado no app instalado, em `%LOCALAPPDATA%\SnapLocal` |
 | 1.0.1 (app) | Microsoft Store | 02/10/2026 | **publicada** em 02/10/2026 — Esc fecha as janelas e seleção cobre todos os monitores. Conferido no catálogo da loja: o pacote servido é o `1.0.1.0`. Enviada sem teste em dois monitores, por decisão do autor; **testada em dois monitores depois de publicada, em 02/10/2026, e funcionou** |
 | 1.0.0 (app) | Microsoft Store | 01/10/2026 | **em certificação** — Submission 2: só as capturas, a 1 tinha ido em branco; pacote inalterado |
