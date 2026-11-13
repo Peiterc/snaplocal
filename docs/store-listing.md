@@ -458,7 +458,7 @@ GPL-3.0 - https://github.com/Peiterc/snaplocal
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
 | 1.1.0 | Chrome Web Store | 13/11/2026 | **em análise** — enviada pelo autor, com a justificativa da permissão opcional `clipboardRead` na aba Privacidade |
-| 1.1.0 | Firefox AMO | 13/11/2026 | **aguardando análise** — com código-fonte. O envio foi finalizado sem as notas (ver a nota sobre o fluxo da AMO); elas foram acrescentadas em seguida pela página da versão e conferidas depois de recarregar |
+| 1.1.0 | Firefox AMO | 13/11/2026 | **publicada** em 13/11/2026 — conferida pela API pública da AMO: versão 1.1.0, `clipboardRead` só como opcional. Enviada com código-fonte; as notas entraram logo depois do envio, pela página da versão (ver a nota sobre o fluxo da AMO) |
 | 1.1.0 | Edge Add-ons | 13/11/2026 | **em análise** — "Colar imagem", com a permissão opcional `clipboardRead`; as obrigatórias são as mesmas da 1.0.6, conferido na verificação do pacote |
 | 1.0.6 | Edge Add-ons | 05/10/2026 | **publicada** — confirmada em 13/11/2026 pela API pública do Edge Add-ons. A ficha aparece em 10 idiomas (`availableLanguages`): en-US, pt-BR, de-DE, id-ID, it-IT, es-ES, fr-CA, ru-RU, pl-PL, tr-TR. **Português (Portugal) não consta**, embora tenha sido enviado — a conferir no painel. Mesmas permissões da 1.0.4; primeira versão reproduzível a partir de um clone |
 | 1.0.2 (app) | Microsoft Store | 02/10/2026 | **publicada** — conferido no catálogo da loja: o pacote servido é o `1.0.2.0`. Avisa quando a Ferramenta de Captura é dona do Print Screen, e o log volta a ser gravado no app instalado, em `%LOCALAPPDATA%\SnapLocal` |

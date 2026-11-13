@@ -5,7 +5,7 @@ nuvem, sem rastreamento, sem nenhuma requisição de rede.
 
 **[Instalar no Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/bpenklkjkfmcmkbeggldokggnjpgfndn)** · **[Instalar no Chrome](https://chromewebstore.google.com/detail/lbiffdmehabmombfigmpmfgidngiphnh)** · **[Instalar no Firefox](https://addons.mozilla.org/firefox/addon/snaplocal/)** · **[App para Windows](https://apps.microsoft.com/detail/9p5kccgm2bk7)** · [Site do projeto](https://peiterc.github.io/snaplocal/) · [Política de privacidade](https://peiterc.github.io/snaplocal/privacy.html)
 
-Estado atual: **1.0.6 publicada no Edge, 1.0.5 no Chrome e no Firefox**. Há
+Estado atual: **1.1.0 publicada no Firefox, 1.0.6 no Edge, 1.0.5 no Chrome** — a 1.1.0 aguarda revisão no Edge e no Chrome. Há
 também um **aplicativo de desktop para
 Windows**, que reaproveita o mesmo editor e captura qualquer coisa na tela; a
 1.0.2 dele está publicada na Microsoft Store. O plano dele é o
