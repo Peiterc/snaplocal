@@ -368,6 +368,81 @@ próprio idioma.
 > é somente-leitura. O arraste do `.msix` é sempre manual — o resto do envio
 > não é.
 
+### Envio da 1.1.0 — "Colar imagem" e a permissão opcional `clipboardRead`
+
+| Pacote | SHA-256 |
+|---|---|
+| `snaplocal-chrome-1.1.0.zip` / `snaplocal-edge-1.1.0.zip` (iguais) | `05f064a57d58d7733bd00e6e1a8ed533c0c195397af4a1c794c2e1c3c5d3ce24` |
+| `snaplocal-firefox-1.1.0.zip` | `4b09a4e489a1aef5188a82a62bf813ffbb2d55f565d80ac47bf1148b3f702377` |
+| `snaplocal-source-1.1.0.zip` (só AMO) | `b3d35d6985f7cc8fd272ebc64d78bcc78f8a50d4b9539aa3815ba5f3df29d810` |
+
+As permissões **obrigatórias não mudam**; a `clipboardRead` é só opcional, então
+a atualização não desativa a extensão nem mostra aviso a quem já tem. A política
+de privacidade já a descreve (no ar desde 13/11/2026).
+
+**Chrome — justificativa da permissão `clipboardRead`** (523 caracteres):
+
+```
+Optional, never requested at install. It is asked for only when the user clicks "Paste image" in the popup, to open an image from the clipboard in the editor - typically a screenshot taken with another tool, such as the Windows Snipping Tool. The extension checks the clipboard only on that click, and reads only image data: copied text is never read. Nothing is stored or transmitted; the extension makes no network requests at all. The user can revoke the permission at any time in the extension's Options, under Privacy.
+```
+
+**Edge** — só o pacote. No formulário de envio, "o testador precisa de
+credenciais?" = **Não**; com isso o campo de notas fica desabilitado.
+
+**Firefox — notas da versão** (526 caracteres):
+
+```
+New: Paste image. Take a screenshot with any tool - the Windows Snipping Tool, for example - then click the SnapLocal icon and choose Paste image. The editor opens with the image from your clipboard, ready to annotate, blur or redact.
+
+The first time, Firefox asks for permission to read the clipboard. SnapLocal only looks for an image, only when you click the button, and never reads copied text. You can take the permission back at any time in Options > Privacy.
+
+If the editor opens empty, press Ctrl+V to paste the image.
+```
+
+**Firefox — notas ao revisor** (2361 caracteres, limite 3000):
+
+```
+SOURCE AND BUILD
+
+Source package snaplocal-source-1.1.0.zip is attached; BUILD.md at its root repeats this.
+
+Requirements: Python 3.8+, nothing else - no package manager, no dependencies, no network access; standard library only.
+
+  unzip snaplocal-source-1.1.0.zip -d snaplocal
+  cd snaplocal
+  python tools/build.py firefox
+
+The build is byte-reproducible, also from a git clone of the repository. Your file should match:
+
+  SHA-256 4b09a4e489a1aef5188a82a62bf813ffbb2d55f565d80ac47bf1148b3f702377
+
+src/ is copied byte for byte; the Firefox target only reserialises manifest.json (event page, gecko settings, no "incognito" key), adds a short lib/browser-polyfill.js aliasing chrome to browser, and one <script> line in three HTML files. diff -r src dist/firefox shows exactly that.
+
+WHAT IS NEW SINCE 1.0.5: OPTIONAL clipboardRead
+
+A "Paste image" button in the popup opens an image from the clipboard in the editor, so users can annotate screenshots taken with other tools.
+
+clipboardRead is declared under optional_permissions only. It is requested with permissions.request() inside the button's click handler, never at install, so existing users are not prompted by the update. Required permissions are unchanged.
+
+What is read, and when:
+- popup/popup.js, on that click only: navigator.clipboard.read(), then only item.types is inspected, to tell the user if there is no image. No content is read there.
+- src/lib/platform.js readClipboardImage(), in the editor: getType() is called only for a type starting with "image/". Text types are never read.
+- Nothing is stored or transmitted. The image goes straight into the editor canvas.
+- Options > Privacy shows whether access is granted and has a Revoke button (permissions.remove).
+
+If reading fails, the editor waits for a regular Ctrl+V paste event instead.
+
+Tested on Firefox 160 with this exact package, including the permission request and the revoke.
+
+Also since 1.0.5: Escape closes the window in the desktop build of the shared editor; in the browser it does nothing new.
+
+PERMISSIONS AND PRIVACY
+
+No host permissions. No network requests of any kind - no analytics, no remote code. The only fetch() calls read the add-on's own _locales via runtime.getURL(). The privacy policy covers clipboardRead: https://peiterc.github.io/snaplocal/privacy.html
+
+GPL-3.0 - https://github.com/Peiterc/snaplocal
+```
+
 **Histórico de envios**
 
 | Versão | Loja | Enviada | Situação |
