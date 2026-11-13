@@ -522,7 +522,7 @@
     "description": "Desktop app only: checkbox label. Whether the Print Screen key triggers a capture."
   },
   "opt_printscreen_busy": {
-    "message": "Windows is using the Print Screen key for the Snipping Tool. Turn that setting off in Windows to use the key here.",
+    "message": "Windows is using the Print Screen key for the Snipping Tool. Turn that setting off in Windows to use the key here. If the Snipping Tool still opens afterwards, sign out of Windows or restart.",
     "description": "Shown when the app could not take over the Print Screen key. Keep 'Snipping Tool' as Microsoft names it in your language."
   },
   "tray_screen": {
@@ -726,5 +726,9 @@
   "opt_clipboard_revoke": {
     "message": "Revoke",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Edit image from clipboard",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

@@ -69,13 +69,13 @@ sealed class EditorWindow : WebHostWindow
     }
 
     /// <summary>Entrega a captura e traz a janela para a frente.</summary>
-    public async Task OpenAsync(string captureDataUrl)
+    public async Task OpenAsync(string captureDataUrl, string title = "")
     {
         // O editor lê a captura da sessão, como na extensão.
         session["lastCapture"] = new JsonObject
         {
             ["dataUrl"] = captureDataUrl,
-            ["title"] = "",
+            ["title"] = title,
             ["url"] = "",
             ["at"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
         };

@@ -401,7 +401,7 @@
     "message": "Использовать клавишу Print Screen"
   },
   "opt_printscreen_busy": {
-    "message": "Windows использует клавишу Print Screen для «Ножниц». Отключите этот параметр в Windows, чтобы использовать клавишу здесь."
+    "message": "Windows использует клавишу Print Screen для «Ножниц». Отключите этот параметр в Windows, чтобы использовать клавишу здесь. Если «Ножницы» всё ещё открываются, выйдите из Windows или перезагрузите компьютер."
   },
   "tray_screen": {
     "message": "Этот экран"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Отозвать",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Изменить изображение из буфера обмена",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

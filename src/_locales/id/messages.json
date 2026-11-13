@@ -401,7 +401,7 @@
     "message": "Gunakan tombol Print Screen"
   },
   "opt_printscreen_busy": {
-    "message": "Windows memakai tombol Print Screen untuk Snipping Tool. Matikan pengaturan itu di Windows agar tombolnya bisa dipakai di sini."
+    "message": "Windows memakai tombol Print Screen untuk Snipping Tool. Matikan pengaturan itu di Windows agar tombolnya bisa dipakai di sini. Jika Snipping Tool masih terbuka, keluar dari Windows atau mulai ulang komputer."
   },
   "tray_screen": {
     "message": "Layar ini"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Cabut",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Edit gambar dari papan klip",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

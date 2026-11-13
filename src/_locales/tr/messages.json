@@ -401,7 +401,7 @@
     "message": "Print Screen tuşunu kullan"
   },
   "opt_printscreen_busy": {
-    "message": "Windows, Print Screen tuşunu Ekran Alıntısı Aracı için kullanıyor. Tuşu burada kullanmak için bu ayarı Windows'ta kapatın."
+    "message": "Windows, Print Screen tuşunu Ekran Alıntısı Aracı için kullanıyor. Tuşu burada kullanmak için bu ayarı Windows'ta kapatın. Ekran Alıntısı Aracı yine de açılırsa Windows oturumunu kapatın veya bilgisayarı yeniden başlatın."
   },
   "tray_screen": {
     "message": "Bu ekran"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Erişimi kaldır",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Panodaki görüntüyü düzenle",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

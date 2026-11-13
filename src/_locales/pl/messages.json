@@ -401,7 +401,7 @@
     "message": "Używaj klawisza Print Screen"
   },
   "opt_printscreen_busy": {
-    "message": "Windows używa klawisza Print Screen do Narzędzia Wycinanie. Wyłącz tę opcję w systemie Windows, aby używać klawisza tutaj."
+    "message": "Windows używa klawisza Print Screen do Narzędzia Wycinanie. Wyłącz tę opcję w systemie Windows, aby używać klawisza tutaj. Jeśli Narzędzie Wycinanie nadal się otwiera, wyloguj się z systemu Windows lub uruchom ponownie komputer."
   },
   "tray_screen": {
     "message": "Ten ekran"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Cofnij dostęp",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Edytuj obraz ze schowka",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

@@ -401,7 +401,7 @@
     "message": "Usa il tasto Stamp"
   },
   "opt_printscreen_busy": {
-    "message": "Windows usa il tasto Stamp per lo Strumento di cattura. Disattiva quell'opzione in Windows per usarlo qui."
+    "message": "Windows usa il tasto Stamp per lo Strumento di cattura. Disattiva quell'opzione in Windows per usarlo qui. Se lo Strumento di cattura si apre ancora, esci da Windows o riavvia."
   },
   "tray_screen": {
     "message": "Questo schermo"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Revoca",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Modifica l'immagine dagli appunti",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

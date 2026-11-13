@@ -46,6 +46,14 @@ sealed class TrayContext : ApplicationContext
         var menu = new ContextMenuStrip();
         menu.Items.Add(Strings.Get("ctx_area"), null, (_, _) => CaptureAndEdit());
         menu.Items.Add(Strings.Get("tray_screen"), null, (_, _) => CaptureAndEdit(wholeScreen: true));
+
+        // Ativo só com imagem copiada: um item que existe sempre, mas cinza
+        // quando não há o que colar, ensina que o recurso existe sem prometer
+        // o que não pode cumprir.
+        var colar = new ToolStripMenuItem(Strings.Get("tray_clipboard"), null, (_, _) => EditFromClipboard());
+        menu.Items.Add(colar);
+        menu.Opening += (_, _) => colar.Enabled = Clipboard.ContainsImage();
+
         menu.Items.Add(new ToolStripSeparator());
         menu.Items.Add(Strings.Get("options_title"), null, (_, _) => ShowOptions());
         menu.Items.Add(Strings.Get("tray_exit"), null, (_, _) => ExitThread());
@@ -141,6 +149,31 @@ sealed class TrayContext : ApplicationContext
         Log.Write($"recorte {chosen.Width}x{chosen.Height}, dataUrl {dataUrl.Length} chars");
         if (!ReferenceEquals(chosen, shot)) chosen.Dispose();
 
+        Open(dataUrl);
+    }
+
+    /// <summary>
+    /// O "Colar imagem" do app: a imagem que já está na área de transferência —
+    /// um recorte da Ferramenta de Captura, por exemplo — direto no editor.
+    /// </summary>
+    private void EditFromClipboard()
+    {
+        using Bitmap? imagem = ScreenCapture.FromClipboard();
+        if (imagem is null)
+        {
+            // O item fica cinza sem imagem; isto só acontece se a área de
+            // transferência mudou entre abrir o menu e clicar.
+            tray.ShowBalloonTip(5000, "SnapLocal", Strings.Get("err_no_clipboard_image"), ToolTipIcon.Info);
+            return;
+        }
+        Log.Write($"area de transferencia {imagem.Width}x{imagem.Height}");
+        Warm();
+        Open(ScreenCapture.ToDataUrl(imagem), Strings.Get("editor_clipboard_title"));
+    }
+
+    /// <summary>Entrega a imagem à janela quente e deixa outra aquecendo.</summary>
+    private void Open(string dataUrl, string title = "")
+    {
         EditorWindow editor = warming!;
         warming = null;
         coolDown.Stop();
@@ -148,7 +181,7 @@ sealed class TrayContext : ApplicationContext
         // Quando esta janela fechar, deixa outra pronta: a captura seguinte
         // costuma vir logo depois, e aí ela abre instantaneamente.
         editor.FormClosed += (_, _) => { Warm(); coolDown.Start(); };
-        _ = editor.OpenAsync(dataUrl);
+        _ = editor.OpenAsync(dataUrl, title);
     }
 
     private void Warm()

@@ -41,6 +41,21 @@ static class Program
 
         // Abre só a seleção, sobre a tela de verdade, e fecha sozinha. Serve
         // para conferir o desenho do overlay sem alguém no mouse.
+        // O caminho do item "Editar imagem da área de transferência", sem
+        // precisar clicar na bandeja: lê a área de transferência como o item lê
+        // e abre o editor, que fica aberto até ser fechado de fora.
+        if (args.Length >= 1 && args[0] == "--open-clipboard")
+        {
+            using Bitmap? imagem = ScreenCapture.FromClipboard();
+            Log.Write(imagem is null ? "area de transferencia: sem imagem"
+                                     : $"area de transferencia: {imagem.Width}x{imagem.Height}");
+            if (imagem is null) return;
+            EditorWindow editor = EditorWindow.StartWarm();
+            _ = editor.OpenAsync(ScreenCapture.ToDataUrl(imagem), Strings.Get("editor_clipboard_title"));
+            Application.Run(editor);
+            return;
+        }
+
         // Prova a decisao sobre a tecla Print Screen com valores na mao. A
         // maquina de build nao tem a opcao ligada, e ligar configuracao de
         // sistema so para testar nao e opcao: assim o ramo que importa sai do
@@ -131,7 +146,7 @@ static class Program
         // Relata os textos do menu da bandeja no idioma configurado.
         if (args.Length >= 1 && args[0] == "--selftest-tray")
         {
-            foreach (string key in new[] { "ctx_area", "tray_screen", "options_title", "tray_exit" })
+            foreach (string key in new[] { "ctx_area", "tray_screen", "tray_clipboard", "options_title", "tray_exit" })
                 Log.Write($"{key}: {Strings.Get(key)}");
             return;
         }

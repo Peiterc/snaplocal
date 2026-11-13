@@ -401,7 +401,7 @@
     "message": "Utiliser la touche Impr. écran"
   },
   "opt_printscreen_busy": {
-    "message": "Windows utilise la touche Impr. écran pour l'Outil Capture d'écran. Désactivez ce réglage dans Windows pour l'utiliser ici."
+    "message": "Windows utilise la touche Impr. écran pour l'Outil Capture d'écran. Désactivez ce réglage dans Windows pour l'utiliser ici. Si l'Outil Capture d'écran s'ouvre encore ensuite, déconnectez-vous de Windows ou redémarrez."
   },
   "tray_screen": {
     "message": "Cet écran"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Révoquer",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Modifier l'image du presse-papiers",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

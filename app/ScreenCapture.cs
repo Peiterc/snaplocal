@@ -33,6 +33,29 @@ static class ScreenCapture
         return shot;
     }
 
+    /// <summary>
+    /// A imagem da área de transferência, ou null. É o "Colar imagem" do app:
+    /// aqui não há permissão a pedir — o Windows entrega a área de transferência
+    /// a qualquer programa —, então basta ler. Só imagem: texto copiado nunca é
+    /// lido, igual à extensão.
+    /// </summary>
+    public static Bitmap? FromClipboard()
+    {
+        try
+        {
+            if (!Clipboard.ContainsImage()) return null;
+            using Image? image = Clipboard.GetImage();
+            return image is null ? null : new Bitmap(image);
+        }
+        catch (System.Runtime.InteropServices.ExternalException error)
+        {
+            // Outro programa está com a área de transferência aberta naquele
+            // instante. Não é erro do usuário; a próxima tentativa costuma dar.
+            Log.Write($"area de transferencia ocupada: {error.Message}");
+            return null;
+        }
+    }
+
     /// <summary>O editor recebe a imagem como data URL, igual à extensão.</summary>
     public static string ToDataUrl(Bitmap image)
     {

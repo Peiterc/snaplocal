@@ -401,7 +401,7 @@
     "message": "Usar a tecla Print Screen"
   },
   "opt_printscreen_busy": {
-    "message": "O Windows está usando a tecla Print Screen para a Ferramenta de Captura. Desligue essa opção no Windows para usar a tecla aqui."
+    "message": "O Windows está usando a tecla Print Screen para a Ferramenta de Captura. Desligue essa opção no Windows para usar a tecla aqui. Se a Ferramenta de Captura ainda abrir depois disso, saia da conta do Windows ou reinicie."
   },
   "tray_screen": {
     "message": "Esta tela"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Revogar",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Editar imagem da área de transferência",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }

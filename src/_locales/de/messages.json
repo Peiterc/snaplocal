@@ -401,7 +401,7 @@
     "message": "Die Druck-Taste verwenden"
   },
   "opt_printscreen_busy": {
-    "message": "Windows verwendet die Druck-Taste für das Snipping Tool. Deaktivieren Sie diese Einstellung in Windows, um die Taste hier zu verwenden."
+    "message": "Windows verwendet die Druck-Taste für das Snipping Tool. Deaktivieren Sie diese Einstellung in Windows, um die Taste hier zu verwenden. Wenn sich das Snipping Tool danach weiterhin öffnet, melden Sie sich von Windows ab oder starten Sie neu."
   },
   "tray_screen": {
     "message": "Dieser Bildschirm"
@@ -564,5 +564,9 @@
   "opt_clipboard_revoke": {
     "message": "Widerrufen",
     "description": "Options button that takes back the clipboard permission."
+  },
+  "tray_clipboard": {
+    "message": "Bild aus der Zwischenablage bearbeiten",
+    "description": "Desktop app tray menu item; enabled only when an image is on the clipboard."
   }
 }
