@@ -453,6 +453,15 @@ No host permissions. No network requests of any kind - no analytics, no remote c
 GPL-3.0 - https://github.com/Peiterc/snaplocal
 ```
 
+> **Trocar a grafia do nome na Microsoft Store.** Em *Gerenciar nomes de
+> apps*, reservar o nome com a grafia nova: o Partner Center aceitou
+> "SnapLocal" sendo que "Snaplocal" estava em uso, e **substituiu no lugar** —
+> não ficou nome duplicado. O efeito colateral é que cada ficha de idioma perde
+> o nome escolhido ("O nome selecionado anteriormente não está mais
+> reservado") e precisa ter "SnapLocal" escolhido de novo no campo *Nome do
+> produto*, nas 11. A justificativa do `runFullTrust` não foi pedida no envio
+> seguinte: a capacidade já estava aprovada para o produto.
+
 **Histórico de envios**
 
 | Versão | Loja | Enviada | Situação |
@@ -549,6 +558,7 @@ palavra "extensão" não cobre: aqui ele captura qualquer coisa na tela.
 | Nome | `Peiterc.Snaplocal` |
 | Publisher | `CN=4AB02EBA-4C2A-4CC0-BDE6-1DB25547AE4F` |
 | Nome de exibição | `Peiterc` |
+| Nome reservado na loja | `SnapLocal` — era `Snaplocal`; trocado em 13/11/2026 |
 | ID na Store | `9P5KCCGM2BK7` |
 | Ficha pública | <https://apps.microsoft.com/detail/9p5kccgm2bk7> |
 
