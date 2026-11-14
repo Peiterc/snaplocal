@@ -3,11 +3,11 @@
 
     python tools/sync-app-assets.py
 
-A regra do projeto é que `src/` não muda de forma para acomodar o app: ela é o
+A regra do projeto é que `extension/` não muda de forma para acomodar o app: ela é o
 que a Mozilla revisa e o que o build.py empacota. Quem se adapta é o app, e é
 isto que faz a adaptação — uma cópia, sem transformar nada.
 
-Copia para `app/Assets/web/`:
+Copia para `windows-app/Assets/web/`:
 
     editor/     a página do editor, como está
     options/    a tela de Opções, como está
@@ -15,12 +15,12 @@ Copia para `app/Assets/web/`:
     _locales/   os 11 dicionários
 
 E troca uma peça só: `lib/platform.js`, a implementação escrita sobre
-`chrome.*`, dá lugar a `app/platform-desktop.js`, escrita sobre a ponte com o
+`chrome.*`, dá lugar a `windows-app/platform-desktop.js`, escrita sobre a ponte com o
 processo em C#. O contrato entre as duas está documentado em
-`src/lib/platform.js`. É por isso que o editor importa sempre o mesmo caminho e
+`extension/lib/platform.js`. É por isso que o editor importa sempre o mesmo caminho e
 nenhum dos dois pacotes carrega o código do outro.
 
-Gera também `app/Assets/snaplocal.ico` a partir dos PNGs de `src/icons/`, que
+Gera também `windows-app/Assets/snaplocal.ico` a partir dos PNGs de `extension/icons/`, que
 é o formato que o Windows pede para o ícone da bandeja e do executável.
 """
 import os
@@ -32,10 +32,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "src"
-WEB = ROOT / "app" / "Assets" / "web"
-ICO = ROOT / "app" / "Assets" / "snaplocal.ico"
-PLATFORM = ROOT / "app" / "platform-desktop.js"
+SRC = ROOT / "extension"
+WEB = ROOT / "windows-app" / "Assets" / "web"
+ICO = ROOT / "windows-app" / "Assets" / "snaplocal.ico"
+PLATFORM = ROOT / "windows-app" / "platform-desktop.js"
 
 # O que o editor precisa para rodar. O service worker e o content script ficam
 # de fora: são a parte que só existe dentro de um navegador.
@@ -81,7 +81,7 @@ def copy_web():
         fail(f"{PLATFORM} não existe")
     target = WEB / "lib" / "platform.js"
     if not target.is_file():
-        fail("src/lib/platform.js sumiu; o editor importa esse caminho")
+        fail("extension/lib/platform.js sumiu; o editor importa esse caminho")
     shutil.copyfile(PLATFORM, target)
     print(f"troca: lib/platform.js <- {PLATFORM.relative_to(ROOT)}")
 
@@ -119,7 +119,7 @@ def build_ico():
 
 def main():
     if not SRC.is_dir():
-        fail("pasta src/ não encontrada")
+        fail("pasta extension/ não encontrada")
     copy_web()
     build_ico()
 

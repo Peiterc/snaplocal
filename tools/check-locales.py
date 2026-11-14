@@ -1,6 +1,6 @@
 import glob, json, os, re, sys
 
-BASE = "src/_locales"
+BASE = "extension/_locales"
 REF = "en"
 ok = True
 
@@ -52,9 +52,9 @@ for loc in locales:
 
 def codigo_fonte():
     texto = ""
-    for p in (glob.glob("src/**/*.js", recursive=True)
-              + glob.glob("src/**/*.html", recursive=True)
-              + ["src/manifest.json"]):
+    for p in (glob.glob("extension/**/*.js", recursive=True)
+              + glob.glob("extension/**/*.html", recursive=True)
+              + ["extension/manifest.json"]):
         texto += open(p, encoding="utf-8").read()
     return texto
 
@@ -71,7 +71,7 @@ fonte = codigo_fonte()
 sem_uso = sorted(k for k in ref if k not in fonte)
 print()
 if sem_uso:
-    print("AVISO: %d chaves nunca aparecem em src/ (%d strings a espera de uso)"
+    print("AVISO: %d chaves nunca aparecem em extension/ (%d strings a espera de uso)"
           % (len(sem_uso), len(sem_uso) * len(locales)))
     for k in sem_uso:
         print("   ", k)

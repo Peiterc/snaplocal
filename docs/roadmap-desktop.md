@@ -159,6 +159,11 @@ tools/        build.py, check-locales.py e o script que leva o editor ao app
 docs/         planos, material de loja, site
 ```
 
+> **Atualização (13/11/2026):** `src/` passou a se chamar `extension/` e `app/`
+> passou a se chamar `windows-app/`, para os nomes dizerem o que há dentro. A
+> regra acima continua valendo com os nomes novos. Este documento mantém os
+> nomes antigos onde registra decisões tomadas antes da troca.
+
 Duas consequências registradas aqui para não serem esquecidas:
 
 - **Tags separadas por produto**: `ext-1.0.4` e `app-1.0.0`. Sem isso ninguém

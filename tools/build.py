@@ -25,7 +25,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "src"
+SRC = ROOT / "extension"
 DIST = ROOT / "dist"
 
 TARGETS = ("edge", "chrome", "firefox")
@@ -95,7 +95,7 @@ def fail(message):
 
 
 def check_line_endings():
-    """Recusa arquivo de src/ com CRLF.
+    """Recusa arquivo de extension/ com CRLF.
 
     O repositório guarda tudo em LF, e o git não acusa quando a pasta de
     trabalho tem CRLF: compara o conteúdo já normalizado e mostra tudo limpo.
@@ -110,7 +110,7 @@ def check_line_endings():
                 and b"\r\n" in p.read_bytes()]
     if culpados:
         lista = "\n  ".join(str(c) for c in culpados)
-        fail("arquivos com CRLF em src/ - o pacote nao bateria com um clone do "
+        fail("arquivos com CRLF em extension/ - o pacote nao bateria com um clone do "
              f"repositorio:\n  {lista}\nconverta para LF antes de construir")
 
 
@@ -235,7 +235,7 @@ def main():
             fail(f"alvo desconhecido: {target} (use {', '.join(TARGETS)})")
 
     if not SRC.is_dir():
-        fail("pasta src/ não encontrada")
+        fail("pasta extension/ não encontrada")
     check_line_endings()
     check_locales()
     DIST.mkdir(exist_ok=True)

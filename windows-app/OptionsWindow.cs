@@ -5,7 +5,7 @@ namespace SnapLocal;
 /// <summary>
 /// A tela de Opções — a mesma página da extensão. As linhas que não existem
 /// fora do navegador se escondem sozinhas, pelo `features` declarado em
-/// app/platform-desktop.js.
+/// windows-app/platform-desktop.js.
 /// </summary>
 sealed class OptionsWindow : WebHostWindow
 {

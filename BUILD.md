@@ -36,9 +36,9 @@ that every locale has the same keys and placeholders, and aborts if it does not.
 ## What the build actually does
 
 **No code is transformed.** There is no minifier, no bundler, no transpiler and
-no template engine. Every `.js`, `.css` and `.json` file under `src/` is copied
+no template engine. Every `.js`, `.css` and `.json` file under `extension/` is copied
 byte for byte into the package. You can verify this with a recursive diff
-between `src/` and `dist/firefox/`.
+between `extension/` and `dist/firefox/`.
 
 The Firefox target applies exactly three changes, all of them visible in the
 packaged output:
@@ -80,7 +80,7 @@ each of these three steps is commented there.
 
 ```
 python tools/build.py firefox --no-zip
-diff -r src dist/firefox
+diff -r extension dist/firefox
 ```
 
 The only differences you should see are the three items above: the reserialised
@@ -111,13 +111,13 @@ bytes as building from the source package. That was **not** true for 1.0.4 and
 four files that the repository stores with LF, and git does not report that
 difference, so those two releases can be reproduced only from their source
 packages, not from a clone. `tools/build.py` now refuses to build while any file
-in `src/` has CRLF, so it cannot happen again silently.
+in `extension/` has CRLF, so it cannot happen again silently.
 
 ## Project home
 
 <https://github.com/Peiterc/snaplocal> — GPL-3.0.
 
 The published repository holds this tree plus two things this package leaves
-out, because neither is part of the extension: `app/`, a Windows desktop app
+out, because neither is part of the extension: `windows-app/`, a Windows desktop app
 that reuses the same editor, and the store artwork. Everything the extension is
-built from — `src/` and `tools/` — is here, complete.
+built from — `extension/` and `tools/` — is here, complete.

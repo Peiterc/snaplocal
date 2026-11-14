@@ -15,7 +15,7 @@ sealed class ProbeWindow : WebHostWindow
     private readonly Stopwatch clock = Stopwatch.StartNew();
 
     // A página é escrita aqui, e não guardada no projeto, porque a pasta web
-    // é reconstruída do zero a partir de src/ a cada sync.
+    // é reconstruída do zero a partir de extension/ a cada sync.
     private const string Html =
         "<!doctype html><html><head><meta charset=\"utf-8\"><title>probe</title></head><body>" +
         "<script>window.chrome.webview.postMessage({ id: 1, type: 'probe', payload: {} });</script>" +

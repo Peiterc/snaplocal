@@ -1,10 +1,10 @@
 /**
- * A implementação de desktop do contrato definido em `src/lib/platform.js`.
+ * A implementação de desktop do contrato definido em `extension/lib/platform.js`.
  * `tools/sync-app-assets.py` copia este arquivo por cima daquele ao montar o
  * app, então o editor importa o mesmo caminho nos dois mundos e nenhum pacote
  * carrega o código do outro.
  *
- * Do outro lado da conversa está `app/EditorWindow.cs`.
+ * Do outro lado da conversa está `windows-app/EditorWindow.cs`.
  */
 
 // O canal com o processo em C#. É o único ponto de contato com o WebView2.

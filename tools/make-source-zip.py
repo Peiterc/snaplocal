@@ -18,7 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "dist")
 
 # O que reproduz o pacote, e mais nada.
-INCLUDE_DIRS = ["src", "tools"]
+INCLUDE_DIRS = ["extension", "tools"]
 INCLUDE_FILES = ["BUILD.md", "README.md", "LICENSE", "CONTRIBUTING.md"]
 
 SKIP_SUFFIXES = (".pyc", ".zip", ".png")
@@ -29,10 +29,10 @@ def keep(path):
     name = os.path.basename(path)
     if name in SKIP_NAMES:
         return False
-    # Os ícones em src/icons/ são parte da extensão e precisam ir junto; as
+    # Os ícones em extension/icons/ são parte da extensão e precisam ir junto; as
     # outras imagens do projeto, não.
     if path.endswith(".png"):
-        return os.path.sep + os.path.join("src", "icons") + os.path.sep in path
+        return os.path.sep + os.path.join("extension", "icons") + os.path.sep in path
     return not path.endswith(SKIP_SUFFIXES)
 
 
@@ -50,7 +50,7 @@ def zip_entry(nome):
 
 def main():
     version = __import__("json").load(
-        open(os.path.join(ROOT, "src", "manifest.json"), encoding="utf-8"))["version"]
+        open(os.path.join(ROOT, "extension", "manifest.json"), encoding="utf-8"))["version"]
     out = os.path.join(OUT_DIR, "snaplocal-source-%s.zip" % version)
     os.makedirs(OUT_DIR, exist_ok=True)
 

@@ -7,11 +7,11 @@ Obrigado pelo interesse. O jeito mais útil de ajudar hoje é **traduzir**.
 Toda a interface vem de um único arquivo por idioma. Não é preciso saber
 programar nem rodar a extensão.
 
-1. Copie [`src/_locales/en/messages.json`](src/_locales/en/messages.json) para
-   `src/_locales/<codigo>/messages.json`.
+1. Copie [`extension/_locales/en/messages.json`](extension/_locales/en/messages.json) para
+   `extension/_locales/<codigo>/messages.json`.
    Códigos aceitos hoje: `es`, `ru`, `de`, `fr`, `it`, `id`, `tr`, `pl`, `pt`.
    Para outro idioma, abra uma issue antes — o código precisa ser adicionado à
-   lista `SUPPORTED` em `src/lib/i18n.js`.
+   lista `SUPPORTED` em `extension/lib/i18n.js`.
 
 2. Traduza apenas o valor de cada `"message"`.
 

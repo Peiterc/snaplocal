@@ -7,7 +7,7 @@ namespace SnapLocal;
 /// <summary>
 /// A janela do editor: um WebView2 mostrando exatamente a mesma página que a
 /// extensão usa. Esta classe é a casca — responde ao que a página pede através
-/// do contrato descrito em src/lib/platform.js.
+/// do contrato descrito em extension/lib/platform.js.
 /// </summary>
 sealed class EditorWindow : WebHostWindow
 {
@@ -226,7 +226,7 @@ sealed class EditorWindow : WebHostWindow
 
         // A extensão salva na pasta de downloads do navegador. Aqui o
         // equivalente é Imagens\SnapLocal, e o nome do arquivo continua vindo
-        // do mesmo código: src/lib/naming.js.
+        // do mesmo código: extension/lib/naming.js.
         string folder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "SnapLocal");
         Directory.CreateDirectory(folder);

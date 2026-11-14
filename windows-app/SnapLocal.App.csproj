@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Assets/web/ é gerado por tools/sync-app-assets.py a partir de src/.
+    <!-- Assets/web/ é gerado por tools/sync-app-assets.py a partir de extension/.
          Nunca editar lá dentro. -->
     <Content Include="Assets\**\*.*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

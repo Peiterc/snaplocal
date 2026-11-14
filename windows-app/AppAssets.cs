@@ -1,7 +1,7 @@
 namespace SnapLocal;
 
 /// <summary>
-/// Os arquivos que vieram de `src/` por tools/sync-app-assets.py, mais o
+/// Os arquivos que vieram de `extension/` por tools/sync-app-assets.py, mais o
 /// ícone. Tudo fica ao lado do executável.
 /// </summary>
 static class AppAssets

@@ -5,7 +5,7 @@ Store e Firefox AMO, mais o roteiro dos screenshots.
 
 > **O que já vem do código.** O nome e a descrição curta que as lojas exibem são
 > lidos do `manifest.json` via `__MSG_appName__` e `__MSG_appDesc__`, ou seja,
-> saem dos 11 dicionários em `src/_locales/`. Você não digita isso no formulário
+> saem dos 11 dicionários em `extension/_locales/`. Você não digita isso no formulário
 > em nenhuma das três lojas — já está localizado.
 >
 > **Limites de caracteres mudam.** Os que aparecem aqui são os que valiam quando
@@ -305,7 +305,7 @@ python tools/build.py
 
 - [x] `GECKO_ID` definitivo em `tools/build.py` — **permanente na AMO**
 - [x] Ícones definitivos e logo 300×300 em `docs/store-assets/`
-- [x] Versão certa no `src/manifest.json` — sobe no primeiro commit de código
+- [x] Versão certa no `extension/manifest.json` — sobe no primeiro commit de código
       *depois* de uma publicação, não na hora de submeter
 - [x] Pacote do Firefox carregado num Firefox real (155.0.1) — o ES module no
       background funciona
@@ -426,7 +426,7 @@ The build is byte-reproducible, also from a git clone of the repository. Your fi
 
   SHA-256 4b09a4e489a1aef5188a82a62bf813ffbb2d55f565d80ac47bf1148b3f702377
 
-src/ is copied byte for byte; the Firefox target only reserialises manifest.json (event page, gecko settings, no "incognito" key), adds a short lib/browser-polyfill.js aliasing chrome to browser, and one <script> line in three HTML files. diff -r src dist/firefox shows exactly that.
+extension/ is copied byte for byte; the Firefox target only reserialises manifest.json (event page, gecko settings, no "incognito" key), adds a short lib/browser-polyfill.js aliasing chrome to browser, and one <script> line in three HTML files. diff -r extension dist/firefox shows exactly that.
 
 WHAT IS NEW SINCE 1.0.5: OPTIONAL clipboardRead
 
@@ -436,7 +436,7 @@ clipboardRead is declared under optional_permissions only. It is requested with 
 
 What is read, and when:
 - popup/popup.js, on that click only: navigator.clipboard.read(), then only item.types is inspected, to tell the user if there is no image. No content is read there.
-- src/lib/platform.js readClipboardImage(), in the editor: getType() is called only for a type starting with "image/". Text types are never read.
+- extension/lib/platform.js readClipboardImage(), in the editor: getType() is called only for a type starting with "image/". Text types are never read.
 - Nothing is stored or transmitted. The image goes straight into the editor canvas.
 - Options > Privacy shows whether access is granted and has a Revoke button (permissions.remove).
 
@@ -696,7 +696,7 @@ problemas: https://github.com/Peiterc/snaplocal
 São duas coisas com o mesmo nome, e elas não andam juntas:
 
 - **Idiomas do pacote** — o que a Store mostra em "Idiomas com suporte". Saem
-  das pastas de `src/_locales`, lidas por `tools/make-msix.py`, então os 11
+  das pastas de `extension/_locales`, lidas por `tools/make-msix.py`, então os 11
   idiomas da interface aparecem sem ninguém digitar nada.
 - **Idiomas da ficha** — o texto da loja. Cada um exige uma descrição escrita
   naquele idioma. Há texto pronto em inglês e português; os outros nove ficam

@@ -6,7 +6,7 @@ straight from disk without a server and without loading the extension.
 import json, html, os
 
 REF, TARGET = "en", "pt_BR"
-BASE = "src/_locales"
+BASE = "extension/_locales"
 OUT = "tools/strings-preview.html"
 
 # Only used to group the table into readable sections.

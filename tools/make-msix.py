@@ -26,7 +26,7 @@ do que já é preciso para compilar.
 
 A identidade do pacote (nome, publisher e nome de exibição) fica em
 
-`app/msix-identity.json`. Os valores que vêm ali são de teste e servem para
+`windows-app/msix-identity.json`. Os valores que vêm ali são de teste e servem para
 
 instalar localmente; **os definitivos saem do Partner Center**, na página de
 
@@ -56,9 +56,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-APP = ROOT / "app" / "SnapLocal.App.csproj"
+APP = ROOT / "windows-app" / "SnapLocal.App.csproj"
 
-IDENTITY = ROOT / "app" / "msix-identity.json"
+IDENTITY = ROOT / "windows-app" / "msix-identity.json"
 
 DIST = ROOT / "dist" / "app"
 
@@ -228,7 +228,7 @@ MANIFEST = """<?xml version="1.0" encoding="utf-8"?>
 
   <Resources>
 
-    <!-- Os idiomas que a interface realmente fala, lidos de src/_locales.
+    <!-- Os idiomas que a interface realmente fala, lidos de extension/_locales.
          Sem isto a Store anuncia "Inglês" e mais nada, e quem procura por
          idioma nao encontra o app. -->
 {idiomas}
@@ -317,10 +317,10 @@ MANIFEST = """<?xml version="1.0" encoding="utf-8"?>
 
 
 def languages():
-    """As pastas de src/_locales, na notação do Windows: pt_BR vira pt-br."""
-    pastas = sorted(p.name for p in (ROOT / "src" / "_locales").iterdir() if p.is_dir())
+    """As pastas de extension/_locales, na notação do Windows: pt_BR vira pt-br."""
+    pastas = sorted(p.name for p in (ROOT / "extension" / "_locales").iterdir() if p.is_dir())
     if not pastas:
-        fail("nenhum idioma em src/_locales")
+        fail("nenhum idioma em extension/_locales")
     marcas = [f'    <Resource Language="{nome.replace("_", "-").lower()}" />'
               for nome in pastas]
     return chr(10).join(marcas)

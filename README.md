@@ -23,7 +23,7 @@ O histórico de envios a cada loja está em
 
 1. Abra `edge://extensions`
 2. Ligue **Modo de desenvolvedor** (canto inferior esquerdo)
-3. **Carregar sem pacote** → selecione a pasta `src`
+3. **Carregar sem pacote** → selecione a pasta `extension`
 4. Fixe o ícone na barra e clique nele
 
 No Chrome o caminho é o mesmo em `chrome://extensions`.
@@ -61,8 +61,23 @@ reabrir a página.
 
 ## Estrutura
 
+O repositório tem dois produtos que compartilham o mesmo editor:
+
+| Pasta | O que é | Lojas |
+|---|---|---|
+| `extension/` | a extensão — um código só para os três navegadores | Edge, Chrome, Firefox |
+| `windows-app/` | o app de desktop, em C# + WebView2 | Microsoft Store |
+| `tools/` | build, empacotamento e verificações | — |
+| `docs/` | site, política de privacidade, material das lojas | — |
+| `dist/` | gerado: `edge/`, `chrome/`, `firefox/`, `app/` e os zips | — |
+
+As três extensões não têm pasta própria de código de propósito: o que muda de
+um navegador para outro é aplicado pelo `tools/build.py`, que gera
+`dist/edge`, `dist/chrome` e `dist/firefox`. O app reaproveita o editor de
+`extension/` por cópia, feita por `tools/sync-app-assets.py`.
+
 ```
-src/
+extension/
   manifest.json          MV3, __MSG_* para nome/descrição, permissões mínimas
   _locales/<loc>/        11 idiomas; en é a referência com notas de tradução
   lib/i18n.js            carregador híbrido + troca manual de idioma
@@ -80,6 +95,12 @@ tools/
   overlay-harness.html   roda o overlay de seleção sobre uma página hostil
   stitch-harness.html    asserções da costura de página inteira
   build.py               empacota para Edge, Chrome e Firefox
+  sync-app-assets.py     leva o editor de extension/ para windows-app/
+  make-msix.py           empacota o app para a Microsoft Store
+windows-app/
+  SnapLocal.App.csproj   projeto .NET
+  platform-desktop.js    ponte entre o editor e o C#, no lugar de lib/platform.js
+  Assets/web/            gerado por sync-app-assets.py — não editar
 ```
 
 ## Harness do editor
@@ -110,7 +131,7 @@ partir de um código-fonte só. Roda a verificação dos dicionários antes e ab
 se ela falhar. Use `--no-zip` para só as pastas, ou passe um alvo
 (`python tools/build.py firefox`).
 
-Edge e Chrome saem idênticos ao `src`. O Firefox recebe três ajustes, todos
+Edge e Chrome saem idênticos à pasta `extension/`. O Firefox recebe três ajustes, todos
 aplicados no build e nenhum no código-fonte:
 
 | Ajuste | Por quê |

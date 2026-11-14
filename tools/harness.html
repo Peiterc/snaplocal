@@ -5,7 +5,7 @@
   <title>SnapLocal harness</title>
   <!-- Everything below resolves against the real editor folder, so the harness
        loads the shipping HTML, CSS and JS instead of a copy that could drift. -->
-  <base href="../src/editor/">
+  <base href="../extension/editor/">
 </head>
 <body>
 <script type="module">
@@ -80,7 +80,7 @@ function fakeCapture() {
 window.chrome = {
   storage: { local: area(store.local), session: area(store.session), onChanged: { addListener() {} } },
   runtime: {
-    // The <base> above points at src/editor/, so one level up is src/.
+    // The <base> above points at extension/editor/, so one level up is extension/.
     getURL: (path) => `../${path}`,
     getManifest: () => ({ version: '0.0.0-harness' })
   },

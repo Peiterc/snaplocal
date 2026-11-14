@@ -12,7 +12,7 @@ regra que vale para as capturas da extensão. A área de trabalho verdadeira
 nunca entra: cada janela é fotografada pelo seu próprio retângulo, e o fundo
 das imagens é o documento falso.
 
-Requer Pillow, e o app já compilado (`dotnet build app/SnapLocal.App.csproj`).
+Requer Pillow, e o app já compilado (`dotnet build windows-app/SnapLocal.App.csproj`).
 """
 import json
 import os
@@ -24,7 +24,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-EXE = ROOT / "app" / "bin" / "Debug" / "net10.0-windows10.0.19041.0" / "SnapLocal.exe"
+EXE = ROOT / "windows-app" / "bin" / "Debug" / "net10.0-windows10.0.19041.0" / "SnapLocal.exe"
 WORK = ROOT / "dist" / "app" / "shots"
 OUT = ROOT / "docs" / "store-assets" / "app-shots"
 

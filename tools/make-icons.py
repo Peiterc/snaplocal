@@ -18,9 +18,9 @@ import os
 import struct
 import zlib
 
-OUT_DIR = os.path.join("src", "icons")
+OUT_DIR = os.path.join("extension", "icons")
 STORE_DIR = os.path.join("docs", "store-assets")
-MSIX_DIR = os.path.join("app", "Assets", "msix")
+MSIX_DIR = os.path.join("windows-app", "Assets", "msix")
 
 SIZES = (16, 32, 48, 128)
 STORE_LOGO = 300
