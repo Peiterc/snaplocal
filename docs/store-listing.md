@@ -466,6 +466,7 @@ GPL-3.0 - https://github.com/Peiterc/snaplocal
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.1.1 | Chrome Web Store | 19/11/2026 | **em análise** — enviada pelo autor no painel (o Chrome não deixa extensões operarem a Web Store, nem o Claude in Chrome). Corrige a captura de página inteira em páginas longas: o editor não abria quando a imagem passava dos 10 MB do `storage.session`. Mesmas permissões da 1.1.0 |
 | 1.1.0 | Chrome Web Store | 13/11/2026 | **publicada** — conferida pelo endpoint de atualização do Chrome, que serve `..._1_1_0_0.crx`. Justificativa da permissão opcional `clipboardRead` na aba Privacidade |
 | 1.1.0 | Firefox AMO | 13/11/2026 | **publicada** em 13/11/2026 — conferida pela API pública da AMO: versão 1.1.0, `clipboardRead` só como opcional. Enviada com código-fonte; as notas entraram logo depois do envio, pela página da versão (ver a nota sobre o fluxo da AMO) |
 | 1.1.0 | Edge Add-ons | 13/11/2026 | **publicada** — confirmada em 18/11/2026 pela API pública do Edge Add-ons: versão 1.1.0 (`lastUpdateDate` de 13/11/2026), mesmos 10 idiomas da 1.0.6, 7 instalações ativas e 1 avaliação (5 estrelas). "Colar imagem", com a permissão opcional `clipboardRead`; as obrigatórias são as mesmas da 1.0.6, conferido na verificação do pacote |
