@@ -379,6 +379,13 @@ próprio idioma.
 Sem mudança de permissões. A correção está no commit `d482d06`; os testes
 estão na mensagem dele.
 
+**O app do Windows não muda e continua na 1.1.0** — nada a enviar à
+Microsoft Store. A correção mexe em `background/service-worker.js`, que o app
+não usa, e em `lib/platform.js`, que o `sync-app-assets.py` substitui pela
+versão de desktop (`windows-app/platform-desktop.js`); conferido que
+`pending-capture` não aparece nos assets do app. Os textos de `_locales` que
+entraram na 1.1.1 da extensão são os do próprio app 1.1.0, já publicado.
+
 - **Chrome**: enviado pelo autor. O Chrome bloqueia extensões na Web Store
   ("The extensions gallery cannot be scripted"), então o Claude in Chrome não
   opera aquele painel.
