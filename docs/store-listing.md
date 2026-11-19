@@ -368,6 +368,32 @@ próprio idioma.
 > é somente-leitura. O arraste do `.msix` é sempre manual — o resto do envio
 > não é.
 
+### Envio da 1.1.1 — página inteira em páginas longas
+
+| Pacote | SHA-256 |
+|---|---|
+| `snaplocal-chrome-1.1.1.zip` / `snaplocal-edge-1.1.1.zip` (iguais) | `68b9cc159008d3efffeef0bb174dafe7321633e9b40d251836056c79edf2dd9c` |
+| `snaplocal-firefox-1.1.1.zip` | `060296eb5f95c6d9846138388308d3bd87c6e314618e798c523b8184e03ae42d` |
+| `snaplocal-source-1.1.1.zip` (só AMO) | `393f6f402fe9d57a19b13ceab44712bbe370ed978b12d44925b70b6c0c79575b` |
+
+Sem mudança de permissões. A correção está no commit `d482d06`; os testes
+estão na mensagem dele.
+
+- **Chrome**: enviado pelo autor. O Chrome bloqueia extensões na Web Store
+  ("The extensions gallery cannot be scripted"), então o Claude in Chrome não
+  opera aquele painel.
+- **Edge**: só o pacote; "testador precisa de credenciais?" = **Não**, campo
+  de notas desabilitado.
+- **Firefox — notas da versão**:
+
+```
+Fixed: Full page capture on long pages. On long or image-heavy pages the editor did not open and the icon only showed a "!" - the stitched image was larger than the browser's temporary storage allows. It now opens with the whole page.
+```
+
+- **Firefox — notas ao revisor**: no formato da 1.1.0 (build, hash do pacote,
+  o que mudou: a captura também na memória da página de fundo e a mensagem
+  `pending-capture`, respondida só às páginas da própria extensão).
+
 ### Envio da 1.1.0 — "Colar imagem" e a permissão opcional `clipboardRead`
 
 | Pacote | SHA-256 |
@@ -468,7 +494,9 @@ GPL-3.0 - https://github.com/Peiterc/snaplocal
 |---|---|---|---|
 | 1.1.1 | Chrome Web Store | 19/11/2026 | **em análise** — enviada pelo autor no painel (o Chrome não deixa extensões operarem a Web Store, nem o Claude in Chrome). Corrige a captura de página inteira em páginas longas: o editor não abria quando a imagem passava dos 10 MB do `storage.session`. Mesmas permissões da 1.1.0 |
 | 1.1.0 | Chrome Web Store | 13/11/2026 | **publicada** — conferida pelo endpoint de atualização do Chrome, que serve `..._1_1_0_0.crx`. Justificativa da permissão opcional `clipboardRead` na aba Privacidade |
+| 1.1.1 | Firefox AMO | 19/11/2026 | **aguardando análise** — correção da página inteira em páginas longas. Validada sem erros (3 avisos, os de sempre do `data_collection_permissions`), só Firefox desktop. Notas da versão e ao revisor no próprio envio; desta vez o fluxo passou pela etapa do código-fonte depois da descrição, e o `snaplocal-source-1.1.1.zip` foi junto |
 | 1.1.0 | Firefox AMO | 13/11/2026 | **publicada** em 13/11/2026 — conferida pela API pública da AMO: versão 1.1.0, `clipboardRead` só como opcional. Enviada com código-fonte; as notas entraram logo depois do envio, pela página da versão (ver a nota sobre o fluxo da AMO) |
+| 1.1.1 | Edge Add-ons | 19/11/2026 | **em análise** ("In review", resposta prevista em até 7 dias úteis) — correção da página inteira em páginas longas; pacote verificado pelo Partner Center com as mesmas permissões e 11 idiomas. Marcado "testadores não precisam de credenciais", e com isso o campo de notas fica desativado: foi sem nota |
 | 1.1.0 | Edge Add-ons | 13/11/2026 | **publicada** — confirmada em 18/11/2026 pela API pública do Edge Add-ons: versão 1.1.0 (`lastUpdateDate` de 13/11/2026), mesmos 10 idiomas da 1.0.6, 7 instalações ativas e 1 avaliação (5 estrelas). "Colar imagem", com a permissão opcional `clipboardRead`; as obrigatórias são as mesmas da 1.0.6, conferido na verificação do pacote |
 | 1.0.6 | Edge Add-ons | 05/10/2026 | **publicada** — confirmada em 13/11/2026 pela API pública do Edge Add-ons. A ficha aparece em 10 idiomas (`availableLanguages`): en-US, pt-BR, de-DE, id-ID, it-IT, es-ES, fr-CA, ru-RU, pl-PL, tr-TR. **Português (Portugal) não consta**, embora tenha sido enviado — a conferir no painel. Mesmas permissões da 1.0.4; primeira versão reproduzível a partir de um clone |
 | 1.1.0 (app) | Microsoft Store | 13/11/2026 | **publicada** — conferido em 18/11/2026 no catálogo da loja: o pacote servido é o `1.1.0.0` (catálogo atualizado em 13/11/2026, 18:04 no horário local). Submission 5: item da bandeja "Editar imagem da área de transferência", aviso do Print Screen falando em sair da conta ou reiniciar, e o nome corrigido para "SnapLocal" nas 11 fichas |
