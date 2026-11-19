@@ -31,7 +31,20 @@ export async function setSettings(items) {
 
 /** O mesmo, para o que vive só enquanto o navegador está aberto. */
 export async function getSession(defaults) {
-  return chrome.storage.session.get(defaults);
+  const items = await chrome.storage.session.get(defaults);
+  // A sessão aceita 10 MB, e a página inteira de uma página longa passa disso.
+  // Nesse caso o service worker guarda a captura na memória dele e a entrega
+  // por mensagem. Se ele já adormeceu (o editor recarregado bem depois), a
+  // resposta é null e o editor abre pedindo Ctrl+V, como sem captura.
+  if ('lastCapture' in defaults && !items.lastCapture?.dataUrl) {
+    try {
+      const pending = await chrome.runtime.sendMessage({ type: 'pending-capture' });
+      if (pending?.dataUrl) items.lastCapture = pending;
+    } catch (error) {
+      console.warn('captura pendente indisponível:', error);
+    }
+  }
+  return items;
 }
 
 export async function setSession(items) {

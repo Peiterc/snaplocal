@@ -81,14 +81,31 @@ async function activeTab() {
   return tab;
 }
 
+/**
+ * A última captura, também na memória deste worker. É o caminho de reserva
+ * para o que não cabe na sessão: o editor pede por mensagem quando não a
+ * encontra lá (veja `getSession` em lib/platform.js). Some quando o worker
+ * adormece, segundos depois de o editor já ter carregado a imagem.
+ */
+let pendingCapture = null;
+
 async function openEditor(dataUrl, tab, { fromClipboard = false } = {}) {
   // A imagem colada não passa pela sessão: o editor a lê direto da área de
   // transferência. A sessão tem limite de 10 MB, e um recorte de tela grande,
   // em base64, passa disso.
   if (dataUrl) {
-    await chrome.storage.session.set({
-      lastCapture: { dataUrl, title: tab?.title || '', url: tab?.url || '', at: Date.now() }
-    });
+    const lastCapture = { dataUrl, title: tab?.title || '', url: tab?.url || '', at: Date.now() };
+    pendingCapture = lastCapture;
+    try {
+      await chrome.storage.session.set({ lastCapture });
+    } catch (error) {
+      // Página inteira de uma página longa passa fácil dos 10 MB, e era assim
+      // que ela falhava: "Session storage quota bytes exceeded", nenhum editor,
+      // só o "!" no ícone. A gravação recusada não apaga a captura anterior,
+      // então ela sai daqui — senão o editor abriria com a imagem velha.
+      console.warn('captura grande demais para a sessão, vai pela memória:', error);
+      await chrome.storage.session.remove('lastCapture');
+    }
   }
 
   // Ao lado da aba capturada, e não "onde o navegador quiser". Sem o windowId
@@ -366,6 +383,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       .catch(reportFailure)
       .then(() => sendResponse({ ok: true }));
     return true;
+  }
+  if (msg?.type === 'pending-capture') {
+    // Só para as páginas da própria extensão: um content script também
+    // consegue mandar mensagens para cá, e a captura não é da conta dele.
+    sendResponse(sender.url?.startsWith(chrome.runtime.getURL('')) ? pendingCapture : null);
+    return false;
   }
   return false;
 });
