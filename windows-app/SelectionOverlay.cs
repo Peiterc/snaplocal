@@ -15,6 +15,7 @@ sealed class SelectionOverlay : Form
     private Point origin;
     private Point current;
     private bool dragging;
+    private CrossCursor? cross;
 
     /// <summary>A área escolhida, em coordenadas da imagem congelada.</summary>
     public Rectangle Selection { get; private set; } = Rectangle.Empty;
@@ -58,6 +59,17 @@ sealed class SelectionOverlay : Form
     {
         base.OnShown(e);
         if (Bounds != desktop) Bounds = desktop;
+
+        // Só agora o DeviceDpi é o do monitor onde a janela ficou.
+        cross = new CrossCursor(DeviceDpi);
+        if (cross.Cursor is { } cursor) Cursor = cursor;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        // A janela primeiro: o cursor não pode sumir enquanto ela o usa.
+        base.Dispose(disposing);
+        if (disposing) cross?.Dispose();
     }
 
     protected override void OnPaint(PaintEventArgs e)

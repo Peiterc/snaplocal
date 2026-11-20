@@ -14,7 +14,10 @@
     /* Author rules beat the browser's own [hidden] rule, and .bar/.hint both
        set display, so the attribute needs to be enforced explicitly here. */
     [hidden] { display: none !important; }
-    .layer { position: fixed; inset: 0; cursor: crosshair; }
+    /* Cruz branca com contorno preto: a do sistema é fina e some sobre a tela
+       escurecida. Se a CSP da página barrar a imagem data:, vale o crosshair. */
+    .layer { position: fixed; inset: 0;
+             cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Cpath d='M15 1h3v14h14v3H18v14h-3V18H1v-3h14z'/%3E%3Cpath d='M16 2h1v14h14v1H17v14h-1V17H2v-1h14z' fill='%23fff'/%3E%3C/svg%3E") 16 16, crosshair; }
     .dim { position: fixed; inset: 0; background: rgba(12, 16, 22, .42); }
 
     .cross { position: fixed; background: rgba(255,255,255,.75);

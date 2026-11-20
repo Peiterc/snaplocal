@@ -1,3 +1,10 @@
+/* A cruz do sistema é uma linha fina de uma cor só e some sobre fundos
+   escuros ou sobre a própria imagem. Esta é branca com contorno preto, então
+   aparece em qualquer fundo; o crosshair do fim fica de reserva. */
+:root {
+  --cursor-cross: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' shape-rendering='crispEdges'%3E%3Cpath d='M15 1h3v14h14v3H18v14h-3V18H1v-3h14z'/%3E%3Cpath d='M16 2h1v14h14v1H17v14h-1V17H2v-1h14z' fill='%23fff'/%3E%3C/svg%3E") 16 16, crosshair;
+}
+
 body.editor {
   height: 100vh;
   display: grid;
@@ -152,7 +159,7 @@ body.editor {
   min-width: 82px;
 }
 
-.stage[data-tool="crop"] #board { cursor: crosshair; }
+.stage[data-tool="crop"] #board { cursor: var(--cursor-cross); }
 
 .stage {
   overflow: auto;
@@ -187,7 +194,7 @@ body.editor {
    that is the state the user sees first. */
 #board.crisp { image-rendering: pixelated; }
 
-.stage:not([data-tool="move"]) #board { cursor: crosshair; }
+.stage:not([data-tool="move"]) #board { cursor: var(--cursor-cross); }
 .stage[data-tool="text"] #board { cursor: text; }
 
 /* The inline text editor sits exactly over the spot the label will occupy, so

@@ -34,6 +34,18 @@ function scratch(w, h) {
   return ctx;
 }
 
+const slabCanvas = document.createElement('canvas');
+
+function slab(w, h) {
+  slabCanvas.width = w;
+  slabCanvas.height = h;
+  const ctx = slabCanvas.getContext('2d');
+  // Stretching a 1-pixel strip with smoothing on would blend it with its
+  // transparent neighbour and bring the fade right back.
+  ctx.imageSmoothingEnabled = false;
+  return ctx;
+}
+
 /**
  * Both obscuring tools sample the canvas as composited so far, not the
  * untouched capture, so stacking two regions behaves the way the eye expects.
@@ -41,18 +53,40 @@ function scratch(w, h) {
 function paintBlur(ctx, canvas, x, y, w, h, strength) {
   const radius = strength / 2;
   const pad = Math.ceil(radius * 3);
-  const sx = Math.max(0, Math.floor(x - pad));
-  const sy = Math.max(0, Math.floor(y - pad));
-  const sw = Math.min(canvas.width, Math.ceil(x + w + pad)) - sx;
-  const sh = Math.min(canvas.height, Math.ceil(y + h + pad)) - sy;
-  if (sw <= 0 || sh <= 0) return;
+  // The slab is the region plus a margin wide enough for the whole kernel,
+  // in canvas coordinates; it may stick out past the canvas.
+  const ox = Math.floor(x) - pad;
+  const oy = Math.floor(y) - pad;
+  const sw = Math.ceil(x + w) + pad - ox;
+  const sh = Math.ceil(y + h) + pad - oy;
+  const ax = Math.max(0, ox);
+  const ay = Math.max(0, oy);
+  const aw = Math.min(canvas.width, ox + sw) - ax;
+  const ah = Math.min(canvas.height, oy + sh) - ay;
+  if (aw <= 0 || ah <= 0) return;
 
-  // Blurring a padded slab and drawing only its middle keeps the region edges
-  // from bleeding towards transparent.
+  // CSS blur treats everything outside its source as transparent. Where the
+  // region touches the edge of the image that turned the blurred pixels
+  // semi-transparent, and the sharp text underneath showed through. So the
+  // slab is filled first, with the edge pixels stretched into whatever part
+  // of it lies outside the canvas, and only then blurred.
+  const base = slab(sw, sh);
+  const dx = ax - ox;
+  const dy = ay - oy;
+  base.drawImage(canvas, ax, ay, aw, ah, dx, dy, aw, ah);
+  const right = sw - dx - aw;
+  const bottom = sh - dy - ah;
+  // Each band copies a 1-pixel strip of what was just drawn, so the corners
+  // come out right once the side bands are in place.
+  if (dy) base.drawImage(slabCanvas, dx, dy, aw, 1, dx, 0, aw, dy);
+  if (bottom) base.drawImage(slabCanvas, dx, dy + ah - 1, aw, 1, dx, dy + ah, aw, bottom);
+  if (dx) base.drawImage(slabCanvas, dx, 0, 1, sh, 0, 0, dx, sh);
+  if (right) base.drawImage(slabCanvas, dx + aw - 1, 0, 1, sh, dx + aw, 0, right, sh);
+
   const sctx = scratch(sw, sh);
   sctx.filter = `blur(${radius}px)`;
-  sctx.drawImage(canvas, sx, sy, sw, sh, 0, 0, sw, sh);
-  ctx.drawImage(scratchCanvas, x - sx, y - sy, w, h, x, y, w, h);
+  sctx.drawImage(slabCanvas, 0, 0);
+  ctx.drawImage(scratchCanvas, x - ox, y - oy, w, h, x, y, w, h);
 }
 
 function paintPixelate(ctx, canvas, x, y, w, h, strength) {
