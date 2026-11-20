@@ -368,6 +368,49 @@ próprio idioma.
 > é somente-leitura. O arraste do `.msix` é sempre manual — o resto do envio
 > não é.
 
+### Envio da 1.1.2 — cursor visível e blur firme na borda
+
+| Pacote | SHA-256 |
+|---|---|
+| `snaplocal-chrome-1.1.2.zip` / `snaplocal-edge-1.1.2.zip` (iguais) | `4af47041d8c118a9619b3e3df0420d2a0d9896f62b4df59c81aae8efc2d36dde` |
+| `snaplocal-firefox-1.1.2.zip` | `06fe0d67d0b9b01722e32fa6b153656cba8ce4022398493a110de8fb99441e70` |
+| `snaplocal-source-1.1.2.zip` (só AMO) | `07acf29896fc1784a174e8cceb8f5e4aace32a7b047aff6bf8280af9970b3249` |
+| `app/snaplocal-1.1.2.0.msix` (Microsoft Store) | gerado pelo `make-msix.py`, identidade `Peiterc.Snaplocal`; não é reproduzível byte a byte, por isso sem hash aqui |
+
+Sem mudança de permissões. As correções estão no commit `62cff61`; os testes
+estão na mensagem dele.
+
+**A 1.1.1 ainda estava em análise nas três lojas** quando a 1.1.2 foi
+preparada. A 1.1.2 contém a 1.1.1 inteira, então não há perda em trocar:
+- **Chrome** e **Edge**: cancelar a análise pendente da 1.1.1 no painel e
+  enviar a 1.1.2 no lugar (ou esperar a 1.1.1 sair e enviar em seguida).
+- **Firefox**: a AMO aceita a versão nova com a anterior na fila; as duas são
+  analisadas.
+
+**O app do Windows vai da 1.1.0 direto para a 1.1.2**, para alinhar com a
+extensão: o cursor nativo da seleção de área (`CrossCursor.cs`) e o editor,
+que é o mesmo `shapes.js`/`editor.css` da extensão. Conferido que o `.msix`
+leva os arquivos novos do editor.
+
+- **Firefox — notas da versão** (e "Novidades" do Edge/Chrome, se pedirem):
+
+```
+Improved: The crosshair pointer for selecting an area, and in the editor, is now white with a black outline, so it no longer disappears against dark or light backgrounds.
+Fixed: A blurred region that reached the edge of the image let the original text show through near that edge.
+```
+
+- **Microsoft Store — "Novidades nesta versão"** (pt-BR; as outras fichas
+  podem levar o texto em inglês acima):
+
+```
+Melhorado: a cruz do ponteiro na seleção de área e no editor agora é branca com contorno preto e não some mais em fundos escuros ou claros.
+Corrigido: o desfoque que chegava até a borda da imagem deixava o texto original aparecer perto da borda.
+```
+
+- **Firefox — notas ao revisor**: no formato da 1.1.0 (build, hash do pacote,
+  o que mudou: só CSS de cursor no overlay e no editor, e o preenchimento das
+  bordas antes do blur em `editor/shapes.js`).
+
 ### Envio da 1.1.1 — página inteira em páginas longas
 
 | Pacote | SHA-256 |
@@ -499,6 +542,10 @@ GPL-3.0 - https://github.com/Peiterc/snaplocal
 
 | Versão | Loja | Enviada | Situação |
 |---|---|---|---|
+| 1.1.2 | Chrome Web Store | — | **preparada** em 19/11/2026, não enviada. Cursor visível e blur firme na borda; mesmas permissões |
+| 1.1.2 | Firefox AMO | — | **preparada** em 19/11/2026, não enviada. Enviar com `snaplocal-source-1.1.2.zip` |
+| 1.1.2 | Edge Add-ons | — | **preparada** em 19/11/2026, não enviada |
+| 1.1.2 (app) | Microsoft Store | — | **preparada** em 19/11/2026, não enviada. Pacote `1.1.2.0` (vem da 1.1.0) |
 | 1.1.1 | Chrome Web Store | 19/11/2026 | **em análise** — enviada pelo autor no painel (o Chrome não deixa extensões operarem a Web Store, nem o Claude in Chrome). Corrige a captura de página inteira em páginas longas: o editor não abria quando a imagem passava dos 10 MB do `storage.session`. Mesmas permissões da 1.1.0 |
 | 1.1.0 | Chrome Web Store | 13/11/2026 | **publicada** — conferida pelo endpoint de atualização do Chrome, que serve `..._1_1_0_0.crx`. Justificativa da permissão opcional `clipboardRead` na aba Privacidade |
 | 1.1.1 | Firefox AMO | 19/11/2026 | **aguardando análise** — correção da página inteira em páginas longas. Validada sem erros (3 avisos, os de sempre do `data_collection_permissions`), só Firefox desktop. Notas da versão e ao revisor no próprio envio; desta vez o fluxo passou pela etapa do código-fonte depois da descrição, e o `snaplocal-source-1.1.1.zip` foi junto |
